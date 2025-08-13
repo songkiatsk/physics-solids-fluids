@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>17.2 ความตึงผิวและความหนืด</title>
+  <meta name="description" content="เนื้อหาเรื่องความตึงผิวของของเหลว และความหนืดของของไหล" />
+  <meta name="theme-color" content="#5b6fe6" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            thai: ['Sarabun', 'sans-serif']
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    body { font-family: 'Sarabun', sans-serif; }
+    .gradient-bg { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); }
+    .card-hover { transition: transform .25s ease, box-shadow .25s ease; }
+    .card-hover:hover { transform: translateY(-6px); box-shadow: 0 20px 40px rgba(0, 0, 0, .12); }
+  </style>
+</head>
+<body class="bg-gray-100 text-gray-900">
+  <!-- Navigation -->
+  <nav class="gradient-bg text-white shadow-lg sticky top-0 z-50" role="navigation" aria-label="หลัก">
+    <div class="container mx-auto px-4 py-4 flex items-center justify-between">
+      <div class="flex items-center gap-3">
+        <div class="w-10 h-10 bg-white rounded-full flex items-center justify-center" aria-hidden="true">
+          <span class="text-2xl">💧</span>
+        </div>
+        <h1 class="text-lg sm:text-xl font-bold">17.2 ความตึงผิวและความหนืด</h1>
+      </div>
+      <a href="index.html" class="text-sm font-semibold hover:text-blue-200 transition-colors">กลับหน้าหลัก</a>
+    </div>
+  </nav>
+
+  <main class="container mx-auto px-4 py-12">
+    <div class="max-w-3xl mx-auto bg-white p-8 rounded-lg shadow-lg space-y-12">
+      
+      <!-- Section 1 -->
+      <div>
+        <h2 class="text-3xl font-bold text-green-700 mb-6">17.2.1 ความตึงผิวของของเหลว</h2>
+        <p class="mb-4">
+          **ความตึงผิว (Surface Tension, γ)** เป็นสมบัติของผิวของเหลวที่พยายามจะยึดผิวหน้าไว้ให้มีพื้นที่น้อยที่สุด เกิดจากแรงยึดเหนี่ยวระหว่างโมเลกุลของของเหลว (Cohesive force) ที่ผิวหน้า ทำให้ผิวของเหลวมีลักษณะคล้ายแผ่นยางยืดบางๆ
+        </p>
+        <p class="mb-4">
+          ความตึงผิวคืออัตราส่วนของแรงที่กระทำขนานกับผิวของเหลว (F) ต่อความยาว (L) ของขอบที่ของเหลวสัมผัส
+        </p>
+        <div class="mt-2 bg-gray-100 p-4 rounded-lg text-center font-mono text-lg">
+          γ = F / L
+        </div>
+         <div class="mt-4 text-sm text-gray-700 bg-gray-50 p-4 rounded-lg">
+          <h4 class="font-semibold mb-2">โดยที่:</h4>
+          <ul class="list-disc list-inside space-y-1">
+            <li><b>γ</b> (gamma) คือ ความตึงผิว (N/m)</li>
+            <li><b>F</b> คือ แรงตึงผิว (N)</li>
+            <li><b>L</b> คือ ความยาวของผิวของเหลวที่สัมผัสกับวัตถุ (m)</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Section 2 -->
+      <div>
+        <h2 class="text-3xl font-bold text-green-700 mb-6">17.2.2 ความหนืดของของเหลว</h2>
+        <p class="mb-4">
+          **ความหนืด (Viscosity, η)** คือสมบัติของของไหลที่ต้านทานการไหลหรือการเคลื่อนที่ เกิดจากแรงเสียดทานภายในระหว่างชั้นของของไหล ของไหลที่มีความหนืดสูงจะไหลได้ช้ากว่าของไหลที่มีความหนืดต่ำ
+        </p>
+        <p class="mb-4">
+          เมื่อวัตถุทรงกลมรัศมี r เคลื่อนที่ในของไหลด้วยอัตราเร็ว v จะเกิดแรงต้านเนื่องจากความหนืด เรียกว่า **แรงหนืด** ซึ่งหาได้จาก **กฎของสโตกส์ (Stoke's Law)**
+        </p>
+        <div class="mt-2 bg-gray-100 p-4 rounded-lg text-center font-mono text-lg">
+          F = 6πηrv
+        </div>
+        <div class="mt-4 text-sm text-gray-700 bg-gray-50 p-4 rounded-lg">
+          <h4 class="font-semibold mb-2">โดยที่:</h4>
+          <ul class="list-disc list-inside space-y-1">
+            <li><b>F</b> คือ แรงหนืด (N)</li>
+            <li><b>η</b> (eta) คือ สัมประสิทธิ์ความหนืด (Pa·s)</li>
+            <li><b>r</b> คือ รัศมีของวัตถุทรงกลม (m)</li>
+            <li><b>v</b> คือ อัตราเร็วของวัตถุเทียบกับของไหล (m/s)</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Example Calculation -->
+      <div class="mt-12">
+        <h3 class="text-2xl font-bold text-center mb-6">🧮 ตัวอย่างการคำนวณ</h3>
+        <div class="bg-white border border-gray-200 rounded-lg shadow-md p-8">
+          <h4 class="text-xl font-semibold mb-4 text-gray-800">ตัวอย่าง: แรงหนืด</h4>
+          <div class="bg-blue-50 p-6 rounded-lg mb-4">
+            <p class="font-semibold mb-2">โจทย์:</p>
+            <p>หยดน้ำมันทรงกลมรัศมี 0.2 มิลลิเมตร กำลังเคลื่อนที่ลงในอากาศด้วยอัตราเร็วคงตัว 0.5 เมตรต่อวินาที จงหาขนาดของแรงหนืดของอากาศที่กระทำต่อหยดน้ำมัน (กำหนดให้สัมประสิทธิ์ความหนืดของอากาศ η = 1.8 × 10⁻⁵ Pa·s)</p>
+          </div>
+          <div class="space-y-3">
+            <p><strong>วิธีทำ:</strong> จากกฎของสโตกส์ F = 6πηrv</p>
+            <p>แปลงหน่วยรัศมี: r = 0.2 mm = 0.2 × 10⁻³ m</p>
+            <p>แทนค่า: F = 6π(1.8 × 10⁻⁵ Pa·s)(0.2 × 10⁻³ m)(0.5 m/s)</p>
+            <p>F ≈ 3.39 × 10⁻⁸ N</p>
+            <div class="bg-green-50 p-4 rounded-lg mt-4"><p class="font-semibold text-green-800">คำตอบ: แรงหนืดของอากาศที่กระทำต่อหยดน้ำมันมีค่าประมาณ 3.39 × 10⁻⁸ นิวตัน</p></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Simulations -->
+       <div class="mt-12">
+        <h3 class="text-2xl font-bold text-center mb-6">🔬 การทดลองเสมือน</h3>
+        <div class="bg-white border border-gray-200 rounded-lg shadow-md p-8">
+            <h4 class="text-xl font-semibold mb-6 text-green-700">การทดลอง: กฎของสโตกส์</h4>
+            <div class="bg-gray-100 rounded-lg p-6">
+              <!-- Sliders -->
+              <div class="space-y-4 mb-6">
+                <div>
+                  <label for="viscositySlider" class="block text-sm font-medium text-gray-700">ความหนืด (η): <span id="viscosityValue" class="font-bold text-green-600">1.0</span> x10⁻³ Pa·s</label>
+                  <input type="range" id="viscositySlider" min="1" max="100" value="10" class="w-full" oninput="updateStoke()">
+                </div>
+                <div>
+                  <label for="radiusSlider" class="block text-sm font-medium text-gray-700">รัศมี (r): <span id="radiusValue" class="font-bold text-green-600">5.0</span> mm</label>
+                  <input type="range" id="radiusSlider" min="1" max="20" value="5" class="w-full" oninput="updateStoke()">
+                </div>
+                <div>
+                  <label for="velocitySlider" class="block text-sm font-medium text-gray-700">อัตราเร็ว (v): <span id="velocityValue" class="font-bold text-green-600">1.0</span> m/s</label>
+                  <input type="range" id="velocitySlider" min="1" max="100" value="10" class="w-full" oninput="updateStoke()">
+                </div>
+              </div>
+          
+              <!-- Visual Simulation Area -->
+              <div class="relative w-full h-80 bg-blue-200 rounded-lg overflow-hidden p-4 flex justify-center items-center">
+                  <div class="text-center">
+                      <div id="sphere" class="w-10 h-10 bg-red-500 rounded-full mx-auto transition-all duration-200" style="width: 50px; height: 50px;"></div>
+                      <div class="mt-8 bg-white/70 p-4 rounded-lg">
+                          <p class="font-semibold">แรงหนืดคำนวณได้ (F):</p>
+                          <p id="stokeForceValue" class="text-2xl font-bold text-green-800">0.00 N</p>
+                      </div>
+                  </div>
+              </div>
+            </div>
+          </div>
+      </div>
+
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer class="gradient-bg text-white py-8 mt-16" role="contentinfo">
+    <div class="container mx-auto px-4 text-center">
+       <p class="text-sm text-blue-300">พัฒนาโดย: นายทรงเกียรติ สวนแก้ว โรงเรียนลองวิทยา อำเภอลอง จังหวัดแพร่</p>
+    </div>
+  </footer>
+  <script>
+    function updateStoke() {
+        const eta_slider = document.getElementById('viscositySlider').value;
+        const r_slider = document.getElementById('radiusSlider').value;
+        const v_slider = document.getElementById('velocitySlider').value;
+
+        const eta = eta_slider * 0.1 * 1e-3; // Scale to Pa.s
+        const r = r_slider * 1e-3; // Scale to m
+        const v = v_slider * 0.1; // Scale to m/s
+
+        document.getElementById('viscosityValue').textContent = (eta_slider * 0.1).toFixed(1);
+        document.getElementById('radiusValue').textContent = r_slider;
+        document.getElementById('velocityValue').textContent = v.toFixed(1);
+
+        const force = 6 * Math.PI * eta * r * v;
+        document.getElementById('stokeForceValue').textContent = `${force.toExponential(2)} N`;
+
+        const sphere = document.getElementById('sphere');
+        const size = 20 + (r_slider * 2); // Visual size for sphere
+        sphere.style.width = `${size}px`;
+        sphere.style.height = `${size}px`;
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+      updateStoke();
+    });
+  </script>
+</body>
+</html>
