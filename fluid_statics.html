@@ -59,11 +59,52 @@
         <div class="mt-4 text-sm text-gray-700 bg-gray-50 p-4 rounded-lg">
           <h4 class="font-semibold mb-2">โดยที่:</h4>
           <ul class="list-disc list-inside space-y-1">
-            <li><b>P</b> คือ ความดัน (N/m²)</li>
+            <li><b>P</b> คือ ความดัน (N/m²) หรือ Pa)</li>
             <li><b>ρ</b> (rho) คือ ความหนาแน่นของของไหล (kg/m³)</li>
             <li><b>g</b> คือ ความเร่งโน้มถ่วง (m/s²)</li>
             <li><b>h</b> คือ ความลึกจากผิวของไหล (m)</li>
           </ul>
+        </div>
+        <!-- Example for Fluid Pressure -->
+        <div class="mt-8 bg-white border border-gray-200 rounded-lg shadow-md p-6">
+          <h4 class="text-xl font-semibold mb-4 text-gray-800">🧮 ตัวอย่าง: ความดันเกจ</h4>
+          <div class="bg-blue-50 p-6 rounded-lg mb-4">
+            <p class="font-semibold mb-2">โจทย์:</p>
+            <p>จงคำนวณหาความดันเกจ ณ จุดที่อยู่ลึกจากผิวน้ำทะเลเป็นระยะ 10 เมตร (กำหนดให้ ρ<sub>น้ำทะเล</sub> ≈ 1025 kg/m³ และ g = 9.8 m/s²)</p>
+          </div>
+          <div class="space-y-3">
+            <p><strong>วิธีทำ:</strong> จากสมการ P = ρgh</p>
+            <p>P = (1025 kg/m³)(9.8 m/s²)(10 m) = 100,450 Pa</p>
+            <div class="bg-green-50 p-4 rounded-lg mt-4"><p class="font-semibold text-green-800">คำตอบ: ความดันเกจมีค่าประมาณ 100.5 กิโลพาสคัล (kPa)</p></div>
+          </div>
+        </div>
+        <!-- Simulation for Fluid Pressure -->
+        <div class="mt-8 bg-white border border-gray-200 rounded-lg shadow-md p-6">
+            <h4 class="text-xl font-semibold mb-6 text-blue-600">🔬 การทดลอง: ความดันในของไหล</h4>
+            <div class="bg-gradient-to-b from-blue-200 to-blue-600 rounded-lg p-8 relative overflow-hidden">
+              <div class="text-center mb-6">
+                <p class="text-white font-semibold mb-4">ปรับความลึกเพื่อดูการเปลี่ยนแปลงความดัน</p>
+                <div class="flex items-center justify-center gap-4">
+                  <label class="text-white" for="depthSlider">ความลึก:</label>
+                  <input type="range" id="depthSlider" min="0" max="10" value="5" class="w-48" oninput="updatePressure()" aria-label="ความลึก (เมตร)">
+                  <span id="depthValue" class="text-white font-bold" aria-live="polite">5 m</span>
+                </div>
+              </div>
+              <div class="relative">
+                <div id="waterLevel" class="absolute bottom-0 left-0 right-0 bg-blue-500/70 transition-all duration-500" style="height: 50%"></div>
+                <div id="pressureIndicator" class="absolute bg-red-500 w-4 h-4 rounded-full transition-all duration-500" style="bottom: 50%; left: 50%; transform: translateX(-50%)" aria-hidden="true"></div>
+                <div class="h-64 border-2 border-white rounded relative">
+                  <div class="absolute top-2 left-2 text-white text-sm">ผิวน้ำ</div>
+                  <div class="absolute bottom-2 left-2 text-white text-sm">ก้นถัง</div>
+                </div>
+              </div>
+              <div class="mt-6 text-center">
+                <div class="bg-white/20 rounded-lg p-4">
+                  <p class="text-white">ความดัน = <span id="pressureValue" class="font-bold" aria-live="polite">49,000 Pa</span></p>
+                  <p class="text-white text-sm mt-2">P = 1000 × 9.8 × h</p>
+                </div>
+              </div>
+            </div>
         </div>
       </div>
 
@@ -87,6 +128,70 @@
             <li><b>A<sub>2</sub></b> คือ พื้นที่หน้าตัดของลูกสูบใหญ่ (m²)</li>
           </ul>
         </div>
+         <!-- Example for Pascal's Principle -->
+        <div class="mt-8 bg-white border border-gray-200 rounded-lg shadow-md p-6">
+          <h4 class="text-xl font-semibold mb-4 text-gray-800">🧮 ตัวอย่าง: หลักของพาสคัล</h4>
+          <div class="bg-blue-50 p-6 rounded-lg mb-4">
+            <p class="font-semibold mb-2">โจทย์:</p>
+            <p>เครื่องอัดไฮดรอลิกเครื่องหนึ่ง ลูกสูบเล็กมีพื้นที่หน้าตัด 2.0 cm² และลูกสูบใหญ่มีพื้นที่หน้าตัด 14 cm² หากออกแรงกระทำต่อลูกสูบเล็ก 100 N จะสามารถยกวัตถุที่มีน้ำหนักสูงสุดเท่าใดบนลูกสูบใหญ่</p>
+          </div>
+          <div class="space-y-3">
+            <p><strong>วิธีทำ:</strong> จากหลักของพาสคัล F₁/A₁ = F₂/A₂</p>
+            <p>F₂ = F₁(A₂/A₁) = (100 N)(14 cm² / 2.0 cm²) = 700 N</p>
+            <div class="bg-green-50 p-4 rounded-lg mt-4"><p class="font-semibold text-green-800">คำตอบ: จะสามารถยกวัตถุที่มีน้ำหนักสูงสุด 700 นิวตัน</p></div>
+          </div>
+        </div>
+         <!-- Simulation for Pascal's Principle -->
+        <div class="mt-8 bg-white border border-gray-200 rounded-lg shadow-md p-6">
+            <h4 class="text-xl font-semibold mb-6 text-blue-600">🔬 การทดลอง: กฎของพาสคัล</h4>
+            <div class="bg-gray-100 rounded-lg p-6">
+              <!-- Sliders -->
+              <div class="space-y-4 mb-6">
+                <div>
+                  <label for="forceSliderNew" class="block text-sm font-medium text-gray-700">แรงกดเข้า (Force In): <span id="forceValueNew" class="font-bold text-blue-600">10.0 N</span></label>
+                  <input type="range" id="forceSliderNew" min="1" max="100" value="10" class="w-full" oninput="updatePascal()">
+                </div>
+                <div>
+                  <label for="asSliderNew" class="block text-sm font-medium text-gray-700">พื้นที่ลูกสูบเล็ก (Area Small): <span id="asValueNew" class="font-bold text-blue-600">2.0</span> m²</label>
+                  <input type="range" id="asSliderNew" min="1" max="10" value="2" class="w-full" oninput="updatePascal()">
+                </div>
+                <div>
+                  <label for="alSliderNew" class="block text-sm font-medium text-gray-700">พื้นที่ลูกสูบใหญ่ (Area Large): <span id="alValueNew" class="font-bold text-blue-600">8.0</span> m²</label>
+                  <input type="range" id="alSliderNew" min="1" max="20" value="8" class="w-full" oninput="updatePascal()">
+                </div>
+              </div>
+          
+              <!-- Visual Simulation Area -->
+              <div class="relative w-full h-96 bg-gray-200 rounded-lg overflow-hidden p-4 flex flex-col">
+                <!-- Text Info -->
+                <div class="flex justify-between text-xs sm:text-sm mb-4 flex-shrink-0">
+                  <div id="infoSmall" class="w-1/2 pr-2"></div>
+                  <div id="infoLarge" class="w-1/2 pl-2 text-right"></div>
+                </div>
+                <!-- U-Tube Container -->
+                <div class="relative flex-grow flex items-end justify-center">
+                  <!-- Small Piston Side -->
+                  <div class="flex items-end h-full">
+                      <div id="scale-small" class="relative h-full text-xs mr-1 flex flex-col-reverse justify-between text-gray-500"></div>
+                      <div id="smallPistonContainerNew" class="relative h-full border-l-2 border-r-2 border-b-2 border-gray-500 transition-all duration-200" style="width: 3.5rem;">
+                          <div id="smallLiquid" class="absolute bottom-0 w-full bg-blue-400 transition-all duration-200"></div>
+                          <div id="smallPistonNew" class="absolute w-full h-4 bg-gray-600 border-t-2 border-gray-700 transition-all duration-200"></div>
+                      </div>
+                  </div>
+                  <!-- Connecting Pipe -->
+                  <div class="h-8 border-b-2 border-gray-500 flex-grow bg-blue-400"></div>
+                  <!-- Large Piston Side -->
+                  <div class="flex items-end h-full">
+                      <div id="largePistonContainerNew" class="relative h-full border-l-2 border-r-2 border-b-2 border-gray-500 transition-all duration-200" style="width: 7.1rem;">
+                          <div id="largeLiquid" class="absolute bottom-0 w-full bg-blue-400 transition-all duration-200"></div>
+                          <div id="largePistonNew" class="absolute w-full h-4 bg-gray-600 border-t-2 border-gray-700 transition-all duration-200"></div>
+                      </div>
+                      <div id="scale-large" class="relative h-full text-xs ml-1 flex flex-col-reverse justify-between text-gray-500"></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
       </div>
 
       <hr class="my-8">
@@ -108,6 +213,61 @@
             <li><b>V<sub>จม</sub></b> คือ ปริมาตรของวัตถุส่วนที่จมในของไหล (m³)</li>
           </ul>
         </div>
+        <p class="mt-4">
+          โดยที่ V<sub>จม</sub> คือปริมาตรของวัตถุส่วนที่จมในของไหล ซึ่งเท่ากับปริมาตรของของไหลที่ถูกแทนที่
+        </p>
+         <!-- Example for Buoyancy -->
+        <div class="mt-8 bg-white border border-gray-200 rounded-lg shadow-md p-6">
+          <h4 class="text-xl font-semibold mb-4 text-gray-800">🧮 ตัวอย่าง: แรงพยุง</h4>
+          <div class="bg-blue-50 p-6 rounded-lg mb-4">
+            <p class="font-semibold mb-2">โจทย์:</p>
+            <p>วัตถุทรงกลมทำจากเหล็ก มวล 2.0 กิโลกรัม ถูกจุ่มให้จมมิดในภาชนะที่บรรจุน้ำ จงหาขนาดของแรงพยุงที่ของเหลวกระทำต่อวัตถุ (กำหนดให้ ρ<sub>เหล็ก</sub> = 7800 kg/m³ และ ρ<sub>น้ำ</sub> = 1000 kg/m³)</p>
+          </div>
+          <div class="space-y-3">
+            <p><strong>วิธีทำ:</strong> หาปริมาตรของวัตถุจาก V = m/ρ</p>
+            <p>V = 2.0 kg / 7800 kg/m³ ≈ 2.56 × 10⁻⁴ m³</p>
+            <p>จากหลักของอาร์คิมีดีส F<sub>B</sub> = ρ<sub>ของเหลว</sub>gV<sub>ส่วนที่จม</sub></p>
+            <p>F<sub>B</sub> = (1000 kg/m³)(9.8 m/s²)(2.56 × 10⁻⁴ m³) ≈ 2.51 N</p>
+            <div class="bg-green-50 p-4 rounded-lg mt-4"><p class="font-semibold text-green-800">คำตอบ: ขนาดของแรงพยุงที่กระทำต่อวัตถุคือ 2.51 นิวตัน</p></div>
+          </div>
+        </div>
+         <!-- Simulation for Buoyancy -->
+        <div class="mt-8 bg-white border border-gray-200 rounded-lg shadow-md p-6">
+            <h4 class="text-xl font-semibold mb-6 text-green-700">🔬 การทดลอง: แรงลอยตัว</h4>
+            <div class="bg-gradient-to-b from-cyan-200 to-sky-500 rounded-lg p-8">
+                <div class="text-center mb-6">
+                    <p class="text-sky-800 font-semibold mb-4">เลือกวัสดุเพื่อดูว่าวัตถุจะลอยหรือจม</p>
+                    <div class="flex items-center justify-center gap-4">
+                        <label class="text-sky-900" for="materialSelect">วัสดุ:</label>
+                        <select id="materialSelect" class="rounded-md p-2 bg-white/80 text-sky-900" onchange="updateBuoyancy()">
+                            <option value="wood">ไม้ (600 kg/m³)</option>
+                            <option value="aluminum">อะลูมิเนียม (2700 kg/m³)</option>
+                            <option value="iron">เหล็ก (7800 kg/m³)</option>
+                            <option value="lead">ตะกั่ว (11300 kg/m³)</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="relative h-48 bg-sky-600/50 rounded-lg border-2 border-sky-400 overflow-hidden mb-6">
+                    <div class="absolute top-1/2 left-0 right-0 h-px bg-sky-300/50"></div>
+                    <div class="absolute" style="top: calc(50% - 2px); left: 0; right: 0; height: 4px; background: radial-gradient(ellipse at center, rgba(255,255,255,0.3) 0%,rgba(255,255,255,0) 70%);"></div>
+                    <div id="floatingObject" class="absolute left-1/2 -translate-x-1/2 w-16 h-16 bg-yellow-400 border-2 border-yellow-600 rounded-lg transition-all duration-500" style="bottom: 80px;"></div>
+                </div>
+                <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 text-center">
+                    <div class="bg-white/20 rounded-lg p-4">
+                        <p class="text-sky-900 font-semibold">น้ำหนักวัตถุ (W)</p>
+                        <p id="weightValue" class="text-white text-lg font-bold">—</p>
+                    </div>
+                    <div class="bg-white/20 rounded-lg p-4">
+                        <p class="text-sky-900 font-semibold">แรงลอยตัวสูงสุด (F<sub>B</sub>)</p>
+                        <p id="buoyancyValue" class="text-white text-lg font-bold">—</p>
+                    </div>
+                    <div class="bg-white/20 rounded-lg p-4">
+                        <p class="text-sky-900 font-semibold">สถานะ</p>
+                        <p id="floatStatus" class="text-white text-lg font-bold">—</p>
+                    </div>
+                </div>
+            </div>
+        </div>
       </div>
 
     </div>
@@ -119,5 +279,141 @@
        <p class="text-sm text-blue-300">พัฒนาโดย: นายทรงเกียรติ สวนแก้ว โรงเรียนลองวิทยา อำเภอลอง จังหวัดแพร่</p>
     </div>
   </footer>
+  <script>
+    // Pascal's Law Simulation Script
+    function updatePascal() {
+        const forceSlider = document.getElementById('forceSliderNew');
+        const asSlider = document.getElementById('asSliderNew');
+        const alSlider = document.getElementById('alSliderNew');
+        if (!forceSlider || !asSlider || !alSlider) return;
+
+        const force = parseFloat(forceSlider.value);
+        const a_small = parseFloat(asSlider.value);
+        const a_large = parseFloat(alSlider.value);
+
+        const force_out = a_small > 0 ? force * (a_large / a_small) : 0;
+        const pressure = a_small > 0 ? force / a_small : 0;
+        
+        const k_width = 2.5; 
+        const w_small_rem = k_width * Math.sqrt(a_small);
+        const w_large_rem = k_width * Math.sqrt(a_large);
+
+        const containerHeightPx = document.getElementById('smallPistonContainerNew').clientHeight;
+        const initialLiquidHeightPx = containerHeightPx / 2;
+        
+        const max_disp_px = containerHeightPx / 4;
+        const disp_small_px = (force / 100) * max_disp_px; 
+        const disp_large_px = a_large > 0 ? disp_small_px * (a_small / a_large) : 0;
+
+        document.getElementById('forceValueNew').textContent = `${force.toFixed(1)} N`;
+        document.getElementById('asValueNew').textContent = `${a_small.toFixed(1)}`;
+        document.getElementById('alValueNew').textContent = `${a_large.toFixed(1)}`;
+
+        document.getElementById('infoSmall').innerHTML = `
+            <p class="font-bold">กระบอกเล็ก</p>
+            <p>แรงเข้า: ${force.toFixed(1)} N</p>
+            <p>พื้นที่: ${a_small.toFixed(1)} m²</p>
+            <p>ความดัน: ${pressure.toFixed(2)} N/m²</p>
+            <p>ขยับ: -${(disp_small_px / 16).toFixed(2)} หน่วย</p>
+        `;
+        document.getElementById('infoLarge').innerHTML = `
+            <p class="font-bold">กระบอกใหญ่</p>
+            <p>แรงออก: ${force_out.toFixed(1)} N</p>
+            <p>พื้นที่: ${a_large.toFixed(1)} m²</p>
+            <p>ความดัน: ${pressure.toFixed(2)} N/m²</p>
+            <p>ขยับ: +${(disp_large_px / 16).toFixed(2)} หน่วย</p>
+        `;
+
+        const smallPistonContainer = document.getElementById('smallPistonContainerNew');
+        const largePistonContainer = document.getElementById('largePistonContainerNew');
+        const smallLiquid = document.getElementById('smallLiquid');
+        const largeLiquid = document.getElementById('largeLiquid');
+        const smallPiston = document.getElementById('smallPistonNew');
+        const largePiston = document.getElementById('largePistonNew');
+        
+        smallPistonContainer.style.width = `${w_small_rem}rem`;
+        largePistonContainer.style.width = `${w_large_rem}rem`;
+
+        const smallLiquidHeight = initialLiquidHeightPx - disp_small_px;
+        const largeLiquidHeight = initialLiquidHeightPx + disp_large_px;
+
+        smallLiquid.style.height = `${smallLiquidHeight}px`;
+        largeLiquid.style.height = `${largeLiquidHeight}px`;
+
+        smallPiston.style.bottom = `${smallLiquidHeight}px`;
+        largePiston.style.bottom = `${largeLiquidHeight}px`;
+    }
+    
+    function setupScales() {
+        const scaleSmall = document.getElementById('scale-small');
+        const scaleLarge = document.getElementById('scale-large');
+        if (!scaleSmall || !scaleLarge) return;
+
+        scaleSmall.innerHTML = '';
+        scaleLarge.innerHTML = '';
+
+        for (let i = 0; i <= 10; i++) {
+            scaleSmall.innerHTML += `<div><span>${i}</span> -</div>`;
+            scaleLarge.innerHTML += `<div>- <span>${i}</span></div>`;
+        }
+    }
+
+     // ===== Simulation: Hydrostatic Pressure =====
+    function updatePressure() {
+      const depthSlider = document.getElementById('depthSlider');
+      if (!depthSlider) return;
+      const depth = parseFloat(depthSlider.value || '0');
+      const P = 1000 * 9.8 * depth;
+      document.getElementById('depthValue').textContent = depth + ' m';
+      document.getElementById('pressureValue').textContent = P.toLocaleString() + ' Pa';
+      document.getElementById('waterLevel').style.height = (Math.min(10, Math.max(0, depth)) * 10) + '%';
+      document.getElementById('pressureIndicator').style.bottom = (Math.min(10, Math.max(0, depth)) * 10) + '%';
+    }
+    
+    // ===== Simulation: Buoyancy (Archimedes' Principle) =====
+    function updateBuoyancy() {
+        const materialSelect = document.getElementById('materialSelect');
+        if (!materialSelect) return;
+        
+        const densities = { wood: 600, aluminum: 2700, iron: 7800, lead: 11300 };
+        const volume = 0.001; // m³ (1 L)
+        const material = materialSelect.value || 'wood';
+        const rho_object = densities[material];
+        const rho_fluid = 1000; // kg/m³ (water)
+        const g = 9.8;
+
+        const weight = rho_object * volume * g;
+        const buoyancyForce = rho_fluid * volume * g; // Max buoyancy if fully submerged
+
+        const box = document.getElementById('floatingObject');
+        const statusEl = document.getElementById('floatStatus');
+
+        document.getElementById('weightValue').textContent = weight.toFixed(2) + ' N';
+        document.getElementById('buoyancyValue').textContent = buoyancyForce.toFixed(2) + ' N';
+
+        if (weight < buoyancyForce) {
+            // Object floats
+            const submergedRatio = rho_object / rho_fluid;
+            const containerHeight = 192; // 12rem = 192px
+            const waterLevel = containerHeight / 2;
+            const objectHeight = 64; // 4rem = 64px
+            box.style.bottom = `${waterLevel - (objectHeight * submergedRatio)}px`; 
+            statusEl.textContent = 'วัตถุลอยน้ำ! 🎈';
+            statusEl.className = 'text-white text-lg font-bold';
+        } else {
+            // Object sinks
+            box.style.bottom = '8px'; // Sits at the bottom
+            statusEl.textContent = 'วัตถุจมน้ำ! ⬇️';
+            statusEl.className = 'text-red-200 text-lg font-bold';
+        }
+    }
+    
+    document.addEventListener('DOMContentLoaded', () => {
+      updatePascal();
+      setupScales();
+      updatePressure();
+      updateBuoyancy();
+    });
+  </script>
 </body>
 </html>
