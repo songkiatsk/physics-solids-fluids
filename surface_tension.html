@@ -4,11 +4,12 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>17.2 ความตึงผิวและความหนืด</title>
-  <meta name="description" content="เนื้อหาเรื่องความตึงผิวของของเหลว และความหนืดของของไหล" />
+  <meta name="description" content="เนื้อหาและการทดลองเสมือนจริงเรื่องความตึงผิวของของเหลว และความหนืดของของไหล" />
   <meta name="theme-color" content="#5b6fe6" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@300;400;500;600;700&display=swap" rel="stylesheet">
   <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <script>
     tailwind.config = {
       theme: {
@@ -21,10 +22,45 @@
     }
   </script>
   <style>
-    body { font-family: 'Sarabun', sans-serif; }
+    body { font-family: 'Sarabun', 'sans-serif'; }
     .gradient-bg { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); }
-    .card-hover { transition: transform .25s ease, box-shadow .25s ease; }
-    .card-hover:hover { transform: translateY(-6px); box-shadow: 0 20px 40px rgba(0, 0, 0, .12); }
+    input[type="range"] {
+        -webkit-appearance: none; appearance: none;
+        width: 100%; height: 8px;
+        background: #d1d5db; border-radius: 5px;
+        outline: none; opacity: 0.7;
+        transition: opacity .2s;
+    }
+    input[type="range"]:hover { opacity: 1; }
+    input[type="range"]::-webkit-slider-thumb {
+        -webkit-appearance: none; appearance: none;
+        width: 20px; height: 20px;
+        background: #10b981; cursor: pointer;
+        border-radius: 50%;
+    }
+    input[type="range"]::-moz-range-thumb {
+        width: 20px; height: 20px;
+        background: #10b981; cursor: pointer;
+        border-radius: 50%;
+    }
+    input[type=number]::-webkit-inner-spin-button, 
+    input[type=number]::-webkit-outer-spin-button { 
+      -webkit-appearance: none; 
+      margin: 0; 
+    }
+    input[type=number] {
+      -moz-appearance: textfield;
+    }
+    .control-btn {
+        transition: all 0.2s ease-in-out;
+    }
+    .control-btn-active {
+        transform: translateY(-2px);
+        box-shadow: 0 4px 6px rgba(16, 185, 129, 0.4);
+        background-color: #10b981;
+        color: white;
+        border-color: #059669;
+    }
   </style>
 </head>
 <body class="bg-gray-100 text-gray-900">
@@ -41,106 +77,88 @@
     </div>
   </nav>
 
-  <main class="container mx-auto px-4 py-12">
-    <div class="max-w-3xl mx-auto bg-white p-8 rounded-lg shadow-lg space-y-12">
+  <main class="container mx-auto px-4 py-8 sm:py-12">
+    <div class="max-w-4xl mx-auto bg-white p-4 sm:p-8 rounded-lg shadow-lg space-y-12">
       
       <!-- Section 1 -->
       <div>
         <h2 class="text-3xl font-bold text-green-700 mb-6">17.2.1 ความตึงผิวของของเหลว</h2>
         <p class="mb-4">
-          **ความตึงผิว (Surface Tension, γ)** เป็นสมบัติของผิวของเหลวที่พยายามจะยึดผิวหน้าไว้ให้มีพื้นที่น้อยที่สุด เกิดจากแรงยึดเหนี่ยวระหว่างโมเลกุลของของเหลว (Cohesive force) ที่ผิวหน้า ทำให้ผิวของเหลวมีลักษณะคล้ายแผ่นยางยืดบางๆ
-        </p>
-        <p class="mb-4">
-          ความตึงผิวคืออัตราส่วนของแรงที่กระทำขนานกับผิวของเหลว (F) ต่อความยาว (L) ของขอบที่ของเหลวสัมผัส
+          <strong>ความตึงผิว (Surface Tension, γ)</strong> เป็นสมบัติของผิวของเหลวที่พยายามจะยึดผิวหน้าไว้ให้มีพื้นที่น้อยที่สุด เกิดจากแรงยึดเหนี่ยวระหว่างโมเลกุลของของเหลว (Cohesive force) ที่ผิวหน้า ทำให้ผิวของเหลวมีลักษณะคล้ายแผ่นยางยืดบางๆ
         </p>
         <div class="mt-2 bg-gray-100 p-4 rounded-lg text-center font-mono text-lg">
           γ = F / L
         </div>
-         <div class="mt-4 text-sm text-gray-700 bg-gray-50 p-4 rounded-lg">
-          <h4 class="font-semibold mb-2">โดยที่:</h4>
-          <ul class="list-disc list-inside space-y-1">
-            <li><b>γ</b> (gamma) คือ ความตึงผิว (N/m)</li>
-            <li><b>F</b> คือ แรงตึงผิว (N)</li>
-            <li><b>L</b> คือ ความยาวของผิวของเหลวที่สัมผัสกับวัตถุ (m)</li>
-          </ul>
-        </div>
       </div>
+
+      <hr class="my-8">
 
       <!-- Section 2 -->
       <div>
-        <h2 class="text-3xl font-bold text-green-700 mb-6">17.2.2 ความหนืดของของเหลว</h2>
+        <h2 class="text-3xl font-bold text-green-700 mb-6">17.2.2 ความหนืดและกฎของสโตกส์</h2>
         <p class="mb-4">
-          **ความหนืด (Viscosity, η)** คือสมบัติของของไหลที่ต้านทานการไหลหรือการเคลื่อนที่ เกิดจากแรงเสียดทานภายในระหว่างชั้นของของไหล ของไหลที่มีความหนืดสูงจะไหลได้ช้ากว่าของไหลที่มีความหนืดต่ำ
-        </p>
-        <p class="mb-4">
-          เมื่อวัตถุทรงกลมรัศมี r เคลื่อนที่ในของไหลด้วยอัตราเร็ว v จะเกิดแรงต้านเนื่องจากความหนืด เรียกว่า **แรงหนืด** ซึ่งหาได้จาก **กฎของสโตกส์ (Stoke's Law)**
+          <strong>ความหนืด (Viscosity, η)</strong> คือสมบัติของของไหลที่ต้านทานการไหล เกิดจากแรงเสียดทานภายในระหว่างชั้นของของไหล เมื่อวัตถุทรงกลมรัศมี r เคลื่อนที่ในของไหล จะเกิดแรงต้านเนื่องจากความหนืด เรียกว่า **แรงหนืด (Fₛ)** ซึ่งหาได้จาก **กฎของสโตกส์ (Stoke's Law)**
         </p>
         <div class="mt-2 bg-gray-100 p-4 rounded-lg text-center font-mono text-lg">
-          F = 6πηrv
-        </div>
-        <div class="mt-4 text-sm text-gray-700 bg-gray-50 p-4 rounded-lg">
-          <h4 class="font-semibold mb-2">โดยที่:</h4>
-          <ul class="list-disc list-inside space-y-1">
-            <li><b>F</b> คือ แรงหนืด (N)</li>
-            <li><b>η</b> (eta) คือ สัมประสิทธิ์ความหนืด (Pa·s)</li>
-            <li><b>r</b> คือ รัศมีของวัตถุทรงกลม (m)</li>
-            <li><b>v</b> คือ อัตราเร็วของวัตถุเทียบกับของไหล (m/s)</li>
-          </ul>
+          Fₛ = 6πηrv
         </div>
       </div>
 
-      <!-- Example Calculation -->
-      <div class="mt-12">
-        <h3 class="text-2xl font-bold text-center mb-6">🧮 ตัวอย่างการคำนวณ</h3>
-        <div class="bg-white border border-gray-200 rounded-lg shadow-md p-8">
-          <h4 class="text-xl font-semibold mb-4 text-gray-800">ตัวอย่าง: แรงหนืด</h4>
-          <div class="bg-blue-50 p-6 rounded-lg mb-4">
-            <p class="font-semibold mb-2">โจทย์:</p>
-            <p>หยดน้ำมันทรงกลมรัศมี 0.2 มิลลิเมตร กำลังเคลื่อนที่ลงในอากาศด้วยอัตราเร็วคงตัว 0.5 เมตรต่อวินาที จงหาขนาดของแรงหนืดของอากาศที่กระทำต่อหยดน้ำมัน (กำหนดให้สัมประสิทธิ์ความหนืดของอากาศ η = 1.8 × 10⁻⁵ Pa·s)</p>
-          </div>
-          <div class="space-y-3">
-            <p><strong>วิธีทำ:</strong> จากกฎของสโตกส์ F = 6πηrv</p>
-            <p>แปลงหน่วยรัศมี: r = 0.2 mm = 0.2 × 10⁻³ m</p>
-            <p>แทนค่า: F = 6π(1.8 × 10⁻⁵ Pa·s)(0.2 × 10⁻³ m)(0.5 m/s)</p>
-            <p>F ≈ 3.39 × 10⁻⁸ N</p>
-            <div class="bg-green-50 p-4 rounded-lg mt-4"><p class="font-semibold text-green-800">คำตอบ: แรงหนืดของอากาศที่กระทำต่อหยดน้ำมันมีค่าประมาณ 3.39 × 10⁻⁸ นิวตัน</p></div>
-          </div>
-        </div>
-      </div>
-
-      <!-- Simulations -->
-       <div class="mt-12">
-        <h3 class="text-2xl font-bold text-center mb-6">🔬 การทดลองเสมือน</h3>
-        <div class="bg-white border border-gray-200 rounded-lg shadow-md p-8">
-            <h4 class="text-xl font-semibold mb-6 text-green-700">การทดลอง: กฎของสโตกส์</h4>
-            <div class="bg-gray-100 rounded-lg p-6">
-              <!-- Sliders -->
-              <div class="space-y-4 mb-6">
-                <div>
-                  <label for="viscositySlider" class="block text-sm font-medium text-gray-700">ความหนืด (η): <span id="viscosityValue" class="font-bold text-green-600">1.0</span> x10⁻³ Pa·s</label>
-                  <input type="range" id="viscositySlider" min="1" max="100" value="10" class="w-full" oninput="updateStoke()">
-                </div>
-                <div>
-                  <label for="radiusSlider" class="block text-sm font-medium text-gray-700">รัศมี (r): <span id="radiusValue" class="font-bold text-green-600">5.0</span> mm</label>
-                  <input type="range" id="radiusSlider" min="1" max="20" value="5" class="w-full" oninput="updateStoke()">
-                </div>
-                <div>
-                  <label for="velocitySlider" class="block text-sm font-medium text-gray-700">อัตราเร็ว (v): <span id="velocityValue" class="font-bold text-green-600">1.0</span> m/s</label>
-                  <input type="range" id="velocitySlider" min="1" max="100" value="10" class="w-full" oninput="updateStoke()">
-                </div>
-              </div>
-          
-              <!-- Visual Simulation Area -->
-              <div class="relative w-full h-80 bg-blue-200 rounded-lg overflow-hidden p-4 flex justify-center items-center">
-                  <div class="text-center">
-                      <div id="sphere" class="w-10 h-10 bg-red-500 rounded-full mx-auto transition-all duration-200" style="width: 50px; height: 50px;"></div>
-                      <div class="mt-8 bg-white/70 p-4 rounded-lg">
-                          <p class="font-semibold">แรงหนืดคำนวณได้ (F):</p>
-                          <p id="stokeForceValue" class="text-2xl font-bold text-green-800">0.00 N</p>
+      <!-- SIMULATION: Stokes' Law -->
+      <div class="mt-8 bg-white border border-gray-200 rounded-lg shadow-md p-4 sm:p-6">
+          <h4 class="text-xl font-semibold mb-6 text-green-600">🔬 การทดลอง: กฎของสโตกส์และอัตราเร็วปลาย</h4>
+          <div class="flex flex-col lg:flex-row lg:gap-6">
+              <!-- Controls -->
+              <div class="lg:w-1/3 lg:order-2 bg-white p-4 sm:p-6 rounded-xl shadow-inner mb-6 lg:mb-0">
+                  <div class="space-y-4">
+                      <div>
+                          <label class="font-medium text-sm mb-2 block">เลือกของไหล</label>
+                          <div id="fluidButtons" class="grid grid-cols-2 gap-2 text-center text-sm">
+                              <button data-viscosity="0.001" data-density="1000" class="control-btn p-2 rounded-lg bg-gray-200 control-btn-active border">น้ำ</button>
+                              <button data-viscosity="0.010" data-density="910" class="control-btn p-2 rounded-lg bg-gray-200 border">น้ำมันเครื่อง</button>
+                              <button data-viscosity="1.48" data-density="1260" class="control-btn p-2 rounded-lg bg-gray-200 border">กลีเซอรีน</button>
+                              <button data-viscosity="10.0" data-density="1420" class="control-btn p-2 rounded-lg bg-gray-200 border">น้ำผึ้ง</button>
+                          </div>
+                      </div>
+                       <div>
+                          <label class="font-medium text-sm mb-2 block">เลือกวัตถุ</label>
+                          <div id="objectButtons" class="grid grid-cols-2 gap-2 text-center text-sm">
+                              <button data-density="2500" class="control-btn p-2 rounded-lg bg-gray-200 control-btn-active border">ลูกแก้ว</button>
+                              <button data-density="7850" class="control-btn p-2 rounded-lg bg-gray-200 border">ลูกเหล็ก</button>
+                          </div>
+                      </div>
+                      <div>
+                          <label for="radiusSlider" class="font-medium text-sm mb-1 block">รัศมีวัตถุ (r)</label>
+                          <div class="flex items-center gap-2">
+                              <input type="range" id="radiusSlider" min="1" max="20" value="5" step="0.5" class="flex-grow">
+                              <input type="number" id="radiusNumber" min="1" max="20" value="5" step="0.1" class="w-20 text-center border rounded-md p-1 bg-green-50">
+                              <span class="text-xs text-gray-500">mm</span>
+                          </div>
+                      </div>
+                  </div>
+                  <hr class="my-6">
+                  <div class="text-center p-3 bg-green-50 rounded-lg">
+                      <h4 class="font-bold text-green-700">ผลลัพธ์: อัตราเร็วปลาย (vₜ)</h4>
+                      <p id="terminalVelocityDisplay" class="font-semibold text-2xl mt-1">0.00 m/s</p>
+                      <p id="stokesForceDisplay" class="text-xs mt-1">แรงหนืด (Fₛ): 0.00 N</p>
+                  </div>
+                  <div class="mt-6 space-y-2">
+                      <button id="calculateStokesBtn" class="w-full text-center py-3 bg-green-500 hover:bg-green-600 text-white font-bold rounded-lg transition text-base">คำนวณและบันทึกผล</button>
+                      <div class="flex gap-2">
+                          <button id="clearStokesGraphBtn" class="w-1/2 text-center py-2 bg-yellow-400 hover:bg-yellow-500 text-yellow-800 font-bold rounded-lg transition text-sm">ล้างกราฟ</button>
+                          <button id="exportStokesCsvBtn" class="w-1/2 text-center py-2 bg-green-500 hover:bg-green-600 text-white font-bold rounded-lg transition text-sm">ส่งออก CSV</button>
                       </div>
                   </div>
               </div>
-            </div>
+              <!-- Visuals -->
+              <div class="lg:w-2/3 lg:order-1 space-y-4 lg:space-y-6">
+                  <div class="w-full flex items-center justify-center bg-white p-4 rounded-xl shadow-inner h-72 sm:h-80 lg:min-h-[350px]">
+                      <canvas id="viscosityCanvas"></canvas>
+                  </div>
+                  <div class="w-full bg-white p-2 sm:p-4 rounded-xl shadow-inner h-64 sm:h-72">
+                      <canvas id="viscosityChart"></canvas>
+                  </div>
+              </div>
           </div>
       </div>
 
@@ -153,31 +171,272 @@
        <p class="text-sm text-blue-300">พัฒนาโดย: นายทรงเกียรติ สวนแก้ว โรงเรียนลองวิทยา อำเภอลอง จังหวัดแพร่</p>
     </div>
   </footer>
+
   <script>
-    function updateStoke() {
-        const eta_slider = document.getElementById('viscositySlider').value;
-        const r_slider = document.getElementById('radiusSlider').value;
-        const v_slider = document.getElementById('velocitySlider').value;
-
-        const eta = eta_slider * 0.1 * 1e-3; // Scale to Pa.s
-        const r = r_slider * 1e-3; // Scale to m
-        const v = v_slider * 0.1; // Scale to m/s
-
-        document.getElementById('viscosityValue').textContent = (eta_slider * 0.1).toFixed(1);
-        document.getElementById('radiusValue').textContent = r_slider;
-        document.getElementById('velocityValue').textContent = v.toFixed(1);
-
-        const force = 6 * Math.PI * eta * r * v;
-        document.getElementById('stokeForceValue').textContent = `${force.toExponential(2)} N`;
-
-        const sphere = document.getElementById('sphere');
-        const size = 20 + (r_slider * 2); // Visual size for sphere
-        sphere.style.width = `${size}px`;
-        sphere.style.height = `${size}px`;
-    }
-
     document.addEventListener('DOMContentLoaded', () => {
-      updateStoke();
+        const GRAVITY = 9.81;
+        let stokesExperimentData = [];
+        let stokesChart;
+        let animationFrameId;
+        let sphereState = { y: 0, v: 0, startY: 0 };
+
+        // --- Utility Functions ---
+        function exportToCSV(filename, headers, data) {
+            const rows = data.map(d => Object.values(d).join(','));
+            const csvString = headers.join(',') + "\n" + rows.join("\n");
+            const bom = '\uFEFF';
+            const blob = new Blob([bom + csvString], { type: 'text/csv;charset=utf-8;' });
+            const url = URL.createObjectURL(blob);
+            const link = document.createElement("a");
+            link.setAttribute("href", url);
+            link.setAttribute("download", filename);
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+            URL.revokeObjectURL(url);
+        }
+
+        function drawArrow(ctx, fromx, fromy, len, angle, color, label) {
+            const tox = fromx + len * Math.cos(angle);
+            const toy = fromy + len * Math.sin(angle);
+            const headlen = 10;
+            const dx = tox - fromx;
+            const dy = toy - fromy;
+            const arrowAngle = Math.atan2(dy, dx);
+            ctx.strokeStyle = color;
+            ctx.fillStyle = color;
+            ctx.lineWidth = 3;
+            ctx.beginPath();
+            ctx.moveTo(fromx, fromy);
+            ctx.lineTo(tox, toy);
+            ctx.stroke();
+            ctx.beginPath();
+            ctx.moveTo(tox, toy);
+            ctx.lineTo(tox - headlen * Math.cos(arrowAngle - Math.PI / 6), toy - headlen * Math.sin(arrowAngle - Math.PI / 6));
+            ctx.lineTo(tox - headlen * Math.cos(arrowAngle + Math.PI / 6), toy - headlen * Math.sin(arrowAngle + Math.PI / 6));
+            ctx.closePath();
+            ctx.fill();
+            if (label) {
+                ctx.fillStyle = '#1f2937';
+                ctx.font = 'bold 14px Sarabun';
+                ctx.textAlign = 'center';
+                const isUpArrow = Math.sin(angle) < 0;
+                ctx.fillText(label, tox, toy + (isUpArrow ? -15 : 20));
+            }
+        }
+        
+        function linkSliderAndNumber(sliderId, numberId) {
+            const slider = document.getElementById(sliderId);
+            const number = document.getElementById(numberId);
+            if(!slider || !number) return;
+            slider.addEventListener('input', () => number.value = slider.value);
+            number.addEventListener('input', () => slider.value = number.value);
+        }
+
+        // --- Simulation Logic ---
+        const stokesSim = {
+            canvas: document.getElementById('viscosityCanvas'),
+            chartCanvas: document.getElementById('viscosityChart'),
+            fluidButtons: document.getElementById('fluidButtons'),
+            objectButtons: document.getElementById('objectButtons'),
+            radiusSlider: document.getElementById('radiusSlider'),
+            radiusNumber: document.getElementById('radiusNumber'),
+            velocityDisplay: document.getElementById('terminalVelocityDisplay'),
+            forceDisplay: document.getElementById('stokesForceDisplay'),
+            calculateBtn: document.getElementById('calculateStokesBtn'),
+            clearBtn: document.getElementById('clearStokesGraphBtn'),
+            exportBtn: document.getElementById('exportStokesCsvBtn'),
+        };
+        let activeFluidBtn = stokesSim.fluidButtons.querySelector('.control-btn-active');
+        let activeObjectBtn = stokesSim.objectButtons.querySelector('.control-btn-active');
+
+        function initializeStokesSim() {
+            if (!stokesSim.canvas) return;
+            linkSliderAndNumber('radiusSlider', 'radiusNumber');
+            const chartCtx = stokesSim.chartCanvas.getContext('2d');
+            stokesChart = new Chart(chartCtx, {
+                type: 'scatter',
+                data: { datasets: [{
+                    label: 'ข้อมูลการทดลอง', data: [],
+                    backgroundColor: 'rgba(16, 185, 129, 0.6)',
+                }] },
+                options: {
+                    responsive: true, maintainAspectRatio: false,
+                    plugins: {
+                        title: { display: true, text: 'ความสัมพันธ์ระหว่าง อัตราเร็วปลาย (vₜ) และ รัศมี² (r²)', font: { size: 14, family: "'Sarabun', sans-serif" } }
+                    },
+                    scales: {
+                        x: { type: 'linear', position: 'bottom', title: { display: true, text: 'รัศมี² (r²) [mm²]' }, min: 0 },
+                        y: { title: { display: true, text: 'อัตราเร็วปลาย (vₜ) [m/s]' }, min: 0 }
+                    }
+                }
+            });
+            updateStokesSim(false);
+        }
+
+        function drawStokesSim() {
+            if (!stokesSim.canvas.getContext) return;
+            const ctx = stokesSim.canvas.getContext('2d');
+            const W = stokesSim.canvas.width = stokesSim.canvas.parentElement.clientWidth;
+            const H = stokesSim.canvas.height = stokesSim.canvas.parentElement.clientHeight;
+            const {eta, rho_f} = getFluidProperties();
+            const r = parseFloat(stokesSim.radiusSlider.value) / 1000;
+            
+            ctx.clearRect(0, 0, W, H);
+
+            // Draw fluid container
+            const fluidColor = `rgba(107, 114, 128, ${0.1 + (eta / 12) * 0.4})`;
+            const containerWidth = W * 0.6;
+            const containerX = (W - containerWidth) / 2;
+            ctx.fillStyle = fluidColor;
+            ctx.fillRect(containerX, 0, containerWidth, H);
+            ctx.strokeStyle = '#4b5563';
+            ctx.lineWidth = 4;
+            ctx.strokeRect(containerX, 0, containerWidth, H);
+
+            // Draw sphere
+            const sphereRadiusPixels = 10 + (r * 1000 - 1) * 2;
+            sphereState.startY = sphereRadiusPixels + 5;
+            const sphereX = W / 2;
+            
+            ctx.fillStyle = '#ef4444';
+            ctx.beginPath();
+            ctx.arc(sphereX, sphereState.y, sphereRadiusPixels, 0, 2 * Math.PI);
+            ctx.fill();
+
+            // Draw forces
+            const {rho_obj} = getObjectProperties();
+            const volume = 4/3 * Math.PI * r**3;
+            const Fg = rho_obj * volume * GRAVITY;
+            const Fb = rho_f * volume * GRAVITY;
+            const Fs = 6 * Math.PI * eta * r * sphereState.v;
+
+            const maxForce = Fg * 1.1;
+            const arrowScale = H / (maxForce * 4);
+
+            drawArrow(ctx, sphereX, sphereState.y, Fg * arrowScale, Math.PI/2, '#16a34a', 'W');
+            drawArrow(ctx, sphereX, sphereState.y, Fb * arrowScale, -Math.PI/2, '#3b82f6', 'Fʙ');
+            drawArrow(ctx, sphereX, sphereState.y, Fs * arrowScale, -Math.PI/2, '#d97706', 'Fₛ');
+        }
+
+        function animateStokes(terminalVelocity, onFinish) {
+            if (animationFrameId) cancelAnimationFrame(animationFrameId);
+            
+            const H = stokesSim.canvas.height;
+            const start = performance.now();
+            
+            function step(timestamp) {
+                const elapsed = timestamp - start;
+                const timeScale = 0.05;
+                const vt_scaled = terminalVelocity * timeScale * 100;
+
+                sphereState.v = vt_scaled * (1 - Math.exp(-0.005 * elapsed)); // Approach vt
+                sphereState.y += sphereState.v * 0.1; // dt
+                
+                drawStokesSim();
+                
+                if (sphereState.y < H + 50) {
+                   animationFrameId = requestAnimationFrame(step);
+                } else {
+                    if (onFinish) onFinish();
+                }
+            }
+            animationFrameId = requestAnimationFrame(step);
+        }
+
+        function getFluidProperties() {
+            return {
+                name: activeFluidBtn.textContent,
+                eta: parseFloat(activeFluidBtn.dataset.viscosity),
+                rho_f: parseFloat(activeFluidBtn.dataset.density)
+            };
+        }
+
+        function getObjectProperties() {
+            return {
+                name: activeObjectBtn.textContent,
+                rho_obj: parseFloat(activeObjectBtn.dataset.density)
+            };
+        }
+        
+        function updateStokesSim(runAnimation = true) {
+            if (!stokesSim.radiusSlider) return;
+            
+            const {eta, rho_f} = getFluidProperties();
+            const {rho_obj} = getObjectProperties();
+            const r = parseFloat(stokesSim.radiusSlider.value) / 1000;
+
+            const terminalVelocity = (2 * GRAVITY * r**2 * (rho_obj - rho_f)) / (9 * eta);
+            const stokesForce = 6 * Math.PI * eta * r * terminalVelocity;
+
+            stokesSim.velocityDisplay.textContent = `${terminalVelocity > 0 ? terminalVelocity.toFixed(3) : '0.000'} m/s`;
+            stokesSim.forceDisplay.textContent = `แรงหนืด (Fₛ): ${stokesForce > 0 ? stokesForce.toExponential(2) : '0.00'} N`;
+            
+            if (runAnimation) {
+                sphereState = { y: 25, v: 0, startY: 25 };
+                animateStokes(terminalVelocity);
+            } else {
+                 sphereState = { y: 25, v: 0, startY: 25 };
+                 drawStokesSim();
+            }
+        }
+
+        function logStokesData() {
+            const {name: fluidName, eta, rho_f} = getFluidProperties();
+            const {name: objName, rho_obj} = getObjectProperties();
+            const r_mm = parseFloat(stokesSim.radiusSlider.value);
+            const r_m = r_mm / 1000;
+            const terminalVelocity = (2 * GRAVITY * r_m**2 * (rho_obj - rho_f)) / (9 * eta);
+
+            if (terminalVelocity > 0) {
+                 const dataPoint = {
+                    fluidName, objName, radius_mm: r_mm,
+                    radius_sq_mm: r_mm**2, terminalVelocity
+                };
+                stokesExperimentData.push(dataPoint);
+                stokesChart.data.datasets[0].data.push({ x: dataPoint.radius_sq_mm, y: dataPoint.terminalVelocity });
+                stokesChart.update();
+            }
+            updateStokesSim(true);
+        }
+
+        // --- Event Listeners ---
+        stokesSim.fluidButtons.querySelectorAll('.control-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                activeFluidBtn.classList.remove('control-btn-active');
+                btn.classList.add('control-btn-active');
+                activeFluidBtn = btn;
+                updateStokesSim(true);
+            });
+        });
+
+        stokesSim.objectButtons.querySelectorAll('.control-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                activeObjectBtn.classList.remove('control-btn-active');
+                btn.classList.add('control-btn-active');
+                activeObjectBtn = btn;
+                updateStokesSim(true);
+            });
+        });
+
+        ['input'].forEach(evt => {
+            stokesSim.radiusSlider.addEventListener(evt, () => updateStokesSim(false));
+            stokesSim.radiusNumber.addEventListener(evt, () => updateStokesSim(false));
+        });
+        stokesSim.calculateBtn.addEventListener('click', logStokesData);
+
+        stokesSim.clearBtn.addEventListener('click', () => {
+            stokesExperimentData = [];
+            stokesChart.data.datasets[0].data = [];
+            stokesChart.update();
+        });
+
+        stokesSim.exportBtn.addEventListener('click', () => {
+            const headers = ['ของไหล', 'วัตถุ', 'รัศมี (mm)', 'รัศมี² (mm²)', 'อัตราเร็วปลาย (m/s)'];
+            exportToCSV('stokes_law_data.csv', headers, stokesExperimentData);
+        });
+        
+        initializeStokesSim();
     });
   </script>
 </body>
