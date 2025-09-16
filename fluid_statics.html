@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>17.3 ของไหลสถิต (ฉบับสมบูรณ์)</title>
-  <meta name="description" content="เนื้อหาและการทดลองเสมือนจริงเรื่องความดันในของไหล, หลักของพาสคัล, และหลักของอาร์คิมีดีส" />
+  <meta name="description" content="เนื้อหาและการทดลองเสมือนจริงเรื่องความดันในของไหล, กฎของพาสคัล, และหลักของอาร์คิมีดีส" />
   <meta name="theme-color" content="#5b6fe6" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@300;400;500;600;700&display=swap" rel="stylesheet">
@@ -22,10 +22,8 @@
     }
   </script>
   <style>
-    body { font-family: 'Sarabun', sans-serif; }
+    body { font-family: 'Sarabun', 'sans-serif'; }
     .gradient-bg { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); }
-    .card-hover { transition: transform .25s ease, box-shadow .25s ease; }
-    .card-hover:hover { transform: translateY(-6px); box-shadow: 0 20px 40px rgba(0, 0, 0, .12); }
     input[type="range"] {
         -webkit-appearance: none; appearance: none;
         width: 100%; height: 8px;
@@ -81,16 +79,25 @@
   <main class="container mx-auto px-4 py-8 sm:py-12">
     <div class="max-w-4xl mx-auto bg-white p-4 sm:p-8 rounded-lg shadow-lg space-y-12">
       
+      <!-- Student Info Section -->
+      <div class="bg-blue-50 border-l-4 border-blue-500 p-4 rounded-r-lg">
+          <h3 class="font-bold text-blue-800">ข้อมูลสำหรับใบงาน</h3>
+          <p class="text-sm text-blue-700 mb-4">กรุณากรอกข้อมูลด้านล่างนี้ก่อนสร้างใบงานสรุปผล</p>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div>
+                  <label for="studentName" class="block text-sm font-medium text-gray-700">ชื่อ - สกุล</label>
+                  <input type="text" id="studentName" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500" placeholder="นายฟิสิกส์ รักการเรียน">
+              </div>
+              <div>
+                  <label for="studentClass" class="block text-sm font-medium text-gray-700">ชั้น / เลขที่</label>
+                  <input type="text" id="studentClass" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500" placeholder="ม.6/1 เลขที่ 99">
+              </div>
+          </div>
+      </div>
+
       <!-- Section 1: Fluid Pressure -->
       <div>
         <h2 class="text-3xl font-bold text-purple-700 mb-6">17.3.1 ความดันในของไหล</h2>
-        <p class="mb-4">
-          <strong>ความดัน (Pressure, P)</strong> คือแรงที่กระทำตั้งฉากต่อหนึ่งหน่วยพื้นที่ (P = F/A) สำหรับของไหลที่อยู่นิ่ง ความดัน ณ จุดใดๆ จะขึ้นอยู่กับความลึก (h) และความหนาแน่นของของไหล (ρ)
-        </p>
-        <div class="mt-2 bg-gray-100 p-4 rounded-lg text-center font-mono text-lg">
-          P<sub>เกจ</sub> = ρgh
-        </div>
-        <!-- SIMULATION: Fluid Pressure -->
         <div class="mt-8 bg-white border border-gray-200 rounded-lg shadow-md p-4 sm:p-6">
             <h4 class="text-xl font-semibold mb-6 text-blue-600">🔬 การทดลอง: ความดันในของไหล</h4>
             <div class="flex flex-col lg:flex-row lg:gap-6">
@@ -125,6 +132,7 @@
                             <button id="clearPressureGraphBtn" class="w-1/2 text-center py-2 bg-yellow-400 hover:bg-yellow-500 text-yellow-800 font-bold rounded-lg transition text-sm">ล้างกราฟ</button>
                             <button id="exportPressureCsvBtn" class="w-1/2 text-center py-2 bg-green-500 hover:bg-green-600 text-white font-bold rounded-lg transition text-sm">ส่งออก CSV</button>
                         </div>
+                         <button id="generatePressureReportBtn" class="w-full text-center py-2 bg-purple-500 hover:bg-purple-600 text-white font-bold rounded-lg transition text-sm mt-2">ผลการทดลอง (PDF)</button>
                     </div>
                 </div>
                 <!-- Visuals -->
@@ -144,13 +152,7 @@
 
       <!-- Section 2: Pascal's Principle -->
       <div>
-        <h2 class="text-3xl font-bold text-purple-700 mb-6">หลักของพาสคัล</h2>
-        <p class="mb-4">
-          "เมื่อเพิ่มความดันให้แก่ของไหลที่อยู่นิ่งในภาชนะปิด ความดันส่วนที่เพิ่มขึ้นนั้นจะถูกส่งผ่านไปยังทุกๆ จุดในของไหลและผนังของภาชนะอย่างทั่วถึงและเท่ากัน"
-        </p>
-        <div class="mt-2 bg-gray-100 p-4 rounded-lg text-center font-mono text-lg">
-          F/a = W/A
-        </div>
+        <h2 class="text-3xl font-bold text-purple-700 mb-6">กฎของพาสคัล</h2>
         <!-- SIMULATION: Pascal's Law -->
         <div class="mt-8 bg-white border border-gray-200 rounded-lg shadow-md p-4 sm:p-6">
             <h4 class="text-xl font-semibold mb-6 text-blue-600">🔬 การทดลอง: กฎของพาสคัล</h4>
@@ -211,6 +213,7 @@
                             <button id="clearPascalGraphBtn" class="w-1/2 text-center py-2 bg-yellow-400 hover:bg-yellow-500 text-yellow-800 font-bold rounded-lg transition text-sm">ล้างกราฟ</button>
                             <button id="exportPascalCsvBtn" class="w-1/2 text-center py-2 bg-green-500 hover:bg-green-600 text-white font-bold rounded-lg transition text-sm">ส่งออก CSV</button>
                         </div>
+                        <button id="generatePascalReportBtn" class="w-full text-center py-2 bg-purple-500 hover:bg-purple-600 text-white font-bold rounded-lg transition text-sm mt-2">ผลการทดลอง (PDF)</button>
                     </div>
                 </div>
                 <!-- Visuals -->
@@ -231,12 +234,6 @@
       <!-- Section 3: Buoyancy -->
       <div>
         <h2 class="text-3xl font-bold text-purple-700 mb-6">17.3.3 แรงพยุงและหลักของอาร์คิมีดีส</h2>
-        <p class="mb-4">
-          <strong>หลักของอาร์คิมีดีส</strong> กล่าวว่า "วัตถุที่จมในของไหลทั้งก้อนหรือจมเพียงบางส่วน จะถูกแรงพยุง (Buoyant force) กระทำ ซึ่งมีขนาดเท่ากับน้ำหนักของของไหลที่ถูกวัตถุนั้นแทนที่"
-        </p>
-        <div class="mt-2 bg-gray-100 p-4 rounded-lg text-center font-mono text-lg">
-          F<sub>B</sub> = ρ<sub>ของไหล</sub> V<sub>จม</sub> g
-        </div>
         <!-- SIMULATION: Buoyancy -->
         <div class="mt-8 bg-white border border-gray-200 rounded-lg shadow-md p-4 sm:p-6">
             <h4 class="text-xl font-semibold mb-6 text-green-600">🔬 การทดลอง: แรงลอยตัว</h4>
@@ -271,6 +268,7 @@
                            <button id="clearBuoyancyGraphBtn" class="w-1/2 text-center py-2 bg-yellow-400 hover:bg-yellow-500 text-yellow-800 font-bold rounded-lg transition text-sm">ล้างกราฟ</button>
                            <button id="exportBuoyancyCsvBtn" class="w-1/2 text-center py-2 bg-green-500 hover:bg-green-600 text-white font-bold rounded-lg transition text-sm">ส่งออก CSV</button>
                         </div>
+                        <button id="generateBuoyancyReportBtn" class="w-full text-center py-2 bg-purple-500 hover:bg-purple-600 text-white font-bold rounded-lg transition text-sm mt-2">ผลการทดลอง (PDF)</button>
                     </div>
                 </div>
                 <!-- Visuals -->
@@ -309,7 +307,7 @@
         // --- Utility Functions ---
         function exportToCSV(filename, headers, data) {
             const rows = data.map(d => d.join(','));
-            const csvString = headers + "\n" + rows.join("\n");
+            const csvString = headers.join(',') + "\n" + rows.join("\n");
             const bom = '\uFEFF';
             const blob = new Blob([bom + csvString], { type: 'text/csv;charset=utf-8;' });
             const url = URL.createObjectURL(blob);
@@ -320,6 +318,60 @@
             link.click();
             document.body.removeChild(link);
             URL.revokeObjectURL(url);
+        }
+
+        function generateReport(title, headers, data, chartInstance) {
+            const studentName = document.getElementById('studentName').value || '........................................................';
+            const studentClass = document.getElementById('studentClass').value || '................................';
+            const graphImage = chartInstance.toBase64Image();
+
+            const tableRows = data.map(row => `<tr>${row.map(cell => `<td class="border px-4 py-2 text-center">${typeof cell === 'number' ? cell.toFixed(2) : cell}</td>`).join('')}</tr>`).join('');
+            
+            const reportHtml = `
+                <!DOCTYPE html>
+                <html lang="th"><head><meta charset="UTF-8"><title>ผลการทดลอง: ${title}</title>
+                <script src="https://cdn.tailwindcss.com"><\/script>
+                <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@400;700&display=swap" rel="stylesheet">
+                <style>
+                    body { font-family: 'Sarabun', sans-serif; }
+                    textarea { background-color: #f9fafb; border-color: #d1d5db; resize: vertical;}
+                    @media print {
+                        body { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+                        .no-print { display: none; }
+                        textarea { border: 1px solid #d1d5db !important; }
+                    }
+                </style>
+                </head>
+                <body class="bg-gray-100 p-8">
+                    <div class="max-w-4xl mx-auto bg-white p-10 rounded-lg shadow-lg">
+                        <div class="text-center mb-8">
+                            <h1 class="text-2xl font-bold">ผลการทดลอง</h1>
+                            <h2 class="text-xl">${title}</h2>
+                        </div>
+                        <div class="flex justify-between mb-6">
+                            <p><strong>ชื่อ-สกุล:</strong> ${studentName}</p>
+                            <p><strong>ชั้น/เลขที่:</strong> ${studentClass}</p>
+                        </div>
+                        <h3 class="text-lg font-bold mt-8 mb-2">ตารางบันทึกผลการทดลอง</h3>
+                        <table class="w-full text-sm text-left text-gray-500">
+                            <thead class="text-xs text-gray-700 uppercase bg-gray-50"><tr>${headers.map(h => `<th class="px-4 py-2 border text-center">${h}</th>`).join('')}</tr></thead>
+                            <tbody>${tableRows}</tbody>
+                        </table>
+                        <h3 class="text-lg font-bold mt-8 mb-2">กราฟแสดงผลการทดลอง</h3>
+                        <div class="text-center border p-4 rounded-lg">
+                            <img src="${graphImage}" alt="Graph Image" class="mx-auto">
+                        </div>
+                        <h3 class="text-lg font-bold mt-8 mb-2">สรุปและวิเคราะห์ผลการทดลอง</h3>
+                        <textarea class="w-full h-48 border-2 border-gray-200 rounded-lg p-2 bg-gray-50 focus:outline-none focus:ring-2 focus:ring-blue-500"></textarea>
+                        <div class="text-center mt-10 no-print">
+                            <button onclick="window.print()" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">พิมพ์ หรือ บันทึกเป็น PDF</button>
+                        </div>
+                    </div>
+                </body></html>`;
+            
+            const reportWindow = window.open('', '_blank');
+            reportWindow.document.write(reportHtml);
+            reportWindow.document.close();
         }
 
         function drawArrow(ctx, fromx, fromy, tox, toy, color, label = '') {
@@ -353,12 +405,8 @@
             const slider = document.getElementById(sliderId);
             const number = document.getElementById(numberId);
             if(!slider || !number) return;
-            
-            const updateFromSlider = () => number.value = slider.value;
-            const updateFromNumber = () => slider.value = number.value;
-
-            slider.addEventListener('input', updateFromSlider);
-            number.addEventListener('input', updateFromNumber);
+            slider.addEventListener('input', () => { number.value = slider.value; slider.dispatchEvent(new Event('change', {bubbles: true})); });
+            number.addEventListener('input', () => { slider.value = number.value; number.dispatchEvent(new Event('change', {bubbles: true})); });
         }
 
         function formatArea(area) {
@@ -381,6 +429,7 @@
             calculateBtn: document.getElementById('calculatePressureBtn'),
             clearBtn: document.getElementById('clearPressureGraphBtn'),
             exportBtn: document.getElementById('exportPressureCsvBtn'),
+            reportBtn: document.getElementById('generatePressureReportBtn'),
         };
 
         function initializePressureSim() {
@@ -423,15 +472,11 @@
             const tankBottom = H * 0.9;
             const tankTop = H * 0.1;
             const waterHeight = (tankBottom - tankTop);
-
-            // Draw Tank and Fluid
             ctx.fillStyle = fluidColor;
             ctx.fillRect(tankX, tankTop, tankWidth, waterHeight);
             ctx.strokeStyle = '#374151';
             ctx.lineWidth = 4;
             ctx.strokeRect(tankX, tankTop, tankWidth, waterHeight);
-
-            // Draw Depth Indicator
             const sensorY = tankTop + (h / 100) * waterHeight;
             ctx.beginPath();
             ctx.setLineDash([5, 5]);
@@ -441,12 +486,10 @@
             ctx.lineWidth = 2;
             ctx.stroke();
             ctx.setLineDash([]);
-
             ctx.fillStyle = '#ef4444';
             ctx.beginPath();
             ctx.arc(tankX + tankWidth/2, sensorY, 5, 0, 2 * Math.PI);
             ctx.fill();
-
             ctx.fillStyle = '#1f2937';
             ctx.font = '14px Sarabun';
             ctx.textAlign = 'right';
@@ -466,7 +509,7 @@
             const rho = parseFloat(pressureSim.densitySlider.value);
             const h = parseFloat(pressureSim.depthSlider.value);
             const pressure = rho * GRAVITY * h;
-            pressureExperimentData.push([h, rho, pressure]);
+            pressureExperimentData.push([h, rho, (pressure/1000)]);
             pressureChart.data.datasets[0].data.push({x: h, y: pressure/1000});
             pressureChart.update();
         }
@@ -491,6 +534,7 @@
             calculateBtn: document.getElementById('calculatePascalBtn'),
             clearBtn: document.getElementById('clearPascalGraphBtn'),
             exportBtn: document.getElementById('exportPascalCsvBtn'),
+            reportBtn: document.getElementById('generatePascalReportBtn'),
         };
         
         function initializePascalSim() {
@@ -532,7 +576,6 @@
             const H = pascalSim.canvas.height = pascalSim.canvas.parentElement.clientHeight;
             const d_small = parseFloat(pascalSim.dSmallSlider.value);
             const D_large = parseFloat(pascalSim.dLargeSlider.value);
-            
             ctx.clearRect(0, 0, W, H);
             const groundY = H * 0.85, containerWidth = W * 0.7, containerX = (W - containerWidth) / 2;
             const fluidHeight = H * 0.3, pipeHeight = H * 0.1, pistonHeight = 15;
@@ -541,23 +584,19 @@
             const p1X = containerX + (containerWidth * 0.25) - (p1Width / 2), p2X = containerX + (containerWidth * 0.75) - (p2Width / 2);
             const fluidTopY = groundY - fluidHeight - pipeHeight;
             const fluidLvl1 = fluidTopY - simState.piston1Y, fluidLvl2 = fluidTopY - simState.piston2Y;
-            
             ctx.fillStyle = '#60a5fa';
             ctx.fillRect(p1X, fluidLvl1, p1Width, groundY - fluidLvl1);
             ctx.fillRect(p2X, fluidLvl2, p2Width, groundY - fluidLvl2);
             ctx.fillRect(p1X, groundY - pipeHeight, (p2X + p2Width) - p1X, pipeHeight);
-            
             ctx.fillStyle = '#718096';
             const p1y = fluidLvl1 - pistonHeight, p2y = fluidLvl2 - pistonHeight;
             ctx.fillRect(p1X, p1y, p1Width, pistonHeight);
             ctx.fillRect(p2X, p2y, p2Width, pistonHeight);
-            
             const massWidth = p2Width * 0.8, massHeight = 40;
             ctx.fillStyle = '#f59e0b';
             ctx.fillRect(p2X + (p2Width - massWidth) / 2, p2y - massHeight, massWidth, massHeight);
             ctx.fillStyle = '#1f2937'; ctx.font = 'bold 16px Sarabun'; ctx.textAlign = 'center';
             ctx.fillText('M', p2X + p2Width / 2, p2y - massHeight / 2 + 6);
-
             drawArrow(ctx, p1X + p1Width / 2, p1y - 50, p1X + p1Width / 2, p1y - 5, '#d97706', 'F');
             drawArrow(ctx, p2X + p2Width / 2, p2y - massHeight - 5, p2X + p2Width / 2, p2y - massHeight - 50, '#16a34a', 'W');
         }
@@ -575,19 +614,16 @@
             if (!pascalSim.fSlider) return;
             if (pascalAnimationId) cancelAnimationFrame(pascalAnimationId);
             simState.piston1Y = 0; simState.piston2Y = 0;
-
             const F = parseFloat(pascalSim.fSlider.value);
             const d = parseFloat(pascalSim.dSmallSlider.value);
             const D = parseFloat(pascalSim.dLargeSlider.value);
             const delta_x_cm = 20;
-
             const a = Math.PI * (d / 200) ** 2;
             const A = Math.PI * (D / 200) ** 2;
             const p = a > 0 ? F / a : 0;
             const W = p * A;
             const M = W / GRAVITY;
             const delta_X_cm = A > 0 ? (a / A) * delta_x_cm : 0;
-
             pascalSim.aVal.innerHTML = `${formatArea(a)} m²`;
             pascalSim.AVal.innerHTML = `${formatArea(A)} m²`;
             pascalSim.pVal.textContent = `${(p / 1000).toLocaleString('th-TH', { maximumFractionDigits: 2 })} kPa`;
@@ -595,7 +631,6 @@
             pascalSim.mVal.textContent = `${M.toLocaleString('th-TH', { maximumFractionDigits: 2 })} kg`;
             pascalSim.deltaXVal.textContent = `-${delta_x_cm.toFixed(2)} cm`;
             pascalSim.deltaXLargeVal.textContent = `+${delta_X_cm.toFixed(2)} cm`;
-            
             const visualScale = 1.5;
             simState.targetPiston1Y = -delta_x_cm * visualScale;
             simState.targetPiston2Y = delta_X_cm * visualScale;
@@ -619,9 +654,9 @@
                 pascalChart.options.scales.x.max = maxVal;
                 pascalChart.options.scales.y.max = maxVal;
                 pascalChart.update();
-                pascalExperimentData.push([F, d, a, D, A, W, areaRatio, forceRatio]);
+                pascalExperimentData.push([F, d, formatArea(a), D, formatArea(A), W.toFixed(2), areaRatio.toFixed(2), forceRatio.toFixed(2)]);
             }
-            updatePascalSim(); // To trigger animation
+            updatePascalSim();
         }
         
         // --- Simulation 3: Buoyancy ---
@@ -635,6 +670,7 @@
             calculateBtn: document.getElementById('calculateBuoyancyBtn'),
             clearBtn: document.getElementById('clearBuoyancyGraphBtn'),
             exportBtn: document.getElementById('exportBuoyancyCsvBtn'),
+            reportBtn: document.getElementById('generateBuoyancyReportBtn'),
         };
         let activeMaterialBtn = buoyancySim.materialButtons ? buoyancySim.materialButtons.querySelector('.material-btn') : null;
 
@@ -644,7 +680,7 @@
             const chartCtx = buoyancySim.chartCanvas.getContext('2d');
             buoyancyChart = new Chart(chartCtx, {
                 type: 'bar',
-                data: { labels: [], datasets: [{ label: 'น้ำหนัก (W)', data: [], backgroundColor: '#ef4444' }, { label: 'แรงพยุงสูงสุด (Fʙ)', data: [], backgroundColor: '#3b82f6' }] },
+                data: { labels: [], datasets: [{ label: 'น้ำหนัก (W)', data: [], backgroundColor: '#ef4444' }, { label: 'แรงพยุง (Fʙ)', data: [], backgroundColor: '#3b82f6' }] },
                 options: {
                     responsive: true, maintainAspectRatio: false,
                     plugins: { title: { display: true, text: 'เปรียบเทียบขนาดของแรง', font: { size: 14, family: "'Sarabun', sans-serif" } } },
@@ -662,46 +698,34 @@
             const rho_obj = parseFloat(activeMaterialBtn.dataset.density);
             const rho_fluid = 1000;
             const V = parseFloat(buoyancySim.volumeSlider.value);
-
             ctx.clearRect(0, 0, W, H);
-            
             const fluidBottom = H * 0.95;
             const waterLevelY = H * 0.5;
             ctx.fillStyle = 'rgba(96, 165, 250, 0.7)';
             ctx.fillRect(0, waterLevelY, W, fluidBottom - waterLevelY);
             ctx.fillStyle = '#1e3a8a';
             ctx.fillRect(0, waterLevelY, W, 3);
-            
             const totalVolumePixels = 80000;
             const objectWidth = Math.cbrt(V / 0.05 * totalVolumePixels) * 1.5;
             const objectHeight = objectWidth / 1.5;
             const objectX = (W - objectWidth) / 2;
-            
             const weight = rho_obj * V * GRAVITY;
             let objectBottomY;
-
-            if (rho_obj >= rho_fluid) { // Sinks
+            if (rho_obj >= rho_fluid) {
                 objectBottomY = fluidBottom;
-            } else { // Floats
+            } else {
                 const submergedRatio = rho_obj / rho_fluid;
                 const submergedHeight = objectHeight * submergedRatio;
                 objectBottomY = waterLevelY + submergedHeight;
             }
-            
             ctx.fillStyle = '#f59e0b';
             ctx.fillRect(objectX, objectBottomY - objectHeight, objectWidth, objectHeight);
-            
-            // Arrows
             const objectCenterX = objectX + objectWidth / 2;
             const objectCenterY = objectBottomY - objectHeight / 2;
             const maxForce = rho_fluid * 0.05 * GRAVITY; 
             const arrowLengthScale = H / (maxForce * 2.5);
-
-            // Weight Arrow (down)
             const weightArrowLength = weight * arrowLengthScale;
             drawArrow(ctx, objectCenterX, objectCenterY, objectCenterX, objectCenterY + weightArrowLength, '#ef4444', 'W');
-            
-            // Buoyancy Arrow (up)
             const submergedVolume = (rho_obj < rho_fluid) ? (weight / (rho_fluid * GRAVITY)) : V;
             const actualBuoyantForce = submergedVolume * rho_fluid * GRAVITY;
             const buoyancyArrowLength = actualBuoyantForce * arrowLengthScale;
@@ -711,14 +735,11 @@
         function updateBuoyancySim() {
             if (!buoyancySim.volumeSlider) return;
             const rho_obj = parseFloat(activeMaterialBtn.dataset.density);
-            const V = parseFloat(buoyancySim.volumeSlider.value);
-            
             let status;
             if (rho_obj > 1000) status = 'จม';
             else if (rho_obj < 1000) status = 'ลอย';
             else status = 'ลอยปริ่ม';
             buoyancySim.statusDisplay.textContent = status;
-
             drawBuoyancySim();
         }
 
@@ -730,9 +751,8 @@
             const weight = rho_obj * V * GRAVITY;
             const maxBuoyantForce = rho_fluid * V * GRAVITY;
             const status = buoyancySim.statusDisplay.textContent;
-
             buoyancyExperimentData.push([materialName, rho_obj, V, weight, maxBuoyantForce, status]);
-            const label = `${materialName.substring(0,3)}. (${V.toFixed(3)} m³)`;
+            const label = `${materialName.substring(0,3)}. (${V.toFixed(3)} m³)`
             buoyancyChart.data.labels.push(label);
             buoyancyChart.data.datasets[0].data.push(weight);
             buoyancyChart.data.datasets[1].data.push(maxBuoyantForce);
@@ -743,11 +763,9 @@
         // --- Initializers and Event Listeners ---
         if (pressureSim.canvas) {
             initializePressureSim();
-            ['input'].forEach(evt => {
+            ['input', 'change'].forEach(evt => {
                 pressureSim.densitySlider.addEventListener(evt, updatePressureSim);
                 pressureSim.depthSlider.addEventListener(evt, updatePressureSim);
-                pressureSim.densityNumber.addEventListener(evt, updatePressureSim);
-                pressureSim.depthNumber.addEventListener(evt, updatePressureSim);
             });
             pressureSim.calculateBtn.addEventListener('click', logPressureData);
             pressureSim.clearBtn.addEventListener('click', () => {
@@ -755,18 +773,18 @@
                 pressureChart.data.datasets[0].data = [];
                 pressureChart.update();
             });
-            pressureSim.exportBtn.addEventListener('click', () => exportToCSV('pressure_data.csv', 'ความลึก h (m),ความหนาแน่น rho (kg/m³),ความดัน P (Pa)', pressureExperimentData));
+            const pressureHeadersCSV = ['h(m)','rho(kg/m^3)','P(kPa)'];
+            const pressureHeadersReport = ['h (m)','ρ (kg/m³)','P (kPa)'];
+            pressureSim.exportBtn.addEventListener('click', () => exportToCSV('pressure_data.csv', pressureHeadersCSV, pressureExperimentData));
+            pressureSim.reportBtn.addEventListener('click', () => generateReport('ความดันในของไหล', pressureHeadersReport, pressureExperimentData, pressureChart));
         }
 
         if (pascalSim.canvas) {
             initializePascalSim();
-            ['input'].forEach(evt => {
+            ['input', 'change'].forEach(evt => {
                 pascalSim.fSlider.addEventListener(evt, updatePascalSim);
                 pascalSim.dSmallSlider.addEventListener(evt, updatePascalSim);
                 pascalSim.dLargeSlider.addEventListener(evt, updatePascalSim);
-                pascalSim.fNumber.addEventListener(evt, updatePascalSim);
-                pascalSim.dSmallNumber.addEventListener(evt, updatePascalSim);
-                pascalSim.dLargeNumber.addEventListener(evt, updatePascalSim);
             });
             pascalSim.calculateBtn.addEventListener('click', logPascalData);
             pascalSim.clearBtn.addEventListener('click', () => {
@@ -774,10 +792,10 @@
                 pascalChart.data.datasets[0].data = [];
                 pascalChart.update();
             });
-            pascalSim.exportBtn.addEventListener('click', () => {
-                const headers = "แรงกด F (N),เส้นผ่านศูนย์กลาง d (cm),พื้นที่ a (m²),เส้นผ่านศูนย์กลาง D (cm),พื้นที่ A (m²),น้ำหนัก W (N),อัตราส่วนพื้นที่ (A/a),อัตราส่วนแรง (W/F)";
-                exportToCSV('pascal_data.csv', headers, pascalExperimentData);
-            });
+            const pascalHeadersCSV = ["F(N)","d(cm)","a(m^2)","D(cm)","A(m^2)","W(N)","A/a","W/F"];
+            const pascalHeadersReport = ['F (N)', 'd (cm)', 'a (m²)', 'D (cm)', 'A (m²)', 'W (N)', 'A/a', 'W/F'];
+            pascalSim.exportBtn.addEventListener('click', () => exportToCSV('pascal_data.csv', pascalHeadersCSV, pascalExperimentData));
+            pascalSim.reportBtn.addEventListener('click', () => generateReport('กฎของพาสคัล', pascalHeadersReport, pascalExperimentData, pascalChart));
         }
 
         if (buoyancySim.canvas) {
@@ -790,9 +808,8 @@
                     updateBuoyancySim();
                 });
             });
-            ['input'].forEach(evt => {
-                 buoyancySim.volumeSlider.addEventListener('input', updateBuoyancySim);
-                 buoyancySim.volumeNumber.addEventListener('input', updateBuoyancySim);
+            ['input', 'change'].forEach(evt => {
+                 buoyancySim.volumeSlider.addEventListener(evt, updateBuoyancySim);
             });
             buoyancySim.calculateBtn.addEventListener('click', logBuoyancyData);
             buoyancySim.clearBtn.addEventListener('click', () => {
@@ -802,9 +819,13 @@
                 buoyancyChart.data.datasets[1].data = [];
                 buoyancyChart.update();
             });
-            buoyancySim.exportBtn.addEventListener('click', () => exportToCSV('buoyancy_data.csv', 'วัสดุ,ความหนาแน่นวัตถุ(kg/m³),ปริมาตร(m³),น้ำหนัก(N),แรงพยุงสูงสุด(N),สถานะ', buoyancyExperimentData));
+            const buoyancyHeadersCSV = ['วัสดุ','rho_obj(kg/m^3)','V(m^3)','W(N)','FB_max(N)','สถานะ'];
+            const buoyancyHeadersReport = ['วัสดุ','ρ_obj (kg/m³)','V (m³)','W (N)','Fʙ (N)','สถานะ'];
+            buoyancySim.exportBtn.addEventListener('click', () => exportToCSV('buoyancy_data.csv', buoyancyHeadersCSV, buoyancyExperimentData));
+            buoyancySim.reportBtn.addEventListener('click', () => generateReport('แรงพยุงและหลักของอาร์คิมีดีส', buoyancyHeadersReport, buoyancyExperimentData, buoyancyChart));
         }
     });
   </script>
 </body>
 </html>
+
