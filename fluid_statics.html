@@ -194,16 +194,16 @@
                         <div>
                             <label for="d_small_slider" class="font-medium text-sm mb-1 block">เส้นผ่านศูนย์กลางเล็ก (d)</label>
                              <div class="flex items-center gap-2">
-                                <input type="range" id="d_small_slider" min="0.5" max="10" value="1.5" step="0.1" class="flex-grow">
-                                <input type="number" id="d_small_number" min="0.5" max="10" value="1.5" step="0.1" class="w-20 text-center border rounded-md p-1 bg-blue-50">
+                                <input type="range" id="d_small_slider" min="0.5" max="5" value="1.5" step="0.1" class="flex-grow">
+                                <input type="number" id="d_small_number" min="0.5" max="5" value="1.5" step="0.1" class="w-20 text-center border rounded-md p-1 bg-blue-50">
                                 <span class="text-xs text-gray-500">cm</span>
                             </div>
                         </div>
                         <div>
                             <label for="D_large_slider" class="font-medium text-sm mb-1 block">เส้นผ่านศูนย์กลางใหญ่ (D)</label>
                              <div class="flex items-center gap-2">
-                                <input type="range" id="D_large_slider" min="1" max="20" value="3" step="0.1" class="flex-grow">
-                                <input type="number" id="D_large_number" min="1" max="20" value="3" step="0.1" class="w-20 text-center border rounded-md p-1 bg-blue-50">
+                                <input type="range" id="D_large_slider" min="1" max="15" value="3" step="0.1" class="flex-grow">
+                                <input type="number" id="D_large_number" min="1" max="15" value="3" step="0.1" class="w-20 text-center border rounded-md p-1 bg-blue-50">
                                 <span class="text-xs text-gray-500">cm</span>
                             </div>
                         </div>
@@ -213,21 +213,19 @@
                         <div class="text-center p-2 bg-gray-50 rounded-lg">
                             <h4 class="font-bold">กระบอกสูบเล็ก</h4>
                             <p>พื้นที่ (a): <span id="a_val" class="font-semibold block">0 m²</span></p>
-                            <p>ขยับ (Δx): <span id="delta_x_val" class="font-semibold block">0 cm</span></p>
                         </div>
                         <div class="text-center p-2 bg-gray-50 rounded-lg">
                             <h4 class="font-bold">กระบอกสูบใหญ่</h4>
                             <p>พื้นที่ (A): <span id="A_val" class="font-semibold block">0 m²</span></p>
-                            <p>ขยับ (ΔX): <span id="delta_X_val" class="font-semibold block">0 cm</span></p>
                         </div>
                          <div class="col-span-2 text-center p-2 bg-gray-50 rounded-lg">
                              <h4 class="font-bold">ค่าความดัน (P)</h4>
                              <p id="p_val" class="font-semibold text-base">0 kPa</p>
                         </div>
-                         <div class="col-span-2 text-center p-3 bg-green-50 rounded-lg">
+                         <div class="col-span-2 text-center p-3 bg-green-50 rounded-lg space-y-1">
                             <h4 class="font-bold text-green-700">ผลลัพธ์</h4>
                             <p class="text-sm">น้ำหนักที่ยกได้ (W): <span id="W_val" class="font-semibold">0 N</span></p>
-                            <p class="text-sm">มวลสูงสุดที่ยกได้ (M): <span id="M_val" class="font-semibold">0 kg</span></p>
+                            <p class="text-sm">การได้เปรียบเชิงกล (M.A.): <span id="ma_val" class="font-semibold">0</span></p>
                         </div>
                     </div>
                     <div class="mt-6 space-y-2">
@@ -499,10 +497,8 @@
             aVal: document.getElementById('a_val'),
             AVal: document.getElementById('A_val'),
             pVal: document.getElementById('p_val'),
-            deltaXVal: document.getElementById('delta_x_val'),
-            deltaXLargeVal: document.getElementById('delta_X_val'),
+            maVal: document.getElementById('ma_val'),
             WVal: document.getElementById('W_val'),
-            mVal: document.getElementById('M_val'),
             calculateBtn: document.getElementById('calculatePascalBtn'),
             clearBtn: document.getElementById('clearPascalGraphBtn'),
             exportBtn: document.getElementById('exportPascalCsvBtn'),
@@ -554,7 +550,7 @@
             const p1Width = Math.max(10, (d_small / maxDiameter) * maxVisWidth), p2Width = Math.max(10, (D_large / maxDiameter) * maxVisWidth);
             const p1X = containerX + (containerWidth * 0.25) - (p1Width / 2), p2X = containerX + (containerWidth * 0.75) - (p2Width / 2);
             const fluidTopY = groundY - fluidHeight - pipeHeight;
-            const fluidLvl1 = fluidTopY - simState.piston1Y, fluidLvl2 = fluidTopY - simState.piston2Y;
+            const fluidLvl1 = fluidTopY, fluidLvl2 = fluidTopY; // Simplified for static view
             ctx.fillStyle = '#60a5fa';
             ctx.fillRect(p1X, fluidLvl1, p1Width, groundY - fluidLvl1);
             ctx.fillRect(p2X, fluidLvl2, p2Width, groundY - fluidLvl2);
@@ -572,41 +568,24 @@
             drawArrow(ctx, p2X + p2Width / 2, p2y - massHeight - 5, p2X + p2Width / 2, p2y - massHeight - 50, '#16a34a', 'W');
         }
 
-        function animatePascal() {
-            simState.piston1Y += (simState.targetPiston1Y - simState.piston1Y) * 0.1;
-            simState.piston2Y += (simState.targetPiston2Y - simState.piston2Y) * 0.1;
-            drawPascalSim();
-            if (Math.abs(simState.targetPiston1Y - simState.piston1Y) > 0.1) {
-                pascalAnimationId = requestAnimationFrame(animatePascal);
-            }
-        }
-
         function updatePascalSim() {
             if (!pascalSim.fSlider) return;
-            if (pascalAnimationId) cancelAnimationFrame(pascalAnimationId);
-            simState.piston1Y = 0; simState.piston2Y = 0;
             const F = parseFloat(pascalSim.fSlider.value);
             const d = parseFloat(pascalSim.dSmallSlider.value);
             const D = parseFloat(pascalSim.dLargeSlider.value);
-            const delta_x_cm = 20;
             const a = Math.PI * (d / 200) ** 2;
             const A = Math.PI * (D / 200) ** 2;
             const p = a > 0 ? F / a : 0;
             const W = p * A;
             const M = W / GRAVITY;
-            const delta_X_cm = A > 0 ? (a / A) * delta_x_cm : 0;
+            const areaRatio = A > 0 && a > 0 ? A / a : 0;
+
             pascalSim.aVal.innerHTML = `${formatArea(a)} m²`;
             pascalSim.AVal.innerHTML = `${formatArea(A)} m²`;
             pascalSim.pVal.textContent = `${(p / 1000).toLocaleString('th-TH', { maximumFractionDigits: 2 })} kPa`;
             pascalSim.WVal.textContent = `${W.toLocaleString('th-TH', { maximumFractionDigits: 2 })} N`;
-            pascalSim.mVal.textContent = `${M.toLocaleString('th-TH', { maximumFractionDigits: 2 })} kg`;
-            pascalSim.deltaXVal.textContent = `-${delta_x_cm.toFixed(2)} cm`;
-            pascalSim.deltaXLargeVal.textContent = `+${delta_X_cm.toFixed(2)} cm`;
-            const visualScale = 1.5;
-            simState.targetPiston1Y = -delta_x_cm * visualScale;
-            simState.targetPiston2Y = delta_X_cm * visualScale;
+            pascalSim.maVal.textContent = `${areaRatio.toLocaleString('th-TH', { maximumFractionDigits: 2 })}`;
             drawPascalSim();
-            animatePascal();
         }
 
         function logPascalData() {
@@ -615,8 +594,7 @@
             const D = parseFloat(pascalSim.dLargeSlider.value);
             const a = Math.PI * (d / 200) ** 2;
             const A = Math.PI * (D / 200) ** 2;
-            const p = a > 0 ? F / a : 0;
-            const W = p * A;
+            const W = a > 0 ? F * (A / a) : 0;
             if(a > 0 && F > 0) {
                 const areaRatio = A / a;
                 const forceRatio = W / F;
@@ -625,9 +603,8 @@
                 pascalChart.options.scales.x.max = maxVal;
                 pascalChart.options.scales.y.max = maxVal;
                 pascalChart.update();
-                pascalExperimentData.push([F, d, formatArea(a), D, formatArea(A), W.toFixed(2), areaRatio.toFixed(2), forceRatio.toFixed(2)]);
+                pascalExperimentData.push([F, d, formatArea(a), D, formatArea(A), W.toFixed(2), areaRatio.toFixed(2), forceRatio.toFixed(2), areaRatio.toFixed(2)]);
             }
-            updatePascalSim();
         }
         
         // --- Simulation 3: Buoyancy ---
@@ -760,7 +737,7 @@
                 pascalChart.data.datasets[0].data = [];
                 pascalChart.update();
             });
-            const pascalHeadersCSV = ["แรงกด F (N)","เส้นผ่านศูนย์กลาง d (cm)","พื้นที่ a (m^2)","เส้นผ่านศูนย์กลาง D (cm)","พื้นที่ A (m^2)","น้ำหนัก W (N)","อัตราส่วนพื้นที่ A/a","อัตราส่วนแรง W/F"];
+            const pascalHeadersCSV = ["แรงกด F (N)","เส้นผ่านศูนย์กลาง d (cm)","พื้นที่ a (m^2)","เส้นผ่านศูนย์กลาง D (cm)","พื้นที่ A (m^2)","น้ำหนัก W (N)","อัตราส่วนพื้นที่ A/a","อัตราส่วนแรง W/F", "การได้เปรียบเชิงกล (M.A.)"];
             pascalSim.exportBtn.addEventListener('click', () => exportToCSV('pascal_data.csv', pascalHeadersCSV, pascalExperimentData));
         }
 
