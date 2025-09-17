@@ -383,7 +383,8 @@
         function formatArea(area) {
             if (area === 0) return '0.00000';
             if (area < 0.0001 && area > 0) {
-                return area.toExponential(2);
+                const parts = area.toExponential(2).split('e');
+                return `${parts[0]} × 10<sup>${parts[1]}</sup>`;
             }
             return area.toFixed(5);
         }
@@ -577,7 +578,6 @@
             const A = Math.PI * (D / 200) ** 2;
             const p = a > 0 ? F / a : 0;
             const W = p * A;
-            const M = W / GRAVITY;
             const areaRatio = A > 0 && a > 0 ? A / a : 0;
 
             pascalSim.aVal.innerHTML = `${formatArea(a)} m²`;
@@ -603,7 +603,7 @@
                 pascalChart.options.scales.x.max = maxVal;
                 pascalChart.options.scales.y.max = maxVal;
                 pascalChart.update();
-                pascalExperimentData.push([F, d, formatArea(a), D, formatArea(A), W.toFixed(2), areaRatio.toFixed(2), forceRatio.toFixed(2), areaRatio.toFixed(2)]);
+                pascalExperimentData.push([F, d, formatArea(a).replace(/<\/?sup>/g, '^').replace('&times;', 'x'), D, formatArea(A).replace(/<\/?sup>/g, '^').replace('&times;', 'x'), W.toFixed(2), areaRatio.toFixed(2), forceRatio.toFixed(2), areaRatio.toFixed(2)]);
             }
         }
         
