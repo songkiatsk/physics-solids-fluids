@@ -60,6 +60,31 @@
         background-color: #3b82f6;
         color: white;
     }
+    .equation-box {
+        background-color: #f3f4f6;
+        padding: 1rem;
+        border-radius: 0.5rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-family: 'Times New Roman', Times, serif;
+        font-size: 1.25rem;
+    }
+    .fraction {
+        display: inline-flex;
+        flex-direction: column;
+        text-align: center;
+        vertical-align: middle;
+        margin: 0 0.5rem;
+    }
+    .fraction > span {
+        padding: 0 0.5rem;
+    }
+    .fraction > hr {
+        border-color: currentColor;
+        border-width: 1px;
+        margin: 0.1rem 0;
+    }
   </style>
 </head>
 <body class="bg-gray-100 text-gray-900">
@@ -85,8 +110,8 @@
         <p class="mb-4">
           <strong>ความดัน (Pressure, P)</strong> คือแรงที่กระทำตั้งฉากต่อหนึ่งหน่วยพื้นที่ (P = F/A) สำหรับของไหลที่อยู่นิ่ง ความดัน ณ จุดใดๆ จะขึ้นอยู่กับความลึก (h) และความหนาแน่นของของไหล (ρ)
         </p>
-        <div class="mt-2 bg-gray-100 p-4 rounded-lg text-center font-mono text-lg">
-          P<sub>เกจ</sub> = ρgh
+        <div class="equation-box my-4">
+            <span>P</span><sub class="text-base">เกจ</sub>&nbsp;=&nbsp;<em>ρgh</em>
         </div>
         <!-- SIMULATION: Fluid Pressure -->
         <div class="mt-8 bg-white border border-gray-200 rounded-lg shadow-md p-4 sm:p-6">
@@ -146,8 +171,10 @@
          <p class="mb-4">
           "เมื่อเพิ่มความดันให้แก่ของไหลที่อยู่นิ่งในภาชนะปิด ความดันส่วนที่เพิ่มขึ้นนั้นจะถูกส่งผ่านไปยังทุกๆ จุดในของไหลและผนังของภาชนะอย่างทั่วถึงและเท่ากัน"
         </p>
-        <div class="mt-2 bg-gray-100 p-4 rounded-lg text-center font-mono text-lg">
-          F/a = W/A
+        <div class="equation-box my-4">
+            <div class="fraction"><span>F</span><hr><span>a</span></div>
+            <span>=</span>
+            <div class="fraction"><span>W</span><hr><span>A</span></div>
         </div>
         <!-- SIMULATION: Pascal's Law -->
         <div class="mt-8 bg-white border border-gray-200 rounded-lg shadow-md p-4 sm:p-6">
@@ -167,16 +194,16 @@
                         <div>
                             <label for="d_small_slider" class="font-medium text-sm mb-1 block">เส้นผ่านศูนย์กลางเล็ก (d)</label>
                              <div class="flex items-center gap-2">
-                                <input type="range" id="d_small_slider" min="0.1" max="50" value="10" step="0.1" class="flex-grow">
-                                <input type="number" id="d_small_number" min="0.1" max="50" value="10" step="0.1" class="w-20 text-center border rounded-md p-1 bg-blue-50">
+                                <input type="range" id="d_small_slider" min="0.5" max="10" value="1.5" step="0.1" class="flex-grow">
+                                <input type="number" id="d_small_number" min="0.5" max="10" value="1.5" step="0.1" class="w-20 text-center border rounded-md p-1 bg-blue-50">
                                 <span class="text-xs text-gray-500">cm</span>
                             </div>
                         </div>
                         <div>
                             <label for="D_large_slider" class="font-medium text-sm mb-1 block">เส้นผ่านศูนย์กลางใหญ่ (D)</label>
                              <div class="flex items-center gap-2">
-                                <input type="range" id="D_large_slider" min="0.1" max="100" value="50" step="0.1" class="flex-grow">
-                                <input type="number" id="D_large_number" min="0.1" max="100" value="50" step="0.1" class="w-20 text-center border rounded-md p-1 bg-blue-50">
+                                <input type="range" id="D_large_slider" min="1" max="20" value="3" step="0.1" class="flex-grow">
+                                <input type="number" id="D_large_number" min="1" max="20" value="3" step="0.1" class="w-20 text-center border rounded-md p-1 bg-blue-50">
                                 <span class="text-xs text-gray-500">cm</span>
                             </div>
                         </div>
@@ -232,8 +259,8 @@
          <p class="mb-4">
           <strong>หลักของอาร์คิมีดีส</strong> กล่าวว่า "วัตถุที่จมในของไหลทั้งก้อนหรือจมเพียงบางส่วน จะถูกแรงพยุง (Buoyant force) กระทำ ซึ่งมีขนาดเท่ากับน้ำหนักของของไหลที่ถูกวัตถุนั้นแทนที่"
         </p>
-        <div class="mt-2 bg-gray-100 p-4 rounded-lg text-center font-mono text-lg">
-          F<sub>B</sub> = ρ<sub>ของไหล</sub> V<sub>จม</sub> g
+        <div class="equation-box my-4">
+            <span>F</span><sub class="text-base">B</sub>&nbsp;=&nbsp;<em>ρ</em><sub class="text-base">ของไหล</sub><em>V</em><sub class="text-base">จม</sub><em>g</em>
         </div>
         <!-- SIMULATION: Buoyancy -->
         <div class="mt-8 bg-white border border-gray-200 rounded-lg shadow-md p-4 sm:p-6">
@@ -733,7 +760,7 @@
                 pascalChart.data.datasets[0].data = [];
                 pascalChart.update();
             });
-            const pascalHeadersCSV = ["แรงกด F(N)","เส้นผ่านศูนย์กลาง d(cm)","พื้นที่ a(m^2)","เส้นผ่านศูนย์กลาง D(cm)","พื้นที่ A(m^2)","น้ำหนัก W(N)","อัตราส่วนพื้นที่ A/a","อัตราส่วนแรง W/F"];
+            const pascalHeadersCSV = ["แรงกด F (N)","เส้นผ่านศูนย์กลาง d (cm)","พื้นที่ a (m^2)","เส้นผ่านศูนย์กลาง D (cm)","พื้นที่ A (m^2)","น้ำหนัก W (N)","อัตราส่วนพื้นที่ A/a","อัตราส่วนแรง W/F"];
             pascalSim.exportBtn.addEventListener('click', () => exportToCSV('pascal_data.csv', pascalHeadersCSV, pascalExperimentData));
         }
 
@@ -758,7 +785,7 @@
                 buoyancyChart.data.datasets[1].data = [];
                 buoyancyChart.update();
             });
-            const buoyancyHeadersCSV = ['วัสดุ','ความหนาแน่นวัตถุ rho_obj(kg/m^3)','ปริมาตร V(m^3)','น้ำหนัก W(N)','แรงพยุงสูงสุด FB_max(N)','สถานะ'];
+            const buoyancyHeadersCSV = ['วัสดุ','ความหนาแน่นวัตถุ rho_obj (kg/m^3)','ปริมาตร V (m^3)','น้ำหนัก W (N)','แรงพยุงสูงสุด FB_max (N)','สถานะ'];
             buoyancySim.exportBtn.addEventListener('click', () => exportToCSV('buoyancy_data.csv', buoyancyHeadersCSV, buoyancyExperimentData));
         }
     });
