@@ -223,14 +223,12 @@
                         <div class="text-center p-2 bg-gray-50 rounded-lg">
                             <h4 class="font-bold">กระบอกสูบเล็ก</h4>
                             <p>พื้นที่ (a): <span id="a_val" class="font-semibold block">0 m²</span></p>
+                            <p>ความดัน (P<sub>a</sub>): <span id="pa_val" class="font-semibold block">0 kPa</span></p>
                         </div>
                         <div class="text-center p-2 bg-gray-50 rounded-lg">
                             <h4 class="font-bold">กระบอกสูบใหญ่</h4>
                             <p>พื้นที่ (A): <span id="A_val" class="font-semibold block">0 m²</span></p>
-                        </div>
-                         <div class="col-span-2 text-center p-2 bg-gray-50 rounded-lg">
-                             <h4 class="font-bold">ค่าความดัน (P)</h4>
-                             <p id="p_val" class="font-semibold text-base">0 kPa</p>
+                             <p>ความดัน (P<sub>A</sub>): <span id="pA_val" class="font-semibold block">0 kPa</span></p>
                         </div>
                          <div class="col-span-2 text-center p-3 bg-green-50 rounded-lg space-y-1">
                             <h4 class="font-bold text-green-700">ผลลัพธ์</h4>
@@ -515,7 +513,8 @@
             dLargeNumber: document.getElementById('D_large_number'),
             aVal: document.getElementById('a_val'),
             AVal: document.getElementById('A_val'),
-            pVal: document.getElementById('p_val'),
+            paVal: document.getElementById('pa_val'),
+            pAVal: document.getElementById('pA_val'),
             maVal: document.getElementById('ma_val'),
             WVal: document.getElementById('W_val'),
             calculateBtn: document.getElementById('calculatePascalBtn'),
@@ -600,16 +599,18 @@
 
             pascalSim.aVal.innerHTML = `${formatArea(a)} m²`;
             pascalSim.AVal.innerHTML = `${formatArea(A)} m²`;
-            pascalSim.pVal.textContent = `${(p / 1000).toLocaleString('th-TH', { maximumFractionDigits: 2 })} kPa`;
+            pascalSim.paVal.textContent = `${(p / 1000).toLocaleString('th-TH', { maximumFractionDigits: 2 })} kPa`;
+            pascalSim.pAVal.textContent = `${(p / 1000).toLocaleString('th-TH', { maximumFractionDigits: 2 })} kPa`;
             pascalSim.WVal.textContent = `${W.toLocaleString('th-TH', { maximumFractionDigits: 2 })} N`;
             pascalSim.maVal.textContent = `${areaRatio.toLocaleString('th-TH', { maximumFractionDigits: 2 })}`;
             
             // Remove animation part to simplify
-            const delta_x_cm = 20;
-            const delta_X_cm = A > 0 ? (a / A) * delta_x_cm : 0;
-            // These are now for display only if you add them back to HTML
-            // pascalSim.deltaXVal.textContent = `-${delta_x_cm.toFixed(2)} cm`;
-            // pascalSim.deltaXLargeVal.textContent = `+${delta_X_cm.toFixed(2)} cm`;
+            // const delta_x_cm = 20;
+            // const delta_X_cm = A > 0 ? (a / A) * delta_x_cm : 0;
+            // const deltaXValEl = document.getElementById('delta_x_val');
+            // const deltaXLargeValEl = document.getElementById('delta_X_val');
+            // if(deltaXValEl) deltaXValEl.textContent = `-${delta_x_cm.toFixed(2)} cm`;
+            // if(deltaXLargeValEl) deltaXLargeValEl.textContent = `+${delta_X_cm.toFixed(2)} cm`;
 
             drawPascalSim();
         }
