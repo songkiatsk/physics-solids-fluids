@@ -1,343 +1,341 @@
 <!DOCTYPE html>
 <html lang="th">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>17.3 ของไหลสถิต (ฉบับปรับปรุง)</title>
-  <meta name="description" content="เนื้อหาและการทดลองเสมือนจริงเรื่องความดันในของไหล, กฎของพาสคัล, และหลักของอาร์คิมีดีส" />
-  <meta name="theme-color" content="#5b6fe6" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-  <script src="https://cdn.tailwindcss.com"></script>
-  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-  <script>
-    tailwind.config = {
-      theme: {
-        extend: {
-          fontFamily: {
-            thai: ['Sarabun', 'sans-serif']
-          }
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>17.3 ของไหลสถิต (ฉบับสมบูรณ์)</title>
+    <meta name="description" content="เนื้อหาและการทดลองเสมือนจริงเรื่องความดันในของไหล, กฎของพาสคัล, และหลักของอาร์คิมีดีส" />
+    <meta name="theme-color" content="#5b6fe6" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        thai: ['Sarabun', 'sans-serif']
+                    },
+                    colors: {
+                        'brand-purple': '#5b6fe6',
+                        'brand-blue': '#667eea',
+                    }
+                }
+            }
         }
-      }
-    }
-  </script>
-  <style>
-    body { font-family: 'Sarabun', 'sans-serif'; }
-    .gradient-bg { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); }
-    input[type="range"] {
-        -webkit-appearance: none; appearance: none;
-        width: 100%; height: 8px;
-        background: #d1d5db; border-radius: 5px;
-        outline: none; opacity: 0.7;
-        transition: opacity .2s;
-    }
-    input[type="range"]:hover { opacity: 1; }
-    input[type="range"]::-webkit-slider-thumb {
-        -webkit-appearance: none; appearance: none;
-        width: 20px; height: 20px;
-        background: #3b82f6; cursor: pointer;
-        border-radius: 50%;
-    }
-    input[type="range"]::-moz-range-thumb {
-        width: 20px; height: 20px;
-        background: #3b82f6; cursor: pointer;
-        border-radius: 50%;
-    }
-    input[type=number]::-webkit-inner-spin-button, 
-    input[type=number]::-webkit-outer-spin-button { 
-      -webkit-appearance: none; 
-      margin: 0; 
-    }
-    input[type=number] {
-      -moz-appearance: textfield;
-    }
-    .material-btn {
-        transition: all 0.2s ease-in-out;
-    }
-    .material-btn-active {
-        transform: translateY(-2px);
-        box-shadow: 0 4px 6px rgba(59, 130, 246, 0.5);
-        background-color: #3b82f6;
-        color: white;
-    }
-    .equation-box {
-        background-color: #f3f4f6;
-        padding: 1rem;
-        border-radius: 0.5rem;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        font-family: 'Times New Roman', Times, serif;
-        font-size: 1.25rem;
-    }
-    .fraction {
-        display: inline-flex;
-        flex-direction: column;
-        text-align: center;
-        vertical-align: middle;
-        margin: 0 0.5rem;
-    }
-    .fraction > span {
-        padding: 0 0.5rem;
-    }
-    .fraction > hr {
-        border-color: currentColor;
-        border-width: 1px;
-        margin: 0.1rem 0;
-    }
-    .tabular-nums {
-        font-variant-numeric: tabular-nums;
-    }
-  </style>
+    </script>
+    <style>
+        body { font-family: 'Sarabun', 'sans-serif'; }
+        .gradient-bg { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); }
+        input[type="range"] {
+            -webkit-appearance: none; appearance: none;
+            width: 100%; height: 8px;
+            background: #d1d5db; border-radius: 5px;
+            outline: none; opacity: 0.7;
+            transition: opacity .2s;
+        }
+        input[type="range"]:hover { opacity: 1; }
+        input[type="range"]::-webkit-slider-thumb {
+            -webkit-appearance: none; appearance: none;
+            width: 20px; height: 20px;
+            background: #3b82f6; cursor: pointer;
+            border-radius: 50%;
+        }
+        input[type="range"]::-moz-range-thumb {
+            width: 20px; height: 20px;
+            background: #3b82f6; cursor: pointer;
+            border-radius: 50%;
+        }
+        input[type=number]::-webkit-inner-spin-button, 
+        input[type=number]::-webkit-outer-spin-button { 
+            -webkit-appearance: none; 
+            margin: 0; 
+        }
+        input[type=number] { -moz-appearance: textfield; }
+        .material-btn {
+            transition: all 0.2s ease-in-out;
+            border: 2px solid transparent;
+        }
+        .material-btn-active {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 6px rgba(59, 130, 246, 0.5);
+            background-color: #3b82f6;
+            color: white;
+            border-color: #2563eb;
+        }
+        .equation-box {
+            background-color: #f3f4f6; padding: 1rem;
+            border-radius: 0.5rem; display: flex;
+            align-items: center; justify-content: center;
+            font-family: 'Times New Roman', Times, serif; font-size: 1.25rem;
+        }
+        .fraction {
+            display: inline-flex; flex-direction: column;
+            text-align: center; vertical-align: middle; margin: 0 0.5rem;
+        }
+        .fraction > span { padding: 0 0.5rem; }
+        .fraction > hr { border-color: currentColor; border-width: 1px; margin: 0.1rem 0; }
+        .tabular-nums { font-variant-numeric: tabular-nums; }
+    </style>
 </head>
-<body class="bg-gray-100 text-gray-900">
-  <!-- Navigation -->
-  <nav class="gradient-bg text-white shadow-lg sticky top-0 z-50" role="navigation" aria-label="หลัก">
-    <div class="container mx-auto px-4 py-4 flex items-center justify-between">
-      <div class="flex items-center gap-3">
-        <div class="w-10 h-10 bg-white rounded-full flex items-center justify-center" aria-hidden="true">
-          <span class="text-2xl">⚖️</span>
-        </div>
-        <h1 class="text-lg sm:text-xl font-bold">17.3 ของไหลสถิต</h1>
-      </div>
-      <a href="index.html" class="text-sm font-semibold hover:text-blue-200 transition-colors">กลับหน้าหลัก</a>
-    </div>
-  </nav>
-
-  <main class="container mx-auto px-4 py-8 sm:py-12">
-    <div class="max-w-4xl mx-auto bg-white p-4 sm:p-8 rounded-lg shadow-lg space-y-12">
-      
-      <!-- Section 1: Fluid Pressure -->
-      <div>
-        <h2 class="text-3xl font-bold text-purple-700 mb-6">17.3.1 ความดันในของไหล</h2>
-        <p class="mb-4">
-          <strong>ความดัน (Pressure, P)</strong> คือแรงที่กระทำตั้งฉากต่อหนึ่งหน่วยพื้นที่ (P = F/A) สำหรับของไหลที่อยู่นิ่ง ความดัน ณ จุดใดๆ จะขึ้นอยู่กับความลึก (h) และความหนาแน่นของของไหล (ρ)
-        </p>
-        <div class="equation-box my-4">
-            <span>P</span><sub class="text-base">เกจ</sub>&nbsp;=&nbsp;<em>ρgh</em>
-        </div>
-        <!-- SIMULATION: Fluid Pressure -->
-        <div class="mt-8 bg-white border border-gray-200 rounded-lg shadow-md p-4 sm:p-6">
-            <h4 class="text-xl font-semibold mb-6 text-blue-600">🔬 การทดลอง: ความดันในของไหล</h4>
-            <div class="flex flex-col lg:flex-row lg:gap-6">
-                <!-- Controls -->
-                <div class="lg:w-1/3 lg:order-2 bg-white p-4 sm:p-6 rounded-xl shadow-inner mb-6 lg:mb-0">
-                    <div class="space-y-4">
-                        <div>
-                            <label for="densitySlider" class="font-medium text-sm mb-1 block">ความหนาแน่น (ρ)</label>
-                            <div class="flex items-center gap-2">
-                                <input type="range" id="densitySlider" min="100" max="14000" value="1000" step="50" class="flex-grow">
-                                <input type="number" id="densityNumber" min="100" max="14000" value="1000" step="50" class="w-20 text-center border rounded-md p-1 bg-blue-50">
-                                <span class="text-xs text-gray-500">kg/m³</span>
-                            </div>
-                        </div>
-                        <div>
-                            <label for="depthSlider" class="font-medium text-sm mb-1 block">ความลึก (h)</label>
-                            <div class="flex items-center gap-2">
-                                <input type="range" id="depthSlider" min="0" max="100" value="10" step="1" class="flex-grow">
-                                <input type="number" id="depthNumber" min="0" max="100" value="10" step="1" class="w-20 text-center border rounded-md p-1 bg-blue-50">
-                                <span class="text-xs text-gray-500">m</span>
-                            </div>
-                        </div>
-                    </div>
-                    <hr class="my-6">
-                    <div class="text-center p-3 bg-blue-50 rounded-lg">
-                        <h4 class="font-bold text-blue-700">ผลลัพธ์: ความดันเกจ (P)</h4>
-                        <p id="pressureDisplay" class="font-semibold text-2xl mt-1 tabular-nums">98.10 kPa</p>
-                    </div>
-                    <div class="mt-6 space-y-2">
-                        <button id="calculatePressureBtn" class="w-full text-center py-3 bg-blue-500 hover:bg-blue-600 text-white font-bold rounded-lg transition text-base">คำนวณและบันทึกผล</button>
-                        <div class="flex gap-2">
-                            <button id="clearPressureGraphBtn" class="w-1/2 text-center py-2 bg-yellow-400 hover:bg-yellow-500 text-yellow-800 font-bold rounded-lg transition text-sm">ล้างกราฟ</button>
-                            <button id="exportPressureCsvBtn" class="w-1/2 text-center py-2 bg-green-500 hover:bg-green-600 text-white font-bold rounded-lg transition text-sm">ส่งออก CSV</button>
-                        </div>
-                    </div>
+<body class="bg-gray-100 text-gray-800">
+    <!-- Navigation -->
+    <nav class="gradient-bg text-white shadow-lg sticky top-0 z-50" role="navigation" aria-label="หลัก">
+        <div class="container mx-auto px-4 py-4 flex items-center justify-between">
+            <div class="flex items-center gap-3">
+                <div class="w-10 h-10 bg-white rounded-full flex items-center justify-center" aria-hidden="true">
+                    <span class="text-2xl">⚖️</span>
                 </div>
-                <!-- Visuals -->
-                <div class="lg:w-2/3 lg:order-1 space-y-4 lg:space-y-6">
-                    <div class="w-full flex items-center justify-center bg-white p-4 rounded-xl shadow-inner h-72 sm:h-80 lg:min-h-[350px]">
-                        <canvas id="pressureCanvas"></canvas>
-                    </div>
-                    <div class="w-full bg-white p-2 sm:p-4 rounded-xl shadow-inner h-64 sm:h-72">
-                        <canvas id="pressureChart"></canvas>
+                <h1 class="text-lg sm:text-xl font-bold">17.3 ของไหลสถิต</h1>
+            </div>
+        </div>
+    </nav>
+
+    <main class="container mx-auto px-4 py-8 sm:py-12">
+        <div class="max-w-6xl mx-auto bg-white p-4 sm:p-8 rounded-2xl shadow-lg space-y-12">
+            
+            <!-- Section 1: Fluid Pressure -->
+            <div>
+                <h2 class="text-3xl font-bold text-purple-700 mb-6">17.3.1 ความดันในของไหล</h2>
+                <p class="mb-4 text-gray-700 leading-relaxed">
+                    <strong>ความดัน (Pressure, P)</strong> คือแรงที่กระทำตั้งฉากต่อหนึ่งหน่วยพื้นที่ (P = F/A) สำหรับของไหลที่อยู่นิ่ง ความดัน ณ จุดใดๆ จะขึ้นอยู่กับความลึก (h) และความหนาแน่นของของไหล (ρ)
+                </p>
+                <div class="equation-box my-4">
+                    <span>P</span><sub class="text-base">เกจ</sub>&nbsp;=&nbsp;<em>ρgh</em>
+                </div>
+                <!-- SIMULATION: Fluid Pressure -->
+                <div class="mt-8 bg-white border border-gray-200 rounded-lg shadow-md p-4 sm:p-6">
+                    <h3 class="text-xl font-semibold mb-6 text-blue-600">🔬 การทดลอง: ความดันในของไหล</h3>
+                    <div class="flex flex-col lg:flex-row lg:gap-6">
+                        <!-- Controls -->
+                        <div class="lg:w-1/3 lg:order-2 bg-gray-50 p-4 sm:p-6 rounded-xl shadow-inner mb-6 lg:mb-0">
+                            <div class="space-y-4">
+                                <div>
+                                    <label for="densitySlider" class="font-medium text-sm mb-1 block text-gray-600">ความหนาแน่น (ρ)</label>
+                                    <div class="flex items-center gap-2">
+                                        <input type="range" id="densitySlider" min="100" max="14000" value="1000" step="50" class="flex-grow">
+                                        <input type="number" id="densityNumber" min="100" max="14000" value="1000" class="w-24 text-center border rounded-md p-1 bg-white tabular-nums">
+                                        <span class="text-xs text-gray-500">kg/m³</span>
+                                    </div>
+                                </div>
+                                <div>
+                                    <label for="depthSlider" class="font-medium text-sm mb-1 block text-gray-600">ความลึก (h)</label>
+                                    <div class="flex items-center gap-2">
+                                        <input type="range" id="depthSlider" min="0" max="100" value="10" step="1" class="flex-grow">
+                                        <input type="number" id="depthNumber" min="0" max="100" value="10" class="w-24 text-center border rounded-md p-1 bg-white tabular-nums">
+                                        <span class="text-xs text-gray-500">m</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <hr class="my-6">
+                            <div class="text-center p-3 bg-blue-100 rounded-lg">
+                                <h4 class="font-bold text-blue-800">ผลลัพธ์: ความดันเกจ (P)</h4>
+                                <p id="pressureDisplay" class="font-semibold text-2xl mt-1 text-blue-700 tabular-nums">98.10 kPa</p>
+                            </div>
+                            <div class="mt-6 space-y-2">
+                                <button id="calculatePressureBtn" class="w-full text-center py-3 bg-blue-500 hover:bg-blue-600 text-white font-bold rounded-lg transition text-base">คำนวณและบันทึกผล</button>
+                                <div class="flex gap-2">
+                                    <button id="clearPressureGraphBtn" class="w-1/2 text-center py-2 bg-yellow-400 hover:bg-yellow-500 text-yellow-900 font-bold rounded-lg transition text-sm">ล้างกราฟ</button>
+                                    <button id="exportPressureCsvBtn" class="w-1/2 text-center py-2 bg-green-500 hover:bg-green-600 text-white font-bold rounded-lg transition text-sm">ส่งออก CSV</button>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Visuals -->
+                        <div class="lg:w-2/3 lg:order-1 space-y-4 lg:space-y-6">
+                            <div class="w-full flex items-center justify-center bg-gray-50 p-4 rounded-xl shadow-inner h-72 sm:h-80 lg:min-h-[350px]">
+                                <canvas id="pressureCanvas"></canvas>
+                            </div>
+                            <div class="w-full bg-gray-50 p-2 sm:p-4 rounded-xl shadow-inner h-64 sm:h-72">
+                                <canvas id="pressureChart"></canvas>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
-      </div>
 
-      <hr class="my-8">
-      
-      <!-- Section 2: Pascal's Principle -->
-      <div>
-        <h2 class="text-3xl font-bold text-purple-700 mb-6">17.3.2 กฎของพาสคัล</h2>
-         <p class="mb-4">
-          "เมื่อเพิ่มความดันให้แก่ของไหลที่อยู่นิ่งในภาชนะปิด ความดันส่วนที่เพิ่มขึ้นนั้นจะถูกส่งผ่านไปยังทุกๆ จุดในของไหลและผนังของภาชนะอย่างทั่วถึงและเท่ากัน"
-        </p>
-        <div class="equation-box my-4">
-            <div class="fraction"><span>F</span><hr><span>a</span></div>
-            <span>=</span>
-            <div class="fraction"><span>W</span><hr><span>A</span></div>
-        </div>
-         <p class="mt-4 mb-4">
-          จากกฎของพาสคัล เราสามารถหา **การได้เปรียบเชิงกล (Mechanical Advantage, M.A.)** ซึ่งเป็นอัตราส่วนที่บอกว่าเครื่องกลนั้นช่วยผ่อนแรงได้กี่เท่า
-        </p>
-         <div class="equation-box my-4">
-            <span>M.A.</span>
-            <span>=</span>
-            <div class="fraction"><span>W</span><hr><span>F</span></div>
-            <span>=</span>
-            <div class="fraction"><span>A</span><hr><span>a</span></div>
-        </div>
-        <!-- SIMULATION: Pascal's Law -->
-        <div class="mt-8 bg-white border border-gray-200 rounded-lg shadow-md p-4 sm:p-6">
-            <h4 class="text-xl font-semibold mb-6 text-blue-600">🔬 การทดลอง: กฎของพาสคัล</h4>
-            <div class="flex flex-col lg:flex-row lg:gap-6">
-                <!-- Controls -->
-                <div class="lg:w-1/3 lg:order-2 bg-white p-4 sm:p-6 rounded-xl shadow-inner mb-6 lg:mb-0">
-                    <div class="space-y-4">
-                        <div>
-                            <label for="f_slider" class="font-medium text-sm mb-1 block">แรงกดเข้า (F)</label>
-                             <div class="flex items-center gap-2">
-                                <input type="range" id="f_slider" min="0" max="500" value="100" step="1" class="flex-grow">
-                                <span id="f_display" class="w-20 text-center border rounded-md p-1 bg-gray-100 tabular-nums">100</span>
-                                <span class="text-xs text-gray-500">N</span>
-                            </div>
-                        </div>
-                        <div>
-                            <label for="d_small_slider" class="font-medium text-sm mb-1 block">เส้นผ่านศูนย์กลางเล็ก (d)</label>
-                             <div class="flex items-center gap-2">
-                                <input type="range" id="d_small_slider" min="0.5" max="5" value="1.50" step="0.01" class="flex-grow">
-                                <span id="d_small_display" class="w-20 text-center border rounded-md p-1 bg-gray-100 tabular-nums">1.50</span>
-                                <span class="text-xs text-gray-500">cm</span>
-                            </div>
-                        </div>
-                        <div>
-                            <label for="D_large_slider" class="font-medium text-sm mb-1 block">เส้นผ่านศูนย์กลางใหญ่ (D)</label>
-                             <div class="flex items-center gap-2">
-                                <input type="range" id="D_large_slider" min="1" max="15" value="3.00" step="0.01" class="flex-grow">
-                                <span id="D_large_display" class="w-20 text-center border rounded-md p-1 bg-gray-100 tabular-nums">3.00</span>
-                                <span class="text-xs text-gray-500">cm</span>
-                            </div>
-                        </div>
-                    </div>
-                    <hr class="my-6">
-                    <div id="results" class="space-y-4 text-sm">
-                        <!-- Flex container for the top two boxes -->
-                        <div class="flex flex-col sm:flex-row gap-4">
-                            <!-- Small Piston Box -->
-                            <div class="flex-1 text-center p-3 bg-gray-50 rounded-lg space-y-1">
-                                <h4 class="font-bold">กระบอกสูบเล็ก</h4>
-                                <p>พื้นที่ (a): <span id="a_val" class="font-semibold block tabular-nums">0 m²</span></p>
-                                <p>ความดัน (P): <span id="p_small_val" class="font-semibold block tabular-nums">0 kPa</span></p>
-                            </div>
-                            <!-- Large Piston Box -->
-                            <div class="flex-1 text-center p-3 bg-gray-50 rounded-lg space-y-1">
-                                <h4 class="font-bold">กระบอกสูบใหญ่</h4>
-                                <p>พื้นที่ (A): <span id="A_val" class="font-semibold block tabular-nums">0 m²</span></p>
-                                <p>ความดัน (P): <span id="p_large_val" class="font-semibold block tabular-nums">0 kPa</span></p>
-                            </div>
-                        </div>
-                        <!-- Results Box -->
-                        <div class="text-center p-4 bg-green-50 rounded-lg space-y-1">
-                            <h4 class="font-bold text-green-700 text-base">ผลลัพธ์</h4>
-                            <p>น้ำหนักที่ยกได้ (W): <span id="W_val" class="font-semibold text-lg tabular-nums">0 N</span></p>
-                            <p>การได้เปรียบเชิงกล (M.A.): <span id="ma_val" class="font-semibold text-lg tabular-nums">0</span></p>
-                        </div>
-                    </div>
-                    <div class="mt-6 space-y-2">
-                        <button id="calculatePascalBtn" class="w-full text-center py-3 bg-blue-500 hover:bg-blue-600 text-white font-bold rounded-lg transition text-base">คำนวณและบันทึกผล</button>
-                        <div class="flex gap-2">
-                            <button id="clearPascalGraphBtn" class="w-1/2 text-center py-2 bg-yellow-400 hover:bg-yellow-500 text-yellow-800 font-bold rounded-lg transition text-sm">ล้างกราฟ</button>
-                            <button id="exportPascalCsvBtn" class="w-1/2 text-center py-2 bg-green-500 hover:bg-green-600 text-white font-bold rounded-lg transition text-sm">ส่งออก CSV</button>
-                        </div>
-                    </div>
+            <hr class="my-12 border-t-2 border-gray-200">
+
+            <!-- Section 2: Pascal's Principle -->
+            <div>
+                <h2 class="text-3xl font-bold text-purple-700 mb-6">17.3.2 กฎของพาสคัล</h2>
+                 <p class="mb-4 text-gray-700 leading-relaxed">
+                    "เมื่อเพิ่มความดันให้แก่ของไหลที่อยู่นิ่งในภาชนะปิด ความดันส่วนที่เพิ่มขึ้นนั้นจะถูกส่งผ่านไปยังทุกๆ จุดในของไหลและผนังของภาชนะอย่างทั่วถึงและเท่ากัน"
+                </p>
+                <div class="equation-box my-4">
+                    <div class="fraction"><span>F</span><hr><span>a</span></div>
+                    <span>=</span>
+                    <div class="fraction"><span>W</span><hr><span>A</span></div>
                 </div>
-                <!-- Visuals -->
-                <div class="lg:w-2/3 lg:order-1 space-y-4 lg:space-y-6">
-                    <div class="w-full flex items-center justify-center bg-white p-4 rounded-xl shadow-inner h-72 sm:h-80 lg:min-h-[350px]">
-                        <canvas id="pascalCanvas"></canvas>
-                    </div>
-                    <div class="w-full bg-white p-2 sm:p-4 rounded-xl shadow-inner h-64 sm:h-72">
-                        <canvas id="pascalChart"></canvas>
-                    </div>
+                 <p class="mt-4 mb-4 text-gray-700 leading-relaxed">
+                    จากกฎของพาสคัล เราสามารถหา **การได้เปรียบเชิงกล (Mechanical Advantage, M.A.)** ซึ่งเป็นอัตราส่วนที่บอกว่าเครื่องกลนั้นช่วยผ่อนแรงได้กี่เท่า
+                </p>
+                 <div class="equation-box my-4">
+                    <span>M.A.</span>
+                    <span>=</span>
+                    <div class="fraction"><span>W</span><hr><span>F</span></div>
+                    <span>=</span>
+                    <div class="fraction"><span>A</span><hr><span>a</span></div>
                 </div>
-            </div>
-        </div>
-      </div>
-
-
-      <hr class="my-8">
-
-      <!-- Section 3: Buoyancy -->
-      <div>
-        <h2 class="text-3xl font-bold text-purple-700 mb-6">17.3.3 แรงพยุงและหลักของอาร์คิมีดีส</h2>
-         <p class="mb-4">
-          <strong>หลักของอาร์คิมีดีส</strong> กล่าวว่า "วัตถุที่จมในของไหลทั้งก้อนหรือจมเพียงบางส่วน จะถูกแรงพยุง (Buoyant force) กระทำ ซึ่งมีขนาดเท่ากับน้ำหนักของของไหลที่ถูกวัตถุนั้นแทนที่"
-        </p>
-        <div class="equation-box my-4">
-            <span>F</span><sub class="text-base">B</sub>&nbsp;=&nbsp;<em>ρ</em><sub class="text-base">ของไหล</sub><em>V</em><sub class="text-base">จม</sub><em>g</em>
-        </div>
-        <!-- SIMULATION: Buoyancy -->
-        <div class="mt-8 bg-white border border-gray-200 rounded-lg shadow-md p-4 sm:p-6">
-            <h4 class="text-xl font-semibold mb-6 text-green-600">🔬 การทดลอง: แรงลอยตัว</h4>
-            <div class="flex flex-col lg:flex-row lg:gap-6">
-                 <!-- Controls -->
-                <div class="lg:w-1/3 lg:order-2 bg-white p-4 sm:p-6 rounded-xl shadow-inner mb-6 lg:mb-0">
-                    <div>
-                        <label class="font-medium text-sm mb-2 block">เลือกวัสดุ</label>
-                        <div id="materialButtons" class="grid grid-cols-2 gap-2 text-center text-sm">
-                            <button data-density="700" class="material-btn p-2 rounded-lg bg-gray-200 material-btn-active">ไม้สน</button>
-                            <button data-density="920" class="material-btn p-2 rounded-lg bg-gray-200 hover:bg-gray-300">น้ำแข็ง</button>
-                            <button data-density="2700" class="material-btn p-2 rounded-lg bg-gray-200 hover:bg-gray-300">อะลูมิเนียม</button>
-                            <button data-density="7850" class="material-btn p-2 rounded-lg bg-gray-200 hover:bg-gray-300">เหล็ก</button>
+                <!-- SIMULATION: Pascal's Law -->
+                <div class="mt-8 bg-white border border-gray-200 rounded-lg shadow-md p-4 sm:p-6">
+                    <h3 class="text-xl font-semibold mb-6 text-blue-600">🔬 การทดลอง: กฎของพาสคัล</h3>
+                    <div class="flex flex-col lg:flex-row lg:gap-8">
+                        <!-- Visuals & Graph (Left Column) -->
+                        <div class="lg:w-3/5 space-y-6">
+                             <div class="w-full flex items-center justify-center bg-gray-50 p-4 rounded-xl shadow-inner h-72 sm:h-80 lg:min-h-[350px]">
+                                <canvas id="pascalCanvas"></canvas>
+                            </div>
+                            <div class="w-full bg-gray-50 p-2 sm:p-4 rounded-xl shadow-inner h-64 sm:h-72">
+                                <canvas id="pascalChart"></canvas>
+                            </div>
                         </div>
-                    </div>
-                    <div class="mt-4">
-                        <label for="volumeSlider" class="font-medium text-sm mb-1 block">ปริมาตร (V)</label>
-                        <div class="flex items-center gap-2">
-                           <input type="range" id="volumeSlider" min="0.001" max="0.05" value="0.01" step="0.001" class="flex-grow">
-                           <input type="number" id="volumeNumber" min="0.001" max="0.05" value="0.01" step="0.001" class="w-20 text-center border rounded-md p-1 bg-blue-50">
-                           <span class="text-xs text-gray-500">m³</span>
+                        
+                        <!-- Controls & Results (Right Column) -->
+                        <div class="lg:w-2/5 bg-gray-50 p-4 sm:p-6 rounded-xl shadow-inner">
+                            <div class="space-y-5">
+                                <div>
+                                    <div class="flex justify-between items-center mb-1">
+                                        <label for="f_slider" class="font-medium text-sm text-gray-600">แรงกดเข้า (F)</label>
+                                        <div class="px-3 py-1 bg-white border rounded-md text-sm tabular-nums">
+                                            <span id="f_display">100</span> N
+                                        </div>
+                                    </div>
+                                    <input type="range" id="f_slider" min="0" max="500" value="100" step="1" class="w-full">
+                                </div>
+                                <div>
+                                    <div class="flex justify-between items-center mb-1">
+                                        <label for="d_small_slider" class="font-medium text-sm text-gray-600">เส้นผ่านศูนย์กลางเล็ก (d)</label>
+                                         <div class="px-3 py-1 bg-white border rounded-md text-sm tabular-nums">
+                                            <span id="d_small_display">1.50</span> cm
+                                        </div>
+                                    </div>
+                                    <input type="range" id="d_small_slider" min="0.5" max="5" value="1.5" step="0.01" class="w-full">
+                                </div>
+                                <div>
+                                    <div class="flex justify-between items-center mb-1">
+                                        <label for="D_large_slider" class="font-medium text-sm text-gray-600">เส้นผ่านศูนย์กลางใหญ่ (D)</label>
+                                        <div class="px-3 py-1 bg-white border rounded-md text-sm tabular-nums">
+                                            <span id="D_large_display">3.00</span> cm
+                                        </div>
+                                    </div>
+                                    <input type="range" id="D_large_slider" min="1" max="15" value="3" step="0.01" class="w-full">
+                                </div>
+                            </div>
+                            
+                            <hr class="my-6">
+                            
+                            <div id="results" class="grid grid-cols-2 gap-4 text-xs">
+                                <!-- Small Piston -->
+                                <div class="text-center p-3 bg-white rounded-lg border">
+                                    <h4 class="font-bold text-gray-700">กระบอกสูบเล็ก</h4>
+                                    <p class="mt-1">พื้นที่ (a): <span id="a_val" class="font-semibold block tabular-nums">0 m²</span></p>
+                                    <p class="mt-1">ความดัน (P<sub class="text-xs">a</sub>): <span id="p_small_val" class="font-semibold block tabular-nums">0 kPa</span></p>
+                                </div>
+                                <!-- Large Piston -->
+                                <div class="text-center p-3 bg-white rounded-lg border">
+                                    <h4 class="font-bold text-gray-700">กระบอกสูบใหญ่</h4>
+                                    <p class="mt-1">พื้นที่ (A): <span id="A_val" class="font-semibold block tabular-nums">0 m²</span></p>
+                                    <p class="mt-1">ความดัน (P<sub class="text-xs">A</sub>): <span id="p_large_val" class="font-semibold block tabular-nums">0 kPa</span></p>
+                                </div>
+                                <!-- Results Box -->
+                                <div class="col-span-2 text-center p-4 bg-green-100 rounded-lg space-y-2 border border-green-200">
+                                    <h4 class="font-bold text-green-800 text-base">ผลลัพธ์</h4>
+                                    <div class="flex justify-center items-baseline gap-2">
+                                        <p class="text-gray-700 text-sm">น้ำหนักที่ยกได้ (W):</p>
+                                        <p class="font-semibold text-xl text-green-700 tabular-nums" id="W_val">0</p>
+                                        <p class="text-gray-700 text-sm">N</p>
+                                    </div>
+                                    <div class="flex justify-center items-baseline gap-2">
+                                        <p class="text-gray-700 text-sm">การได้เปรียบเชิงกล (M.A.):</p>
+                                        <p class="font-semibold text-xl text-green-700 tabular-nums" id="ma_val">0</p>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="mt-6 space-y-2">
+                                <button id="calculatePascalBtn" class="w-full text-center py-3 bg-blue-500 hover:bg-blue-600 text-white font-bold rounded-lg transition text-base">คำนวณและบันทึกผล</button>
+                                <div class="flex gap-2">
+                                    <button id="clearPascalGraphBtn" class="w-1/2 text-center py-2 bg-yellow-400 hover:bg-yellow-500 text-yellow-900 font-bold rounded-lg transition text-sm">ล้างกราฟ</button>
+                                    <button id="exportPascalCsvBtn" class="w-1/2 text-center py-2 bg-green-500 hover:bg-green-600 text-white font-bold rounded-lg transition text-sm">ส่งออก CSV</button>
+                                </div>
+                            </div>
                         </div>
-                    </div>
-                    <hr class="my-6">
-                    <div class="text-center p-3 bg-green-50 rounded-lg">
-                        <h4 class="font-bold text-green-700">สถานะ</h4>
-                        <p id="buoyancyStatus" class="font-semibold text-2xl mt-1">ลอย</p>
-                    </div>
-                    <div class="mt-6 space-y-2">
-                         <button id="calculateBuoyancyBtn" class="w-full text-center py-3 bg-blue-500 hover:bg-blue-600 text-white font-bold rounded-lg transition text-base">คำนวณและบันทึกผล</button>
-                        <div class="flex gap-2">
-                           <button id="clearBuoyancyGraphBtn" class="w-1/2 text-center py-2 bg-yellow-400 hover:bg-yellow-500 text-yellow-800 font-bold rounded-lg transition text-sm">ล้างกราฟ</button>
-                           <button id="exportBuoyancyCsvBtn" class="w-1/2 text-center py-2 bg-green-500 hover:bg-green-600 text-white font-bold rounded-lg transition text-sm">ส่งออก CSV</button>
-                        </div>
-                    </div>
-                </div>
-                <!-- Visuals -->
-                <div class="lg:w-2/3 lg:order-1 space-y-4 lg:space-y-6">
-                    <div class="w-full flex items-center justify-center bg-white p-4 rounded-xl shadow-inner h-72 sm:h-80 lg:min-h-[350px]">
-                        <canvas id="buoyancyCanvas"></canvas>
-                    </div>
-                    <div class="w-full bg-white p-2 sm:p-4 rounded-xl shadow-inner h-64 sm:h-72">
-                        <canvas id="buoyancyChart"></canvas>
                     </div>
                 </div>
             </div>
+
+            <hr class="my-12 border-t-2 border-gray-200">
+
+            <!-- Section 3: Buoyancy -->
+            <div>
+                <h2 class="text-3xl font-bold text-purple-700 mb-6">17.3.3 แรงพยุงและหลักของอาร์คิมีดีส</h2>
+                 <p class="mb-4 text-gray-700 leading-relaxed">
+                    <strong>หลักของอาร์คิมีดีส</strong> กล่าวว่า "วัตถุที่จมในของไหลทั้งก้อนหรือจมเพียงบางส่วน จะถูกแรงพยุง (Buoyant force) กระทำ ซึ่งมีขนาดเท่ากับน้ำหนักของของไหลที่ถูกวัตถุนั้นแทนที่"
+                </p>
+                <div class="equation-box my-4">
+                    <span>F</span><sub class="text-base">B</sub>&nbsp;=&nbsp;<em>ρ</em><sub class="text-base">ของไหล</sub><em>V</em><sub class="text-base">จม</sub><em>g</em>
+                </div>
+                <!-- SIMULATION: Buoyancy -->
+                <div class="mt-8 bg-white border border-gray-200 rounded-lg shadow-md p-4 sm:p-6">
+                    <h3 class="text-xl font-semibold mb-6 text-green-600">🔬 การทดลอง: แรงลอยตัว</h3>
+                    <div class="flex flex-col lg:flex-row lg:gap-6">
+                            <!-- Controls -->
+                        <div class="lg:w-1/3 lg:order-2 bg-gray-50 p-4 sm:p-6 rounded-xl shadow-inner mb-6 lg:mb-0">
+                            <div>
+                                <label class="font-medium text-sm mb-2 block text-gray-600">เลือกวัสดุ</label>
+                                <div id="materialButtons" class="grid grid-cols-2 gap-2 text-center text-sm">
+                                    <button data-density="700" class="material-btn p-2 rounded-lg bg-gray-200 material-btn-active">ไม้สน</button>
+                                    <button data-density="920" class="material-btn p-2 rounded-lg bg-gray-200">น้ำแข็ง</button>
+                                    <button data-density="2700" class="material-btn p-2 rounded-lg bg-gray-200">อะลูมิเนียม</button>
+                                    <button data-density="7850" class="material-btn p-2 rounded-lg bg-gray-200">เหล็ก</button>
+                                </div>
+                            </div>
+                            <div class="mt-4">
+                                <label for="volumeSlider" class="font-medium text-sm mb-1 block text-gray-600">ปริมาตร (V)</label>
+                                <div class="flex items-center gap-2">
+                                   <input type="range" id="volumeSlider" min="0.001" max="0.05" value="0.01" step="0.001" class="flex-grow">
+                                   <input type="number" id="volumeNumber" min="0.001" max="0.05" value="0.01" step="0.001" class="w-24 text-center border rounded-md p-1 bg-white tabular-nums">
+                                   <span class="text-xs text-gray-500">m³</span>
+                                </div>
+                            </div>
+                            <hr class="my-6">
+                            <div class="text-center p-3 bg-green-100 rounded-lg">
+                                <h4 class="font-bold text-green-800">สถานะ</h4>
+                                <p id="buoyancyStatus" class="font-semibold text-2xl mt-1 text-green-700">ลอย</p>
+                            </div>
+                            <div class="mt-6 space-y-2">
+                                 <button id="calculateBuoyancyBtn" class="w-full text-center py-3 bg-blue-500 hover:bg-blue-600 text-white font-bold rounded-lg transition text-base">คำนวณและบันทึกผล</button>
+                                <div class="flex gap-2">
+                                   <button id="clearBuoyancyGraphBtn" class="w-1/2 text-center py-2 bg-yellow-400 hover:bg-yellow-500 text-yellow-900 font-bold rounded-lg transition text-sm">ล้างกราฟ</button>
+                                   <button id="exportBuoyancyCsvBtn" class="w-1/2 text-center py-2 bg-green-500 hover:bg-green-600 text-white font-bold rounded-lg transition text-sm">ส่งออก CSV</button>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Visuals -->
+                        <div class="lg:w-2/3 lg:order-1 space-y-4 lg:space-y-6">
+                            <div class="w-full flex items-center justify-center bg-gray-50 p-4 rounded-xl shadow-inner h-72 sm:h-80 lg:min-h-[350px]">
+                                <canvas id="buoyancyCanvas"></canvas>
+                            </div>
+                            <div class="w-full bg-gray-50 p-2 sm:p-4 rounded-xl shadow-inner h-64 sm:h-72">
+                                <canvas id="buoyancyChart"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
         </div>
-      </div>
+    </main>
 
-    </div>
-  </main>
+    <!-- Footer -->
+    <footer class="gradient-bg text-white py-8 mt-16" role="contentinfo">
+        <div class="container mx-auto px-4 text-center">
+           <p class="text-sm text-blue-200">พัฒนาโดย: นายทรงเกียรติ สวนแก้ว โรงเรียนลองวิทยา อำเภอลอง จังหวัดแพร่</p>
+        </div>
+    </footer>
 
-  <!-- Footer -->
-  <footer class="gradient-bg text-white py-8 mt-16" role="contentinfo">
-    <div class="container mx-auto px-4 text-center">
-        <p class="text-sm text-blue-300">พัฒนาโดย: นายทรงเกียรติ สวนแก้ว โรงเรียนลองวิทยา อำเภอลอง จังหวัดแพร่ (ปรับปรุงโดย Gemini)</p>
-    </div>
-  </footer>
-
-  <script>
+    <script>
     document.addEventListener('DOMContentLoaded', () => {
         // --- Universal Constants & Data Stores ---
         const GRAVITY = 9.81;
@@ -345,6 +343,7 @@
         let pascalExperimentData = [];
         let buoyancyExperimentData = [];
         let pressureChart, pascalChart, buoyancyChart;
+        let pascalAnimationId, simState = { piston1Y: 0, piston2Y: 0, targetPiston1Y: 0, targetPiston2Y: 0 };
 
         // --- Utility Functions ---
         function exportToCSV(filename, headers, data) {
@@ -392,43 +391,30 @@
         function linkSliderAndNumber(sliderId, numberId) {
             const slider = document.getElementById(sliderId);
             const number = document.getElementById(numberId);
-            if (!slider || !number) return;
-            
-            const min = parseFloat(slider.min);
-            const max = parseFloat(slider.max);
-            const step = parseFloat(slider.step) || 1;
-
-            slider.addEventListener('input', () => {
-                number.value = slider.value;
+            if(!slider || !number) return;
+            slider.addEventListener('input', () => { 
+                number.value = slider.value; 
+                // Manually trigger change event for dependent calculations
+                slider.dispatchEvent(new Event('change', {bubbles: true}));
+            });
+            number.addEventListener('input', () => { 
+                slider.value = number.value;
+                // Manually trigger change event for dependent calculations
+                number.dispatchEvent(new Event('change', {bubbles: true}));
+            });
+        }
+        
+        function linkSliderAndDisplay(sliderId, displayId, toFixed) {
+            const slider = document.getElementById(sliderId);
+            const display = document.getElementById(displayId);
+            if (!slider || !display) return;
+            const updateDisplay = () => {
+                display.textContent = parseFloat(slider.value).toFixed(toFixed);
+                // Dispatch a custom event to notify that the value has changed
                 slider.dispatchEvent(new Event('change', { bubbles: true }));
-            });
-
-            number.addEventListener('input', () => {
-                let value = parseFloat(number.value);
-                // No need to clamp here, blur event will handle it.
-                // Just update slider if the value is valid.
-                if (!isNaN(value) && value >= min && value <= max) {
-                    slider.value = value;
-                    number.dispatchEvent(new Event('change', { bubbles: true }));
-                }
-            });
-
-            number.addEventListener('blur', () => {
-                let value = parseFloat(number.value);
-                if (isNaN(value) || value < min) {
-                    value = min;
-                } else if (value > max) {
-                    value = max;
-                }
-                
-                const decimals = (step.toString().split('.')[1] || []).length;
-                number.value = value.toFixed(decimals);
-
-                if (slider.value !== number.value) {
-                    slider.value = number.value;
-                    slider.dispatchEvent(new Event('change', { bubbles: true }));
-                }
-            });
+            };
+            slider.addEventListener('input', updateDisplay);
+            updateDisplay(); // Initial call
         }
 
         function formatArea(area) {
@@ -484,7 +470,6 @@
                     }
                 }
             });
-            observer.observe(pressureSim.canvas.parentElement);
             updatePressureSim();
         }
 
@@ -550,9 +535,9 @@
             canvas: document.getElementById('pascalCanvas'),
             chartCanvas: document.getElementById('pascalChart'),
             fSlider: document.getElementById('f_slider'),
-            fDisplay: document.getElementById('f_display'),
             dSmallSlider: document.getElementById('d_small_slider'),
             dLargeSlider: document.getElementById('D_large_slider'),
+            fDisplay: document.getElementById('f_display'),
             dSmallDisplay: document.getElementById('d_small_display'),
             dLargeDisplay: document.getElementById('D_large_display'),
             aVal: document.getElementById('a_val'),
@@ -568,7 +553,11 @@
         
         function initializePascalSim() {
             if (!pascalSim.canvas) return;
-            // linkSliderAndNumber is not needed for the force slider anymore
+            
+            linkSliderAndDisplay('f_slider', 'f_display', 0);
+            linkSliderAndDisplay('d_small_slider', 'd_small_display', 2);
+            linkSliderAndDisplay('D_large_slider', 'D_large_display', 2);
+
             const chartCtx = pascalSim.chartCanvas.getContext('2d');
             pascalChart = new Chart(chartCtx, {
                 type: 'scatter',
@@ -577,7 +566,7 @@
                     backgroundColor: 'rgba(59, 130, 246, 0.5)', borderColor: 'rgba(59, 130, 246, 1)',
                     borderWidth: 2, pointRadius: 5,
                 }, {
-                    type: 'line', label: 'ค่าตามทฤษฎี (y=x)', data: [{x: 0, y: 0}, {x: 10, y: 10}],
+                    type: 'line', label: 'ค่าตามทฤษฎี (y=x)', data: [{x: 0, y: 0}, {x: 1, y: 1}],
                     borderColor: 'rgba(239, 68, 68, 0.8)', borderWidth: 2,
                     pointRadius: 0, fill: false, borderDash: [5, 5],
                 }] },
@@ -593,7 +582,6 @@
                     }
                 }
             });
-            observer.observe(pascalSim.canvas.parentElement);
             updatePascalSim();
         }
 
@@ -634,12 +622,7 @@
             const F = parseFloat(pascalSim.fSlider.value);
             const d = parseFloat(pascalSim.dSmallSlider.value);
             const D = parseFloat(pascalSim.dLargeSlider.value);
-
-            // Update display values
-            pascalSim.fDisplay.textContent = F.toFixed(0);
-            pascalSim.dSmallDisplay.textContent = d.toFixed(2);
-            pascalSim.dLargeDisplay.textContent = D.toFixed(2);
-
+            
             const a = Math.PI * (d / 200) ** 2;
             const A = Math.PI * (D / 200) ** 2;
             const p = a > 0 ? F / a : 0;
@@ -651,8 +634,8 @@
             pascalSim.AVal.innerHTML = `${formatArea(A)} m²`;
             pascalSim.p_small_val.textContent = pressureText;
             pascalSim.p_large_val.textContent = pressureText;
-            pascalSim.WVal.textContent = `${W.toLocaleString('th-TH', { maximumFractionDigits: 2 })} N`;
-            pascalSim.maVal.textContent = `${areaRatio.toLocaleString('th-TH', { maximumFractionDigits: 2 })}`;
+            pascalSim.WVal.textContent = W.toLocaleString('th-TH', { maximumFractionDigits: 2 });
+            pascalSim.maVal.textContent = areaRatio.toLocaleString('th-TH', { maximumFractionDigits: 2 });
             
             drawPascalSim();
         }
@@ -697,14 +680,13 @@
             const chartCtx = buoyancySim.chartCanvas.getContext('2d');
             buoyancyChart = new Chart(chartCtx, {
                 type: 'bar',
-                data: { labels: [], datasets: [{ label: 'น้ำหนัก (W)', data: [], backgroundColor: '#ef4444' }, { label: 'แรงพยุงสูงสุด (Fʙ)', data: [], backgroundColor: '#3b82f6' }] },
+                data: { labels: [], datasets: [{ label: 'น้ำหนัก (W)', data: [], backgroundColor: '#ef4444' }, { label: 'แรงพยุง (Fʙ)', data: [], backgroundColor: '#3b82f6' }] },
                 options: {
                     responsive: true, maintainAspectRatio: false,
                     plugins: { title: { display: true, text: 'เปรียบเทียบขนาดของแรง', font: { size: 14, family: "'Sarabun', sans-serif" } } },
                     scales: { y: { beginAtZero: true, title: { display: true, text: 'ขนาดของแรง (N)' } } }
                 }
             });
-            observer.observe(buoyancySim.canvas.parentElement);
             updateBuoyancySim();
         }
         
@@ -778,88 +760,78 @@
             updateBuoyancySim();
         }
 
-        // --- Responsive Canvas Handler ---
-        const observer = new ResizeObserver(entries => {
-            for (let entry of entries) {
-                // Use requestAnimationFrame to avoid layout thrashing
-                window.requestAnimationFrame(() => {
-                    if (entry.target.contains(pressureSim.canvas)) drawPressureSim();
-                    if (entry.target.contains(pascalSim.canvas)) drawPascalSim();
-                    if (entry.target.contains(buoyancySim.canvas)) drawBuoyancySim();
-                });
-            }
-        });
-
         // --- Initializers and Event Listeners ---
+        window.addEventListener('resize', () => {
+            if (pressureSim.canvas) drawPressureSim();
+            if (pascalSim.canvas) drawPascalSim();
+            if (buoyancySim.canvas) drawBuoyancySim();
+        });
+        
         if (pressureSim.canvas) {
             initializePressureSim();
             ['input', 'change'].forEach(evt => {
-                if (pressureSim.densitySlider) pressureSim.densitySlider.addEventListener(evt, updatePressureSim);
-                if (pressureSim.depthSlider) pressureSim.depthSlider.addEventListener(evt, updatePressureSim);
+                pressureSim.densitySlider.addEventListener(evt, updatePressureSim);
+                pressureSim.depthSlider.addEventListener(evt, updatePressureSim);
+                pressureSim.densityNumber.addEventListener(evt, updatePressureSim);
+                pressureSim.depthNumber.addEventListener(evt, updatePressureSim);
             });
-            if (pressureSim.calculateBtn) pressureSim.calculateBtn.addEventListener('click', logPressureData);
-            if (pressureSim.clearBtn) pressureSim.clearBtn.addEventListener('click', () => {
+            pressureSim.calculateBtn.addEventListener('click', logPressureData);
+            pressureSim.clearBtn.addEventListener('click', () => {
                 pressureExperimentData = [];
                 pressureChart.data.datasets[0].data = [];
                 pressureChart.update();
             });
             const pressureHeadersCSV = ['ความลึก h (m)','ความหนาแน่น rho (kg/m^3)','ความดัน P (kPa)'];
-            if (pressureSim.exportBtn) pressureSim.exportBtn.addEventListener('click', () => exportToCSV('pressure_data.csv', pressureHeadersCSV, pressureExperimentData));
+            pressureSim.exportBtn.addEventListener('click', () => exportToCSV('pressure_data.csv', pressureHeadersCSV, pressureExperimentData));
         }
 
         if (pascalSim.canvas) {
             initializePascalSim();
             ['input', 'change'].forEach(evt => {
-                if(pascalSim.fSlider) pascalSim.fSlider.addEventListener(evt, updatePascalSim);
-                if(pascalSim.dSmallSlider) pascalSim.dSmallSlider.addEventListener(evt, updatePascalSim);
-                if(pascalSim.dLargeSlider) pascalSim.dLargeSlider.addEventListener(evt, updatePascalSim);
+                pascalSim.fSlider.addEventListener(evt, updatePascalSim);
+                pascalSim.dSmallSlider.addEventListener(evt, updatePascalSim);
+                pascalSim.dLargeSlider.addEventListener(evt, updatePascalSim);
             });
-            if (pascalSim.calculateBtn) pascalSim.calculateBtn.addEventListener('click', logPascalData);
-            if (pascalSim.clearBtn) pascalSim.clearBtn.addEventListener('click', () => {
+            pascalSim.calculateBtn.addEventListener('click', logPascalData);
+            pascalSim.clearBtn.addEventListener('click', () => {
                 pascalExperimentData = [];
                 pascalChart.data.datasets[0].data = [];
-                // Reset the theoretical line and axes
-                pascalChart.data.datasets[1].data = [{x: 0, y: 0}, {x: 10, y: 10}];
+                pascalChart.data.datasets[1].data = [{x: 0, y: 0}, {x: 1, y: 1}];
                 pascalChart.options.scales.x.max = undefined;
                 pascalChart.options.scales.y.max = undefined;
                 pascalChart.update();
             });
             const pascalHeadersCSV = ["แรงกด F (N)","เส้นผ่านศูนย์กลาง d (cm)","พื้นที่ a (m^2)","เส้นผ่านศูนย์กลาง D (cm)","พื้นที่ A (m^2)","น้ำหนัก W (N)","อัตราส่วนพื้นที่ A/a","อัตราส่วนแรง W/F", "การได้เปรียบเชิงกล (M.A.)"];
-            if (pascalSim.exportBtn) pascalSim.exportBtn.addEventListener('click', () => exportToCSV('pascal_data.csv', pascalHeadersCSV, pascalExperimentData));
+            pascalSim.exportBtn.addEventListener('click', () => exportToCSV('pascal_data.csv', pascalHeadersCSV, pascalExperimentData));
         }
 
         if (buoyancySim.canvas) {
             initializeBuoyancySim();
-            if (buoyancySim.materialButtons) {
-                buoyancySim.materialButtons.querySelectorAll('.material-btn').forEach(btn => {
-                    btn.addEventListener('click', () => {
-                        if (activeMaterialBtn) {
-                            activeMaterialBtn.classList.remove('material-btn-active');
-                            activeMaterialBtn.classList.add('hover:bg-gray-300');
-                        }
-                        btn.classList.add('material-btn-active');
-                        btn.classList.remove('hover:bg-gray-300');
-                        activeMaterialBtn = btn;
-                        updateBuoyancySim();
-                    });
+            buoyancySim.materialButtons.querySelectorAll('.material-btn').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    if (activeMaterialBtn) activeMaterialBtn.classList.remove('material-btn-active');
+                    btn.classList.add('material-btn-active');
+                    activeMaterialBtn = btn;
+                    updateBuoyancySim();
                 });
-            }
-            ['input', 'change'].forEach(evt => {
-                 if (buoyancySim.volumeSlider) buoyancySim.volumeSlider.addEventListener(evt, updateBuoyancySim);
             });
-            if (buoyancySim.calculateBtn) buoyancySim.calculateBtn.addEventListener('click', logBuoyancyData);
-            if (buoyancySim.clearBtn) buoyancySim.clearBtn.addEventListener('click', () => {
+            ['input', 'change'].forEach(evt => {
+                 buoyancySim.volumeSlider.addEventListener(evt, updateBuoyancySim);
+                 buoyancySim.volumeNumber.addEventListener(evt, updateBuoyancySim);
+            });
+            buoyancySim.calculateBtn.addEventListener('click', logBuoyancyData);
+            buoyancySim.clearBtn.addEventListener('click', () => {
                 buoyancyExperimentData = [];
                 buoyancyChart.data.labels = [];
-                buoyancyChart.data.datasets.forEach(dataset => dataset.data = []);
+                buoyancyChart.data.datasets[0].data = [];
+                buoyancyChart.data.datasets[1].data = [];
                 buoyancyChart.update();
             });
             const buoyancyHeadersCSV = ['วัสดุ','ความหนาแน่นวัตถุ rho_obj (kg/m^3)','ปริมาตร V (m^3)','น้ำหนัก W (N)','แรงพยุงสูงสุด FB_max (N)','สถานะ'];
-            if (buoyancySim.exportBtn) buoyancySim.exportBtn.addEventListener('click', () => exportToCSV('buoyancy_data.csv', buoyancyHeadersCSV, buoyancyExperimentData));
+            buoyancySim.exportBtn.addEventListener('click', () => exportToCSV('buoyancy_data.csv', buoyancyHeadersCSV, buoyancyExperimentData));
         }
     });
-  </script>
+    </script>
 </body>
 </html>
-
 
