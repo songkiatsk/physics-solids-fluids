@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>17.3 ของไหลสถิต (ฉบับสมบูรณ์)</title>
+  <title>17.3 ของไหลสถิต (ฉบับปรับปรุง)</title>
   <meta name="description" content="เนื้อหาและการทดลองเสมือนจริงเรื่องความดันในของไหล, กฎของพาสคัล, และหลักของอาร์คิมีดีส" />
   <meta name="theme-color" content="#5b6fe6" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -85,6 +85,9 @@
         border-width: 1px;
         margin: 0.1rem 0;
     }
+    .tabular-nums {
+        font-variant-numeric: tabular-nums;
+    }
   </style>
 </head>
 <body class="bg-gray-100 text-gray-900">
@@ -124,7 +127,7 @@
                             <label for="densitySlider" class="font-medium text-sm mb-1 block">ความหนาแน่น (ρ)</label>
                             <div class="flex items-center gap-2">
                                 <input type="range" id="densitySlider" min="100" max="14000" value="1000" step="50" class="flex-grow">
-                                <input type="number" id="densityNumber" min="100" max="14000" value="1000" class="w-20 text-center border rounded-md p-1 bg-blue-50">
+                                <input type="number" id="densityNumber" min="100" max="14000" value="1000" step="50" class="w-20 text-center border rounded-md p-1 bg-blue-50">
                                 <span class="text-xs text-gray-500">kg/m³</span>
                             </div>
                         </div>
@@ -132,7 +135,7 @@
                             <label for="depthSlider" class="font-medium text-sm mb-1 block">ความลึก (h)</label>
                             <div class="flex items-center gap-2">
                                 <input type="range" id="depthSlider" min="0" max="100" value="10" step="1" class="flex-grow">
-                                <input type="number" id="depthNumber" min="0" max="100" value="10" class="w-20 text-center border rounded-md p-1 bg-blue-50">
+                                <input type="number" id="depthNumber" min="0" max="100" value="10" step="1" class="w-20 text-center border rounded-md p-1 bg-blue-50">
                                 <span class="text-xs text-gray-500">m</span>
                             </div>
                         </div>
@@ -140,7 +143,7 @@
                     <hr class="my-6">
                     <div class="text-center p-3 bg-blue-50 rounded-lg">
                         <h4 class="font-bold text-blue-700">ผลลัพธ์: ความดันเกจ (P)</h4>
-                        <p id="pressureDisplay" class="font-semibold text-2xl mt-1">98.10 kPa</p>
+                        <p id="pressureDisplay" class="font-semibold text-2xl mt-1 tabular-nums">98.10 kPa</p>
                     </div>
                     <div class="mt-6 space-y-2">
                         <button id="calculatePressureBtn" class="w-full text-center py-3 bg-blue-500 hover:bg-blue-600 text-white font-bold rounded-lg transition text-base">คำนวณและบันทึกผล</button>
@@ -164,10 +167,10 @@
       </div>
 
       <hr class="my-8">
-
+      
       <!-- Section 2: Pascal's Principle -->
       <div>
-        <h2 class="text-3xl font-bold text-purple-700 mb-6">กฎของพาสคัล</h2>
+        <h2 class="text-3xl font-bold text-purple-700 mb-6">17.3.2 กฎของพาสคัล</h2>
          <p class="mb-4">
           "เมื่อเพิ่มความดันให้แก่ของไหลที่อยู่นิ่งในภาชนะปิด ความดันส่วนที่เพิ่มขึ้นนั้นจะถูกส่งผ่านไปยังทุกๆ จุดในของไหลและผนังของภาชนะอย่างทั่วถึงและเท่ากัน"
         </p>
@@ -197,43 +200,49 @@
                             <label for="f_slider" class="font-medium text-sm mb-1 block">แรงกดเข้า (F)</label>
                              <div class="flex items-center gap-2">
                                 <input type="range" id="f_slider" min="0" max="500" value="100" step="1" class="flex-grow">
-                                <input type="number" id="f_number" min="0" max="500" value="100" class="w-20 text-center border rounded-md p-1 bg-blue-50">
+                                <span id="f_display" class="w-20 text-center border rounded-md p-1 bg-gray-100 tabular-nums">100</span>
                                 <span class="text-xs text-gray-500">N</span>
                             </div>
                         </div>
                         <div>
                             <label for="d_small_slider" class="font-medium text-sm mb-1 block">เส้นผ่านศูนย์กลางเล็ก (d)</label>
                              <div class="flex items-center gap-2">
-                                <input type="range" id="d_small_slider" min="0.5" max="5" value="1.5" step="0.1" class="flex-grow">
-                                <input type="number" id="d_small_number" min="0.5" max="5" value="1.5" step="0.1" class="w-20 text-center border rounded-md p-1 bg-blue-50">
+                                <input type="range" id="d_small_slider" min="0.5" max="5" value="1.50" step="0.01" class="flex-grow">
+                                <span id="d_small_display" class="w-20 text-center border rounded-md p-1 bg-gray-100 tabular-nums">1.50</span>
                                 <span class="text-xs text-gray-500">cm</span>
                             </div>
                         </div>
                         <div>
                             <label for="D_large_slider" class="font-medium text-sm mb-1 block">เส้นผ่านศูนย์กลางใหญ่ (D)</label>
                              <div class="flex items-center gap-2">
-                                <input type="range" id="D_large_slider" min="1" max="15" value="3" step="0.1" class="flex-grow">
-                                <input type="number" id="D_large_number" min="1" max="15" value="3" step="0.1" class="w-20 text-center border rounded-md p-1 bg-blue-50">
+                                <input type="range" id="D_large_slider" min="1" max="15" value="3.00" step="0.01" class="flex-grow">
+                                <span id="D_large_display" class="w-20 text-center border rounded-md p-1 bg-gray-100 tabular-nums">3.00</span>
                                 <span class="text-xs text-gray-500">cm</span>
                             </div>
                         </div>
                     </div>
                     <hr class="my-6">
-                    <div id="results" class="grid grid-cols-2 gap-3 sm:gap-4 text-xs">
-                        <div class="text-center p-2 bg-gray-50 rounded-lg">
-                            <h4 class="font-bold">กระบอกสูบเล็ก</h4>
-                            <p>พื้นที่ (a): <span id="a_val" class="font-semibold block">0 m²</span></p>
-                            <p>ความดัน (P<sub>a</sub>): <span id="pa_val" class="font-semibold block">0 kPa</span></p>
+                    <div id="results" class="space-y-4 text-sm">
+                        <!-- Flex container for the top two boxes -->
+                        <div class="flex flex-col sm:flex-row gap-4">
+                            <!-- Small Piston Box -->
+                            <div class="flex-1 text-center p-3 bg-gray-50 rounded-lg space-y-1">
+                                <h4 class="font-bold">กระบอกสูบเล็ก</h4>
+                                <p>พื้นที่ (a): <span id="a_val" class="font-semibold block tabular-nums">0 m²</span></p>
+                                <p>ความดัน (P): <span id="p_small_val" class="font-semibold block tabular-nums">0 kPa</span></p>
+                            </div>
+                            <!-- Large Piston Box -->
+                            <div class="flex-1 text-center p-3 bg-gray-50 rounded-lg space-y-1">
+                                <h4 class="font-bold">กระบอกสูบใหญ่</h4>
+                                <p>พื้นที่ (A): <span id="A_val" class="font-semibold block tabular-nums">0 m²</span></p>
+                                <p>ความดัน (P): <span id="p_large_val" class="font-semibold block tabular-nums">0 kPa</span></p>
+                            </div>
                         </div>
-                        <div class="text-center p-2 bg-gray-50 rounded-lg">
-                            <h4 class="font-bold">กระบอกสูบใหญ่</h4>
-                            <p>พื้นที่ (A): <span id="A_val" class="font-semibold block">0 m²</span></p>
-                             <p>ความดัน (P<sub>A</sub>): <span id="pA_val" class="font-semibold block">0 kPa</span></p>
-                        </div>
-                         <div class="col-span-2 text-center p-3 bg-green-50 rounded-lg space-y-1">
-                            <h4 class="font-bold text-green-700">ผลลัพธ์</h4>
-                            <p class="text-sm">น้ำหนักที่ยกได้ (W): <span id="W_val" class="font-semibold">0 N</span></p>
-                            <p class="text-sm">การได้เปรียบเชิงกล (M.A.): <span id="ma_val" class="font-semibold">0</span></p>
+                        <!-- Results Box -->
+                        <div class="text-center p-4 bg-green-50 rounded-lg space-y-1">
+                            <h4 class="font-bold text-green-700 text-base">ผลลัพธ์</h4>
+                            <p>น้ำหนักที่ยกได้ (W): <span id="W_val" class="font-semibold text-lg tabular-nums">0 N</span></p>
+                            <p>การได้เปรียบเชิงกล (M.A.): <span id="ma_val" class="font-semibold text-lg tabular-nums">0</span></p>
                         </div>
                     </div>
                     <div class="mt-6 space-y-2">
@@ -257,6 +266,7 @@
         </div>
       </div>
 
+
       <hr class="my-8">
 
       <!-- Section 3: Buoyancy -->
@@ -278,9 +288,9 @@
                         <label class="font-medium text-sm mb-2 block">เลือกวัสดุ</label>
                         <div id="materialButtons" class="grid grid-cols-2 gap-2 text-center text-sm">
                             <button data-density="700" class="material-btn p-2 rounded-lg bg-gray-200 material-btn-active">ไม้สน</button>
-                            <button data-density="920" class="material-btn p-2 rounded-lg bg-gray-200">น้ำแข็ง</button>
-                            <button data-density="2700" class="material-btn p-2 rounded-lg bg-gray-200">อะลูมิเนียม</button>
-                            <button data-density="7850" class="material-btn p-2 rounded-lg bg-gray-200">เหล็ก</button>
+                            <button data-density="920" class="material-btn p-2 rounded-lg bg-gray-200 hover:bg-gray-300">น้ำแข็ง</button>
+                            <button data-density="2700" class="material-btn p-2 rounded-lg bg-gray-200 hover:bg-gray-300">อะลูมิเนียม</button>
+                            <button data-density="7850" class="material-btn p-2 rounded-lg bg-gray-200 hover:bg-gray-300">เหล็ก</button>
                         </div>
                     </div>
                     <div class="mt-4">
@@ -323,7 +333,7 @@
   <!-- Footer -->
   <footer class="gradient-bg text-white py-8 mt-16" role="contentinfo">
     <div class="container mx-auto px-4 text-center">
-       <p class="text-sm text-blue-300">พัฒนาโดย: นายทรงเกียรติ สวนแก้ว โรงเรียนลองวิทยา อำเภอลอง จังหวัดแพร่</p>
+        <p class="text-sm text-blue-300">พัฒนาโดย: นายทรงเกียรติ สวนแก้ว โรงเรียนลองวิทยา อำเภอลอง จังหวัดแพร่ (ปรับปรุงโดย Gemini)</p>
     </div>
   </footer>
 
@@ -335,7 +345,6 @@
         let pascalExperimentData = [];
         let buoyancyExperimentData = [];
         let pressureChart, pascalChart, buoyancyChart;
-        let pascalAnimationId, simState = { piston1Y: 0, piston2Y: 0, targetPiston1Y: 0, targetPiston2Y: 0 };
 
         // --- Utility Functions ---
         function exportToCSV(filename, headers, data) {
@@ -383,9 +392,43 @@
         function linkSliderAndNumber(sliderId, numberId) {
             const slider = document.getElementById(sliderId);
             const number = document.getElementById(numberId);
-            if(!slider || !number) return;
-            slider.addEventListener('input', () => { number.value = slider.value; slider.dispatchEvent(new Event('change', {bubbles: true})); });
-            number.addEventListener('input', () => { slider.value = number.value; number.dispatchEvent(new Event('change', {bubbles: true})); });
+            if (!slider || !number) return;
+            
+            const min = parseFloat(slider.min);
+            const max = parseFloat(slider.max);
+            const step = parseFloat(slider.step) || 1;
+
+            slider.addEventListener('input', () => {
+                number.value = slider.value;
+                slider.dispatchEvent(new Event('change', { bubbles: true }));
+            });
+
+            number.addEventListener('input', () => {
+                let value = parseFloat(number.value);
+                // No need to clamp here, blur event will handle it.
+                // Just update slider if the value is valid.
+                if (!isNaN(value) && value >= min && value <= max) {
+                    slider.value = value;
+                    number.dispatchEvent(new Event('change', { bubbles: true }));
+                }
+            });
+
+            number.addEventListener('blur', () => {
+                let value = parseFloat(number.value);
+                if (isNaN(value) || value < min) {
+                    value = min;
+                } else if (value > max) {
+                    value = max;
+                }
+                
+                const decimals = (step.toString().split('.')[1] || []).length;
+                number.value = value.toFixed(decimals);
+
+                if (slider.value !== number.value) {
+                    slider.value = number.value;
+                    slider.dispatchEvent(new Event('change', { bubbles: true }));
+                }
+            });
         }
 
         function formatArea(area) {
@@ -441,6 +484,7 @@
                     }
                 }
             });
+            observer.observe(pressureSim.canvas.parentElement);
             updatePressureSim();
         }
 
@@ -506,15 +550,15 @@
             canvas: document.getElementById('pascalCanvas'),
             chartCanvas: document.getElementById('pascalChart'),
             fSlider: document.getElementById('f_slider'),
+            fDisplay: document.getElementById('f_display'),
             dSmallSlider: document.getElementById('d_small_slider'),
             dLargeSlider: document.getElementById('D_large_slider'),
-            fNumber: document.getElementById('f_number'),
-            dSmallNumber: document.getElementById('d_small_number'),
-            dLargeNumber: document.getElementById('D_large_number'),
+            dSmallDisplay: document.getElementById('d_small_display'),
+            dLargeDisplay: document.getElementById('D_large_display'),
             aVal: document.getElementById('a_val'),
             AVal: document.getElementById('A_val'),
-            paVal: document.getElementById('pa_val'),
-            pAVal: document.getElementById('pA_val'),
+            p_small_val: document.getElementById('p_small_val'),
+            p_large_val: document.getElementById('p_large_val'),
             maVal: document.getElementById('ma_val'),
             WVal: document.getElementById('W_val'),
             calculateBtn: document.getElementById('calculatePascalBtn'),
@@ -524,9 +568,7 @@
         
         function initializePascalSim() {
             if (!pascalSim.canvas) return;
-            linkSliderAndNumber('f_slider', 'f_number');
-            linkSliderAndNumber('d_small_slider', 'd_small_number');
-            linkSliderAndNumber('D_large_slider', 'D_large_number');
+            // linkSliderAndNumber is not needed for the force slider anymore
             const chartCtx = pascalSim.chartCanvas.getContext('2d');
             pascalChart = new Chart(chartCtx, {
                 type: 'scatter',
@@ -535,7 +577,7 @@
                     backgroundColor: 'rgba(59, 130, 246, 0.5)', borderColor: 'rgba(59, 130, 246, 1)',
                     borderWidth: 2, pointRadius: 5,
                 }, {
-                    type: 'line', label: 'ค่าตามทฤษฎี (y=x)', data: [{x: 0, y: 0}, {x: 1000, y: 1000}],
+                    type: 'line', label: 'ค่าตามทฤษฎี (y=x)', data: [{x: 0, y: 0}, {x: 10, y: 10}],
                     borderColor: 'rgba(239, 68, 68, 0.8)', borderWidth: 2,
                     pointRadius: 0, fill: false, borderDash: [5, 5],
                 }] },
@@ -551,6 +593,7 @@
                     }
                 }
             });
+            observer.observe(pascalSim.canvas.parentElement);
             updatePascalSim();
         }
 
@@ -591,27 +634,26 @@
             const F = parseFloat(pascalSim.fSlider.value);
             const d = parseFloat(pascalSim.dSmallSlider.value);
             const D = parseFloat(pascalSim.dLargeSlider.value);
+
+            // Update display values
+            pascalSim.fDisplay.textContent = F.toFixed(0);
+            pascalSim.dSmallDisplay.textContent = d.toFixed(2);
+            pascalSim.dLargeDisplay.textContent = D.toFixed(2);
+
             const a = Math.PI * (d / 200) ** 2;
             const A = Math.PI * (D / 200) ** 2;
             const p = a > 0 ? F / a : 0;
             const W = p * A;
-            const areaRatio = A > 0 && a > 0 ? A / a : 0;
+            const areaRatio = a > 0 ? A / a : 0;
+            const pressureText = `${(p / 1000).toLocaleString('th-TH', { maximumFractionDigits: 2 })} kPa`;
 
             pascalSim.aVal.innerHTML = `${formatArea(a)} m²`;
             pascalSim.AVal.innerHTML = `${formatArea(A)} m²`;
-            pascalSim.paVal.textContent = `${(p / 1000).toLocaleString('th-TH', { maximumFractionDigits: 2 })} kPa`;
-            pascalSim.pAVal.textContent = `${(p / 1000).toLocaleString('th-TH', { maximumFractionDigits: 2 })} kPa`;
+            pascalSim.p_small_val.textContent = pressureText;
+            pascalSim.p_large_val.textContent = pressureText;
             pascalSim.WVal.textContent = `${W.toLocaleString('th-TH', { maximumFractionDigits: 2 })} N`;
             pascalSim.maVal.textContent = `${areaRatio.toLocaleString('th-TH', { maximumFractionDigits: 2 })}`;
             
-            // Remove animation part to simplify
-            // const delta_x_cm = 20;
-            // const delta_X_cm = A > 0 ? (a / A) * delta_x_cm : 0;
-            // const deltaXValEl = document.getElementById('delta_x_val');
-            // const deltaXLargeValEl = document.getElementById('delta_X_val');
-            // if(deltaXValEl) deltaXValEl.textContent = `-${delta_x_cm.toFixed(2)} cm`;
-            // if(deltaXLargeValEl) deltaXLargeValEl.textContent = `+${delta_X_cm.toFixed(2)} cm`;
-
             drawPascalSim();
         }
 
@@ -627,6 +669,7 @@
                 const forceRatio = W / F;
                 pascalChart.data.datasets[0].data.push({ x: areaRatio, y: forceRatio });
                 const maxVal = Math.max(...pascalChart.data.datasets[0].data.flatMap(p => [p.x, p.y]), 10) * 1.1;
+                pascalChart.data.datasets[1].data = [{x: 0, y: 0}, {x: maxVal, y: maxVal}];
                 pascalChart.options.scales.x.max = maxVal;
                 pascalChart.options.scales.y.max = maxVal;
                 pascalChart.update();
@@ -654,13 +697,14 @@
             const chartCtx = buoyancySim.chartCanvas.getContext('2d');
             buoyancyChart = new Chart(chartCtx, {
                 type: 'bar',
-                data: { labels: [], datasets: [{ label: 'น้ำหนัก (W)', data: [], backgroundColor: '#ef4444' }, { label: 'แรงพยุง (Fʙ)', data: [], backgroundColor: '#3b82f6' }] },
+                data: { labels: [], datasets: [{ label: 'น้ำหนัก (W)', data: [], backgroundColor: '#ef4444' }, { label: 'แรงพยุงสูงสุด (Fʙ)', data: [], backgroundColor: '#3b82f6' }] },
                 options: {
                     responsive: true, maintainAspectRatio: false,
                     plugins: { title: { display: true, text: 'เปรียบเทียบขนาดของแรง', font: { size: 14, family: "'Sarabun', sans-serif" } } },
                     scales: { y: { beginAtZero: true, title: { display: true, text: 'ขนาดของแรง (N)' } } }
                 }
             });
+            observer.observe(buoyancySim.canvas.parentElement);
             updateBuoyancySim();
         }
         
@@ -734,66 +778,88 @@
             updateBuoyancySim();
         }
 
+        // --- Responsive Canvas Handler ---
+        const observer = new ResizeObserver(entries => {
+            for (let entry of entries) {
+                // Use requestAnimationFrame to avoid layout thrashing
+                window.requestAnimationFrame(() => {
+                    if (entry.target.contains(pressureSim.canvas)) drawPressureSim();
+                    if (entry.target.contains(pascalSim.canvas)) drawPascalSim();
+                    if (entry.target.contains(buoyancySim.canvas)) drawBuoyancySim();
+                });
+            }
+        });
+
         // --- Initializers and Event Listeners ---
         if (pressureSim.canvas) {
             initializePressureSim();
             ['input', 'change'].forEach(evt => {
-                pressureSim.densitySlider.addEventListener(evt, updatePressureSim);
-                pressureSim.depthSlider.addEventListener(evt, updatePressureSim);
+                if (pressureSim.densitySlider) pressureSim.densitySlider.addEventListener(evt, updatePressureSim);
+                if (pressureSim.depthSlider) pressureSim.depthSlider.addEventListener(evt, updatePressureSim);
             });
-            pressureSim.calculateBtn.addEventListener('click', logPressureData);
-            pressureSim.clearBtn.addEventListener('click', () => {
+            if (pressureSim.calculateBtn) pressureSim.calculateBtn.addEventListener('click', logPressureData);
+            if (pressureSim.clearBtn) pressureSim.clearBtn.addEventListener('click', () => {
                 pressureExperimentData = [];
                 pressureChart.data.datasets[0].data = [];
                 pressureChart.update();
             });
             const pressureHeadersCSV = ['ความลึก h (m)','ความหนาแน่น rho (kg/m^3)','ความดัน P (kPa)'];
-            pressureSim.exportBtn.addEventListener('click', () => exportToCSV('pressure_data.csv', pressureHeadersCSV, pressureExperimentData));
+            if (pressureSim.exportBtn) pressureSim.exportBtn.addEventListener('click', () => exportToCSV('pressure_data.csv', pressureHeadersCSV, pressureExperimentData));
         }
 
         if (pascalSim.canvas) {
             initializePascalSim();
             ['input', 'change'].forEach(evt => {
-                pascalSim.fSlider.addEventListener(evt, updatePascalSim);
-                pascalSim.dSmallSlider.addEventListener(evt, updatePascalSim);
-                pascalSim.dLargeSlider.addEventListener(evt, updatePascalSim);
+                if(pascalSim.fSlider) pascalSim.fSlider.addEventListener(evt, updatePascalSim);
+                if(pascalSim.dSmallSlider) pascalSim.dSmallSlider.addEventListener(evt, updatePascalSim);
+                if(pascalSim.dLargeSlider) pascalSim.dLargeSlider.addEventListener(evt, updatePascalSim);
             });
-            pascalSim.calculateBtn.addEventListener('click', logPascalData);
-            pascalSim.clearBtn.addEventListener('click', () => {
+            if (pascalSim.calculateBtn) pascalSim.calculateBtn.addEventListener('click', logPascalData);
+            if (pascalSim.clearBtn) pascalSim.clearBtn.addEventListener('click', () => {
                 pascalExperimentData = [];
                 pascalChart.data.datasets[0].data = [];
+                // Reset the theoretical line and axes
+                pascalChart.data.datasets[1].data = [{x: 0, y: 0}, {x: 10, y: 10}];
+                pascalChart.options.scales.x.max = undefined;
+                pascalChart.options.scales.y.max = undefined;
                 pascalChart.update();
             });
             const pascalHeadersCSV = ["แรงกด F (N)","เส้นผ่านศูนย์กลาง d (cm)","พื้นที่ a (m^2)","เส้นผ่านศูนย์กลาง D (cm)","พื้นที่ A (m^2)","น้ำหนัก W (N)","อัตราส่วนพื้นที่ A/a","อัตราส่วนแรง W/F", "การได้เปรียบเชิงกล (M.A.)"];
-            pascalSim.exportBtn.addEventListener('click', () => exportToCSV('pascal_data.csv', pascalHeadersCSV, pascalExperimentData));
+            if (pascalSim.exportBtn) pascalSim.exportBtn.addEventListener('click', () => exportToCSV('pascal_data.csv', pascalHeadersCSV, pascalExperimentData));
         }
 
         if (buoyancySim.canvas) {
             initializeBuoyancySim();
-            buoyancySim.materialButtons.querySelectorAll('.material-btn').forEach(btn => {
-                btn.addEventListener('click', () => {
-                    if (activeMaterialBtn) activeMaterialBtn.classList.remove('material-btn-active');
-                    btn.classList.add('material-btn-active');
-                    activeMaterialBtn = btn;
-                    updateBuoyancySim();
+            if (buoyancySim.materialButtons) {
+                buoyancySim.materialButtons.querySelectorAll('.material-btn').forEach(btn => {
+                    btn.addEventListener('click', () => {
+                        if (activeMaterialBtn) {
+                            activeMaterialBtn.classList.remove('material-btn-active');
+                            activeMaterialBtn.classList.add('hover:bg-gray-300');
+                        }
+                        btn.classList.add('material-btn-active');
+                        btn.classList.remove('hover:bg-gray-300');
+                        activeMaterialBtn = btn;
+                        updateBuoyancySim();
+                    });
                 });
-            });
+            }
             ['input', 'change'].forEach(evt => {
-                 buoyancySim.volumeSlider.addEventListener(evt, updateBuoyancySim);
+                 if (buoyancySim.volumeSlider) buoyancySim.volumeSlider.addEventListener(evt, updateBuoyancySim);
             });
-            buoyancySim.calculateBtn.addEventListener('click', logBuoyancyData);
-            buoyancySim.clearBtn.addEventListener('click', () => {
+            if (buoyancySim.calculateBtn) buoyancySim.calculateBtn.addEventListener('click', logBuoyancyData);
+            if (buoyancySim.clearBtn) buoyancySim.clearBtn.addEventListener('click', () => {
                 buoyancyExperimentData = [];
                 buoyancyChart.data.labels = [];
-                buoyancyChart.data.datasets[0].data = [];
-                buoyancyChart.data.datasets[1].data = [];
+                buoyancyChart.data.datasets.forEach(dataset => dataset.data = []);
                 buoyancyChart.update();
             });
             const buoyancyHeadersCSV = ['วัสดุ','ความหนาแน่นวัตถุ rho_obj (kg/m^3)','ปริมาตร V (m^3)','น้ำหนัก W (N)','แรงพยุงสูงสุด FB_max (N)','สถานะ'];
-            buoyancySim.exportBtn.addEventListener('click', () => exportToCSV('buoyancy_data.csv', buoyancyHeadersCSV, buoyancyExperimentData));
+            if (buoyancySim.exportBtn) buoyancySim.exportBtn.addEventListener('click', () => exportToCSV('buoyancy_data.csv', buoyancyHeadersCSV, buoyancyExperimentData));
         }
     });
   </script>
 </body>
 </html>
+
 
