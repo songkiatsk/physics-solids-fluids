@@ -1,155 +1,204 @@
 <!DOCTYPE html>
 <html lang="th">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>17.1 ของแข็งและสภาพยืดหยุ่น</title>
-  <meta name="description" content="เนื้อหาเรื่องสภาพยืดหยุ่นของของแข็ง ความเค้น ความเครียด และมอดุลัสของยัง" />
-  <meta name="theme-color" content="#5b6fe6" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-  <script src="https://cdn.tailwindcss.com"></script>
-  <script>
-    tailwind.config = {
-      theme: {
-        extend: {
-          fontFamily: {
-            thai: ['Sarabun', 'sans-serif']
-          }
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>17.1 ของแข็งและสภาพยืดหยุ่น </title>
+    <meta name="description" content="เนื้อหาเรื่องสภาพยืดหยุ่นของของแข็ง ความเค้น ความเครียด และมอดุลัสของยัง" />
+    <meta name="theme-color" content="#5b6fe6" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- KaTeX for beautiful math rendering -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css" xintegrity="sha384-n8MVd4RsNIU0KOVEMVIhbGKZC0sHCjodCIbAyOVK24jF2fYEVcfNE6oRdFToOTwV" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js" xintegrity="sha384-XjKyOOlVwcjNcsNQTeKa7fBI3DGhsczS0IOPRTmlAJ7QNusTdTsEBOPdQpEB8w3V" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js" xintegrity="sha384-+VBxd3r6XgURycqtZ117nYw44OOcIax56Z4dCRWbxyPt0Koah1uHoK0o4+/RRE05" crossorigin="anonymous"></script>
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        thai: ['Sarabun', 'sans-serif']
+                    },
+                    colors: {
+                        'brand-purple': '#5b6fe6',
+                        'brand-blue': '#667eea',
+                    }
+                }
+            }
         }
-      }
-    }
-  </script>
-  <style>
-    body { font-family: 'Sarabun', sans-serif; }
-    .gradient-bg { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); }
-    .card-hover { transition: transform .25s ease, box-shadow .25s ease; }
-    .card-hover:hover { transform: translateY(-6px); box-shadow: 0 20px 40px rgba(0, 0, 0, .12); }
-  </style>
+    </script>
+    <style>
+        body { font-family: 'Sarabun', 'sans-serif'; }
+        .gradient-bg { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); }
+        .equation-box {
+            background-color: #f3f4f6; padding: 1rem;
+            border-radius: 0.5rem;
+            text-align: center;
+            font-size: 1.25rem;
+        }
+        .variable-list {
+            background-color: #f9fafb;
+            border: 1px solid #e5e7eb;
+            border-radius: 0.5rem;
+            padding: 1.5rem;
+            margin-top: 1.5rem;
+        }
+        .variable-list p {
+            margin-bottom: 0.5rem;
+            font-size: 1.1rem;
+            display: flex;
+            align-items: flex-start;
+        }
+        .variable-list p > span:first-of-type {
+            display: inline-block;
+            min-width: 140px;
+            text-align: right;
+            margin-right: 10px;
+        }
+        .card-hover { transition: transform .25s ease, box-shadow .25s ease; }
+        .card-hover:hover { transform: translateY(-6px); box-shadow: 0 10px 20px rgba(0,0,0,0.1); }
+    </style>
 </head>
-<body class="bg-gray-100 text-gray-900">
-  <!-- Navigation -->
-  <nav class="gradient-bg text-white shadow-lg sticky top-0 z-50" role="navigation" aria-label="หลัก">
-    <div class="container mx-auto px-4 py-4 flex items-center justify-between">
-      <div class="flex items-center gap-3">
-        <div class="w-10 h-10 bg-white rounded-full flex items-center justify-center" aria-hidden="true">
-          <span class="text-2xl">🧊</span>
-        </div>
-        <h1 class="text-lg sm:text-xl font-bold">17.1 ของแข็งและสภาพยืดหยุ่น</h1>
-      </div>
-      <a href="index.html" class="text-sm font-semibold hover:text-blue-200 transition-colors">กลับหน้าหลัก</a>
-    </div>
-  </nav>
-
-  <main class="container mx-auto px-4 py-12">
-    <div class="max-w-3xl mx-auto bg-white p-8 rounded-lg shadow-lg space-y-12">
-      
-      <!-- Section 1 -->
-      <div>
-        <h2 class="text-3xl font-bold text-blue-700 mb-6">17.1.1 สภาพยืดหยุ่นของของแข็ง</h2>
-        <p class="mb-4">
-          **สภาพยืดหยุ่น (Elasticity)** คือสมบัติของวัตถุที่สามารถเปลี่ยนแปลงรูปร่างได้เมื่อมีแรงภายนอกมากระทำ และจะกลับคืนสู่รูปร่างเดิมได้เมื่อแรงนั้นหมดไป หากวัตถุไม่กลับสู่รูปร่างเดิม เรียกว่า **การเปลี่ยนรูปแบบพลาสติก (Plastic deformation)**
-        </p>
-        <p class="mb-6">
-          แรงที่ทำให้วัตถุคืนรูปเรียกว่า **แรงคืนตัว (Restoring force)** ซึ่งเป็นไปตาม **กฎของฮุก (Hooke's Law)** ในช่วงที่การเปลี่ยนแปลงรูปร่างไม่เกินขีดจำกัดที่เรียกว่า **ขีดจำกัดสภาพยืดหยุ่น (Elastic limit)**
-        </p>
-      </div>
-
-      <!-- Section 2 -->
-      <div>
-        <h2 class="text-3xl font-bold text-blue-700 mb-6">17.1.2 ความเค้นและความเครียดของของแข็ง</h2>
-        <div class="space-y-6">
-          <div>
-            <h3 class="text-xl font-semibold mb-2">ความเค้น (Stress, σ)</h3>
-            <p>คืออัตราส่วนระหว่างขนาดของแรงที่กระทำตั้งฉาก (F) ต่อพื้นที่หน้าตัด (A) ของวัตถุ มีหน่วยเป็นนิวตันต่อตารางเมตร (N/m²) หรือพาสคัล (Pa)</p>
-            <div class="mt-2 bg-gray-100 p-4 rounded-lg text-center font-mono text-lg">
-              σ = F / A
+<body class="bg-gray-100 text-gray-800">
+    <!-- Navigation -->
+    <nav class="gradient-bg text-white shadow-lg sticky top-0 z-50" role="navigation" aria-label="หลัก">
+        <div class="container mx-auto px-4 py-4 flex items-center justify-between">
+            <div class="flex items-center gap-3">
+                <div class="w-10 h-10 bg-white rounded-full flex items-center justify-center" aria-hidden="true">
+                    <span class="text-2xl">🧊</span>
+                </div>
+                <h1 class="text-lg sm:text-xl font-bold">17.1 ของแข็งและสภาพยืดหยุ่น</h1>
             </div>
-             <div class="mt-4 text-sm text-gray-700 bg-gray-50 p-4 rounded-lg">
-              <h4 class="font-semibold mb-2">โดยที่:</h4>
-              <ul class="list-disc list-inside space-y-1">
-                <li><b>σ</b> (sigma) คือ ความเค้น (N/m²)</li>
-                <li><b>F</b> คือ แรงที่กระทำตั้งฉากกับพื้นที่ (N)</li>
-                <li><b>A</b> คือ พื้นที่หน้าตัด (m²)</li>
-              </ul>
+            <a href="index.html" class="flex items-center gap-2 px-3 py-2 text-sm font-medium rounded-md bg-white/20 hover:bg-white/30 transition-colors">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+                <span>กลับหน้าหลัก</span>
+            </a>
+        </div>
+    </nav>
+
+    <main class="container mx-auto px-4 py-8 sm:py-12">
+        <div class="max-w-6xl mx-auto bg-white p-4 sm:p-8 rounded-2xl shadow-lg space-y-12">
+            
+            <!-- Section 1: Elasticity -->
+            <div>
+                <h2 class="text-3xl font-bold text-purple-700 mb-6">17.1.1 สภาพยืดหยุ่นของของแข็ง</h2>
+                <p class="mb-4 text-gray-700 leading-relaxed">
+                    <strong>สภาพยืดหยุ่น (Elasticity)</strong> คือสมบัติของวัตถุที่สามารถเปลี่ยนแปลงรูปร่างได้เมื่อมีแรงภายนอกมากระทำ และจะกลับคืนสู่รูปร่างเดิมได้เมื่อแรงนั้นหมดไป หากวัตถุไม่กลับสู่รูปร่างเดิมอย่างสมบูรณ์ จะเรียกว่า <strong>การเปลี่ยนรูปแบบพลาสติก (Plastic deformation)</strong>
+                </p>
+                <p class="text-gray-700 leading-relaxed">
+                    แรงที่ทำให้วัตถุคืนรูปเรียกว่า <strong>แรงคืนตัว (Restoring force)</strong> ซึ่งเป็นไปตาม <strong>กฎของฮุก (Hooke's Law)</strong> ในช่วงที่การเปลี่ยนแปลงรูปร่างไม่เกินขีดจำกัดที่เรียกว่า <strong>ขีดจำกัดสภาพยืดหยุ่น (Elastic limit)</strong>
+                </p>
             </div>
-          </div>
-          <div>
-            <h3 class="text-xl font-semibold mb-2">ความเครียด (Strain, ε)</h3>
-            <p>คืออัตราส่วนของขนาดที่เปลี่ยนไปต่อขนาดเดิม เป็นปริมาณที่ไม่มีหน่วย เนื่องจากเป็นอัตราส่วนของปริมาณชนิดเดียวกัน</p>
-            <ul class="list-disc list-inside mt-2 space-y-1">
-              <li><b>ความเครียดตามยาว:</b> การเปลี่ยนแปลงความยาว (ΔL) ต่อความยาวเดิม (L₀)</li>
-              <li class="bg-gray-100 p-4 rounded-lg text-center font-mono text-lg">ε = ΔL / L₀</li>
-            </ul>
-             <div class="mt-4 text-sm text-gray-700 bg-gray-50 p-4 rounded-lg">
-              <h4 class="font-semibold mb-2">โดยที่:</h4>
-              <ul class="list-disc list-inside space-y-1">
-                <li><b>ε</b> (epsilon) คือ ความเครียด (ไม่มีหน่วย)</li>
-                <li><b>ΔL</b> คือ ความยาวที่เปลี่ยนไป (m)</li>
-                <li><b>L₀</b> คือ ความยาวเดิม (m)</li>
-              </ul>
+
+            <hr class="my-12 border-t-2 border-gray-200">
+
+            <!-- Section 2: Stress and Strain -->
+            <div>
+                <h2 class="text-3xl font-bold text-purple-700 mb-6">17.1.2 ความเค้นและความเครียด</h2>
+                <p class="mb-4 text-gray-700 leading-relaxed">
+                    <b>ความเค้น (Stress, $\sigma$)</b> คืออัตราส่วนระหว่างขนาดของแรงที่กระทำตั้งฉาก ($F$) ต่อพื้นที่หน้าตัด ($A$) ของวัตถุ มีหน่วยเป็นนิวตันต่อตารางเมตร (N/m²) หรือพาสคัล (Pa)
+                </p>
+                <div class="equation-box my-4">
+                    $$ \sigma = \frac{F}{A} $$
+                </div>
+                <div class="variable-list">
+                    <p><span>$\sigma$ (sigma)</span> = ความเค้น (N/m²)</p>
+                    <p><span>$F$</span> = แรงที่กระทำตั้งฉากกับพื้นที่ (N)</p>
+                    <p><span>$A$</span> = พื้นที่หน้าตัด (m²)</p>
+                </div>
+
+                <p class="mt-8 mb-4 text-gray-700 leading-relaxed">
+                    <b>ความเครียด (Strain, $\epsilon$)</b> คืออัตราส่วนของขนาดที่เปลี่ยนไปต่อขนาดเดิม เป็นปริมาณที่ไม่มีหน่วย ความเครียดที่พบบ่อยคือ <b>ความเครียดตามยาว</b> ซึ่งเป็นการเปลี่ยนแปลงความยาว ($\Delta L$) ต่อความยาวเดิม ($L_0$)
+                </p>
+                 <div class="equation-box my-4">
+                    $$ \epsilon = \frac{\Delta L}{L_0} $$
+                </div>
+                 <div class="variable-list">
+                    <p><span>$\epsilon$ (epsilon)</span> = ความเครียด (ไม่มีหน่วย)</p>
+                    <p><span>$\Delta L$</span> = ความยาวที่เปลี่ยนไป (m)</p>
+                    <p><span>$L_0$</span> = ความยาวเดิม (m)</p>
+                </div>
             </div>
-          </div>
+
+            <hr class="my-12 border-t-2 border-gray-200">
+
+            <!-- Section 3: Young's Modulus -->
+            <div>
+                <h2 class="text-3xl font-bold text-purple-700 mb-6">17.1.3 มอดุลัสของยัง</h2>
+                <p class="mb-4 text-gray-700 leading-relaxed">
+                    <strong>มอดุลัสของยัง (Young's Modulus, $Y$)</strong> เป็นค่าคงที่เฉพาะของวัสดุที่บอกถึงความแข็งเกร็ง หรือความสามารถในการทนทานต่อการเปลี่ยนแปลงความยาวเมื่อมีแรงกระทำ โดยเป็นอัตราส่วนระหว่างความเค้นต่อความเครียดในช่วงขีดจำกัดสภาพยืดหยุ่น
+                </p>
+                <div class="equation-box my-4">
+                     $$ Y = \frac{\text{ความเค้น}}{\text{ความเครียด}} = \frac{\sigma}{\epsilon} = \frac{F/A}{\Delta L / L_0} $$
+                </div>
+                 <div class="variable-list">
+                     <p><span>$Y$</span> = มอดุลัสของยัง (N/m²)</p>
+                </div>
+                <p class="mt-8 text-gray-700 leading-relaxed">
+                    วัสดุที่มีค่ามอดุลัสของยังสูง จะทนต่อการเปลี่ยนแปลงรูปร่างได้ดีกว่า (แข็งเกร็งกว่า) วัสดุที่มีค่ามอดุลัสของยังต่ำ
+                </p>
+
+                 <!-- Example Problem: Stress -->
+                <div class="mt-8 p-6 bg-blue-50 border border-blue-200 rounded-lg">
+                    <h4 class="text-lg font-semibold text-blue-800 mb-4">💡 ตัวอย่างโจทย์</h4>
+                    <p class="font-medium">โจทย์:</p>
+                    <p class="mb-4">ลวดทองแดงเส้นหนึ่งมีเส้นผ่านศูนย์กลาง 2.0 มิลลิเมตร เมื่อใช้แรงดึงขนาด 500 นิวตัน จงคำนวณหาความเค้นดึงที่เกิดขึ้นในเส้นลวด</p>
+                    <p class="font-medium">วิธีทำ:</p>
+                    <div class="space-y-2 text-gray-700">
+                        <p>1. หารัศมี ($r$) และแปลงหน่วยเป็นเมตร:</p>
+                        <div class="pl-4">$$ r = \frac{\text{เส้นผ่านศูนย์กลาง}}{2} = \frac{2.0 \text{ mm}}{2} = 1.0 \text{ mm} = 1.0 \times 10^{-3} \text{ m} $$</div>
+                        <p>2. คำนวณพื้นที่หน้าตัด ($A$):</p>
+                        <div class="pl-4">$$ A = \pi r^2 = \pi (1.0 \times 10^{-3})^2 \approx 3.14 \times 10^{-6} \text{ m}^2 $$</div>
+                        <p>3. คำนวณความเค้น ($\sigma$) จากสมการ:</p>
+                        <div class="pl-4">$$ \sigma = \frac{F}{A} = \frac{500 \text{ N}}{3.14 \times 10^{-6} \text{ m}^2} \approx 1.59 \times 10^8 \text{ N/m}^2 $$</div>
+                    </div>
+                    <p class="mt-4 font-bold text-blue-700">คำตอบ: ความเค้นที่เกิดขึ้นในเส้นลวดมีค่าประมาณ $1.59 \times 10^8$ พาสคัล หรือ 159 เมกะพาสคัล (MPa)</p>
+                </div>
+            </div>
+
+            <hr class="my-12 border-t-2 border-gray-200">
+            
+            <!-- Simulations -->
+            <div>
+                 <h2 class="text-3xl font-bold text-purple-700 mb-6">🔗 การทดลองเสมือน (จากแหล่งอื่น)</h2>
+                 <p class="mb-6 text-gray-700 leading-relaxed">
+                    สามารถศึกษาเรื่องสภาพยืดหยุ่นและความสัมพันธ์ระหว่างแรงกับการยืดของวัสดุเพิ่มเติมได้จากการทดลองเสมือนจริงจากแหล่งข้อมูลภายนอกดังนี้:
+                </p>
+                <div class="grid md:grid-cols-2 gap-6">
+                    <a href="https://phet.colorado.edu/sims/html/hookes-law/latest/hookes-law_th.html" target="_blank" rel="noopener noreferrer" class="block bg-white rounded-lg shadow-md p-6 card-hover border-l-4 border-blue-500">
+                        <h5 class="font-bold text-blue-800">PhET: กฎของฮุก</h5>
+                        <p class="text-sm text-gray-600 mt-1">สำรวจกฎของฮุกและความยืดหยุ่นของสปริงในแบบจำลองที่เข้าใจง่าย</p>
+                    </a>
+                    <a href="https://www.geogebra.org/m/AMjGYhNm" target="_blank" rel="noopener noreferrer" class="block bg-white rounded-lg shadow-md p-6 card-hover border-l-4 border-green-500">
+                        <h5 class="font-bold text-green-800">GeoGebra: Stress & Strain</h5>
+                        <p class="text-sm text-gray-600 mt-1">เรียนรู้ความสัมพันธ์ระหว่างความเค้นและความเครียดแบบโต้ตอบ</p>
+                    </a>
+                </div>
+            </div>
         </div>
-      </div>
+    </main>
 
-      <!-- Section 3 -->
-      <div>
-        <h2 class="text-3xl font-bold text-blue-700 mb-6">17.1.3 มอดุลัสของยัง (Young's Modulus, Y)</h2>
-        <p class="mb-4">
-          เป็นค่าที่บอกถึงความแข็งเกร็งของวัสดุ หรือความสามารถในการทนทานต่อการเปลี่ยนแปลงความยาวเมื่อมีแรงกระทำ เป็นอัตราส่วนระหว่างความเค้นต่อความเครียดในช่วงขีดจำกัดสภาพยืดหยุ่น
-        </p>
-        <div class="bg-gray-100 p-4 rounded-lg text-center font-mono text-lg mb-4">Y = ความเค้น / ความเครียด = (F/A) / (ΔL/L₀)</div>
-        <div class="mt-4 text-sm text-gray-700 bg-gray-50 p-4 rounded-lg">
-          <h4 class="font-semibold mb-2">โดยที่:</h4>
-          <ul class="list-disc list-inside space-y-1">
-            <li><b>Y</b> คือ มอดุลัสของยัง (N/m²)</li>
-          </ul>
+    <!-- Footer -->
+    <footer class="gradient-bg text-white py-8 mt-16" role="contentinfo">
+        <div class="container mx-auto px-4 text-center">
+           <p class="text-sm text-blue-200">พัฒนาโดย: นายทรงเกียรติ สวนแก้ว โรงเรียนลองวิทยา อำเภอลอง จังหวัดแพร่</p>
         </div>
-        <p class="mt-4">วัสดุที่มีค่ามอดุลัสของยังสูง จะทนต่อการเปลี่ยนแปลงรูปร่างได้ดีกว่าวัสดุที่มีค่ามอดุลัสของยังต่ำ</p>
-      </div>
+    </footer>
 
-      <!-- Example Calculation -->
-      <div class="mt-12">
-        <h3 class="text-2xl font-bold text-center mb-6">🧮 ตัวอย่างการคำนวณ</h3>
-        <div class="bg-white border border-gray-200 rounded-lg shadow-md p-8">
-          <h4 class="text-xl font-semibold mb-4 text-gray-800">ตัวอย่าง: ความเค้นดึง</h4>
-          <div class="bg-blue-50 p-6 rounded-lg mb-4">
-            <p class="font-semibold mb-2">โจทย์:</p>
-            <p>ลวดทองแดงเส้นหนึ่งมีเส้นผ่านศูนย์กลาง 2.0 มิลลิเมตร เมื่อใช้แรงดึงขนาด 500 นิวตัน จงคำนวณหาความเค้นดึงที่เกิดขึ้นในเส้นลวด</p>
-          </div>
-          <div class="space-y-3">
-            <p><strong>วิธีทำ:</strong> จากสมการความเค้น σ = F/A</p>
-            <p>คำนวณพื้นที่หน้าตัด: A = πr² = π(1.0 × 10⁻³ m)² ≈ 3.14 × 10⁻⁶ m²</p>
-            <p>แทนค่า: σ = 500 N / (3.14 × 10⁻⁶ m²) ≈ 1.59 × 10⁸ N/m² หรือ Pa</p>
-            <div class="bg-green-50 p-4 rounded-lg mt-4"><p class="font-semibold text-green-800">คำตอบ: ความเค้นที่เกิดขึ้นในเส้นลวดมีค่าประมาณ 159 เมกะพาสคัล (MPa)</p></div>
-          </div>
-        </div>
-      </div>
-
-      <!-- Simulations -->
-      <div class="mt-12">
-        <h3 class="text-2xl font-bold text-center mb-6">🔗 การทดลองเสมือน (จากแหล่งอื่น)</h3>
-        <div class="grid md:grid-cols-2 gap-6">
-          <a href="https://phet.colorado.edu/sims/html/hookes-law/latest/hookes-law_en.html" target="_blank" class="block bg-white rounded-lg shadow p-6 card-hover border-l-4 border-purple-400">
-            <h5 class="font-bold text-purple-800">PhET - Hooke's Law</h5>
-            <p class="text-sm text-gray-600 mt-1">ศึกษากฎของฮุก ความยืดหยุ่นของสปริง</p>
-          </a>
-          <a href="https://www.geogebra.org/m/AMjGYhNm" target="_blank" class="block bg-white rounded-lg shadow p-6 card-hover border-l-4 border-red-400">
-            <h5 class="font-bold text-red-800">GeoGebra - Stress & Strain</h5>
-            <p class="text-sm text-gray-600 mt-1">เรียนรู้ความเค้นและความเครียดแบบโต้ตอบ</p>
-          </a>
-        </div>
-      </div>
-
-    </div>
-  </main>
-
-  <!-- Footer -->
-  <footer class="gradient-bg text-white py-8 mt-16" role="contentinfo">
-    <div class="container mx-auto px-4 text-center">
-       <p class="text-sm text-blue-300">พัฒนาโดย: นายทรงเกียรติ สวนแก้ว โรงเรียนลองวิทยา อำเภอลอง จังหวัดแพร่</p>
-    </div>
-  </footer>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // --- Render Math Equations ---
+            if (typeof renderMathInElement === 'function') {
+                renderMathInElement(document.body, {
+                    delimiters: [
+                        {left: "$$", right: "$$", display: true},
+                        {left: "$", right: "$", display: false}
+                    ]
+                });
+            }
+        });
+    </script>
 </body>
 </html>
