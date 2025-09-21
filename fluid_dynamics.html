@@ -1,149 +1,200 @@
 <!DOCTYPE html>
 <html lang="th">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>17.4 พลศาสตร์ของของไหล</title>
-  <meta name="description" content="เนื้อหาเรื่องของไหลในอุดมคติ สมการความต่อเนื่อง และสมการของเบอร์นูลลี" />
-  <meta name="theme-color" content="#5b6fe6" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-  <script src="https://cdn.tailwindcss.com"></script>
-  <script>
-    tailwind.config = {
-      theme: {
-        extend: {
-          fontFamily: {
-            thai: ['Sarabun', 'sans-serif']
-          }
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>17.4 พลศาสตร์ของของไหล (ฉบับปรับปรุง)</title>
+    <meta name="description" content="เนื้อหาและการทดลองเสมือนจริงเรื่องของไหลในอุดมคติ, สมการความต่อเนื่อง, และสมการของเบอร์นูลลี" />
+    <meta name="theme-color" content="#5b6fe6" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- KaTeX for beautiful math rendering -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css" xintegrity="sha384-n8MVd4RsNIU0KOVEMVIhbGKZC0sHCjodCIbAyOVK24jF2fYEVcfNE6oRdFToOTwV" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js" xintegrity="sha384-XjKyOOlVwcjNcsNQTeKa7fBI3DGhsczS0IOPRTmlAJ7QNusTdTsEBOPdQpEB8w3V" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js" xintegrity="sha384-+VBxd3r6XgURycqtZ117nYw44OOcIax56Z4dCRWbxyPt0Koah1uHoK0o4+/RRE05" crossorigin="anonymous"></script>
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        thai: ['Sarabun', 'sans-serif']
+                    },
+                    colors: {
+                        'brand-purple': '#5b6fe6',
+                        'brand-blue': '#667eea',
+                    }
+                }
+            }
         }
-      }
-    }
-  </script>
-  <style>
-    body { font-family: 'Sarabun', sans-serif; }
-    .gradient-bg { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); }
-    .card-hover { transition: transform .25s ease, box-shadow .25s ease; }
-    .card-hover:hover { transform: translateY(-6px); box-shadow: 0 20px 40px rgba(0, 0, 0, .12); }
-  </style>
+    </script>
+    <style>
+        body { font-family: 'Sarabun', 'sans-serif'; }
+        .gradient-bg { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); }
+        .equation-box {
+            background-color: #f3f4f6; padding: 1rem;
+            border-radius: 0.5rem;
+            text-align: center;
+            font-size: 1.25rem;
+        }
+        .variable-list {
+            background-color: #f9fafb;
+            border: 1px solid #e5e7eb;
+            border-radius: 0.5rem;
+            padding: 1.5rem;
+            margin-top: 1.5rem;
+        }
+        .variable-list p {
+            margin-bottom: 0.5rem;
+            font-size: 1.1rem;
+            display: flex;
+            align-items: flex-start;
+        }
+        .variable-list p > span:first-of-type {
+            display: inline-block;
+            min-width: 140px;
+            text-align: right;
+            margin-right: 10px;
+        }
+        .card-hover { transition: transform .25s ease, box-shadow .25s ease; }
+        .card-hover:hover { transform: translateY(-6px); box-shadow: 0 10px 20px rgba(0,0,0,0.1); }
+    </style>
 </head>
-<body class="bg-gray-100 text-gray-900">
-  <!-- Navigation -->
-  <nav class="gradient-bg text-white shadow-lg sticky top-0 z-50" role="navigation" aria-label="หลัก">
-    <div class="container mx-auto px-4 py-4 flex items-center justify-between">
-      <div class="flex items-center gap-3">
-        <div class="w-10 h-10 bg-white rounded-full flex items-center justify-center" aria-hidden="true">
-          <span class="text-2xl">🌊</span>
+<body class="bg-gray-100 text-gray-800">
+    <!-- Navigation -->
+    <nav class="gradient-bg text-white shadow-lg sticky top-0 z-50" role="navigation" aria-label="หลัก">
+        <div class="container mx-auto px-4 py-4 flex items-center justify-between">
+            <div class="flex items-center gap-3">
+                <div class="w-10 h-10 bg-white rounded-full flex items-center justify-center" aria-hidden="true">
+                    <span class="text-2xl">🌊</span>
+                </div>
+                <h1 class="text-lg sm:text-xl font-bold">17.4 พลศาสตร์ของของไหล</h1>
+            </div>
+            <a href="index.html" class="flex items-center gap-2 px-3 py-2 text-sm font-medium rounded-md bg-white/20 hover:bg-white/30 transition-colors">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+                <span>กลับหน้าหลัก</span>
+            </a>
         </div>
-        <h1 class="text-lg sm:text-xl font-bold">17.4 พลศาสตร์ของของไหล</h1>
-      </div>
-      <a href="index.html" class="text-sm font-semibold hover:text-blue-200 transition-colors">กลับหน้าหลัก</a>
-    </div>
-  </nav>
+    </nav>
 
-  <main class="container mx-auto px-4 py-12">
-    <div class="max-w-3xl mx-auto bg-white p-8 rounded-lg shadow-lg space-y-12">
-      
-      <!-- Section 1 -->
-      <div>
-        <h2 class="text-3xl font-bold text-red-700 mb-6">17.4.1 ของไหลอุดมคติ</h2>
-        <p class="mb-4">
-          ในการศึกษาการเคลื่อนที่ของของไหลซึ่งมีความซับซ้อน เรามักจะเริ่มจากการพิจารณาแบบจำลองอย่างง่ายที่เรียกว่า **ของไหลอุดมคติ (Ideal Fluid)** ซึ่งมีสมบัติ 4 ประการดังนี้:
-        </p>
-        <ul class="list-disc list-inside space-y-2 mb-6">
-          <li><b>ไม่มีความหนืด:</b> ไม่มีแรงเสียดทานภายในของไหล</li>
-          <li><b>ไหลอย่างสม่ำเสมอ:</b> ความเร็วของอนุภาคของไหล ณ ตำแหน่งใดๆ มีค่าคงตัว</li>
-          <li><b>ไม่หมุนวน:</b> อนุภาคของไหลไม่มีการเคลื่อนที่แบบหมุนรอบตัวเอง</li>
-          <li><b>ไม่สามารถอัดได้:</b> ความหนาแน่นของของไหลมีค่าคงตัวตลอดการไหล</li>
-        </ul>
-      </div>
+    <main class="container mx-auto px-4 py-8 sm:py-12">
+        <div class="max-w-6xl mx-auto bg-white p-4 sm:p-8 rounded-2xl shadow-lg space-y-12">
+            
+            <!-- Section 1: Ideal Fluid -->
+            <div>
+                <h2 class="text-3xl font-bold text-purple-700 mb-6">17.4.1 ของไหลอุดมคติ</h2>
+                <p class="mb-4 text-gray-700 leading-relaxed">
+                    ในการศึกษาการเคลื่อนที่ของของไหลซึ่งมีความซับซ้อน เรามักจะเริ่มจากการพิจารณาแบบจำลองอย่างง่ายที่เรียกว่า <strong>ของไหลอุดมคติ (Ideal Fluid)</strong> ซึ่งมีสมบัติ 4 ประการดังนี้:
+                </p>
+                <ul class="list-disc list-inside space-y-3 pl-4 text-gray-700">
+                    <li><b>ไม่มีความหนืด:</b> ไม่มีแรงเสียดทานภายในของไหล</li>
+                    <li><b>ไหลอย่างสม่ำเสมอ:</b> ความเร็วของอนุภาคของไหล ณ ตำแหน่งใดๆ มีค่าคงตัว</li>
+                    <li><b>ไม่หมุนวน:</b> อนุภาคของไหลไม่มีการเคลื่อนที่แบบหมุนรอบตัวเอง</li>
+                    <li><b>ไม่สามารถอัดได้:</b> ความหนาแน่นของของไหลมีค่าคงตัวตลอดการไหล</li>
+                </ul>
+            </div>
 
-      <!-- Section 2 -->
-      <div>
-        <h2 class="text-3xl font-bold text-red-700 mb-6">17.4.2 สมการความต่อเนื่อง</h2>
-        <p class="mb-4">
-          สมการนี้อธิบายถึง **การอนุรักษ์มวล** ของของไหลที่ไหลผ่านท่อ เมื่อของไหลไหลผ่านท่อที่มีพื้นที่หน้าตัดไม่เท่ากัน อัตราการไหล (ผลคูณของพื้นที่หน้าตัดกับอัตราเร็ว) จะมีค่าคงที่
-        </p>
-        <div class="mt-2 bg-gray-100 p-4 rounded-lg text-center font-mono text-lg">
-          A<sub>1</sub>v<sub>1</sub> = A<sub>2</sub>v<sub>2</sub>
-        </div>
-        <div class="mt-4 text-sm text-gray-700 bg-gray-50 p-4 rounded-lg">
-          <h4 class="font-semibold mb-2">โดยที่:</h4>
-          <ul class="list-disc list-inside space-y-1">
-            <li><b>A<sub>1</sub></b> คือ พื้นที่หน้าตัดของท่อ ณ ตำแหน่งที่ 1 (m²)</li>
-            <li><b>v<sub>1</sub></b> คือ อัตราเร็วของของไหล ณ ตำแหน่งที่ 1 (m/s)</li>
-            <li><b>A<sub>2</sub></b> คือ พื้นที่หน้าตัดของท่อ ณ ตำแหน่งที่ 2 (m²)</li>
-            <li><b>v<sub>2</sub></b> คือ อัตราเร็วของของไหล ณ ตำแหน่งที่ 2 (m/s)</li>
-          </ul>
-        </div>
-        <p class="mt-4">
-          หมายความว่า ณ บริเวณที่ท่อแคบ (A เล็ก) ของไหลจะเคลื่อนที่ด้วยอัตราเร็วสูง (v ใหญ่) และในทางกลับกัน
-        </p>
-      </div>
+            <hr class="my-12 border-t-2 border-gray-200">
 
-      <!-- Section 3 -->
-      <div>
-        <h2 class="text-3xl font-bold text-red-700 mb-6">17.4.3 สมการของเบอร์นูลลี</h2>
-        <p class="mb-4">
-          สมการนี้เป็นหัวใจของพลศาสตร์ของของไหล ซึ่งอธิบายถึง **การอนุรักษ์พลังงาน** ของของไหลอุดมคติที่กำลังเคลื่อนที่ โดยกล่าวว่า "ผลรวมของความดัน พลังงานจลน์ต่อหนึ่งหน่วยปริมาตร และพลังงานศักย์โน้มถ่วงต่อหนึ่งหน่วยปริมาตร ณ ตำแหน่งใดๆ ในของไหล จะมีค่าคงที่"
-        </p>
-        <div class="bg-gray-100 p-4 rounded-lg text-center font-mono text-lg mb-4">
-          P + ½ρv² + ρgh = ค่าคงที่
-        </div>
-        <div class="mt-4 text-sm text-gray-700 bg-gray-50 p-4 rounded-lg">
-          <h4 class="font-semibold mb-2">โดยที่:</h4>
-          <ul class="list-disc list-inside space-y-1">
-            <li><b>P</b> คือ ความดันในของไหล (Pa)</li>
-            <li><b>ρ</b> (rho) คือ ความหนาแน่นของของไหล (kg/m³)</li>
-            <li><b>v</b> คือ อัตราเร็วของของไหล (m/s)</li>
-            <li><b>g</b> คือ ความเร่งโน้มถ่วง (m/s²)</li>
-            <li><b>h</b> คือ ความสูงจากระดับอ้างอิง (m)</li>
-          </ul>
-        </div>
-        <p class="mt-4">สมการนี้สามารถอธิบายปรากฏการณ์ต่างๆ ได้มากมาย เช่น การเกิดแรงยกของปีกเครื่องบิน หรือการทำงานของเครื่องพ่นสี</p>
-      </div>
-      
-      <!-- Example Calculation -->
-      <div class="mt-12">
-        <h3 class="text-2xl font-bold text-center mb-6">🧮 ตัวอย่างการคำนวณ</h3>
-        <div class="bg-white border border-gray-200 rounded-lg shadow-md p-8">
-          <h4 class="text-xl font-semibold mb-4 text-gray-800">ตัวอย่าง: สมการของเบอร์นูลลี</h4>
-          <div class="bg-blue-50 p-6 rounded-lg mb-4">
-            <p class="font-semibold mb-2">โจทย์:</p>
-            <p>น้ำไหลอย่างสม่ำเสมอผ่านท่อในแนวระดับ ณ ตำแหน่งที่หนึ่งซึ่งมีความเร็ว 2.0 m/s มีความดัน 1.50 x 10⁵ Pa เมื่อน้ำไหลไปยังตำแหน่งที่สองซึ่งมีความเร็ว 4.0 m/s จงหาความดันของน้ำ ณ ตำแหน่งที่สอง (กำหนดให้ ρ<sub>น้ำ</sub> = 1000 kg/m³)</p>
-          </div>
-          <div class="space-y-3">
-            <p><strong>วิธีทำ:</strong> จากสมการของเบอร์นูลลีสำหรับท่อแนวระดับ: P₁ + ½ρv₁² = P₂ + ½ρv₂²</p>
-            <p>P₂ = P₁ + ½ρ(v₁² − v₂²) = 1.50×10⁵ Pa + ½(1000 kg/m³)( (2.0 m/s)² − (4.0 m/s)² )</p>
-            <p>P₂ = 1.50×10⁵ + 500(4 − 16) = 1.50×10⁵ - 6000 = 1.44×10⁵ Pa</p>
-            <div class="bg-green-50 p-4 rounded-lg mt-4"><p class="font-semibold text-green-800">คำตอบ: ความดันของน้ำ ณ ตำแหน่งที่สองคือ 144 กิโลพาสคัล (kPa)</p></div>
-          </div>
-        </div>
-      </div>
+            <!-- Section 2: Continuity Equation -->
+            <div>
+                <h2 class="text-3xl font-bold text-purple-700 mb-6">17.4.2 สมการความต่อเนื่อง</h2>
+                <p class="mb-4 text-gray-700 leading-relaxed">
+                    สมการนี้อธิบายถึง <strong>การอนุรักษ์มวล</strong> ของของไหลที่ไหลผ่านท่อ เมื่อของไหลไหลผ่านท่อที่มีพื้นที่หน้าตัดไม่เท่ากัน อัตราการไหล (ผลคูณของพื้นที่หน้าตัดกับอัตราเร็ว) จะมีค่าคงที่ หมายความว่า ณ บริเวณที่ท่อแคบ ($A$ เล็ก) ของไหลจะเคลื่อนที่ด้วยอัตราเร็วสูง ($v$ ใหญ่) และในทางกลับกัน
+                </p>
+                <div class="equation-box my-4">
+                    $$ A_1 v_1 = A_2 v_2 $$
+                </div>
+                <div class="variable-list">
+                    <p><span>$A_1, A_2$</span> = พื้นที่หน้าตัดของท่อ ณ ตำแหน่งที่ 1 และ 2 (m²)</p>
+                    <p><span>$v_1, v_2$</span> = อัตราเร็วของของไหล ณ ตำแหน่งที่ 1 และ 2 (m/s)</p>
+                </div>
+            </div>
 
-      <!-- Simulations -->
-       <div class="mt-12">
-        <h3 class="text-2xl font-bold text-center mb-6">🔗 การทดลองเสมือน (จากแหล่งอื่น)</h3>
-        <div class="grid md:grid-cols-2 gap-6">
-          <a href="https://phet.colorado.edu/sims/cheerpj/fluid-pressure-and-flow/latest/fluid-pressure-and-flow.html?simulation=fluid-pressure-and-flow" target="_blank" class="block bg-white rounded-lg shadow p-6 card-hover border-l-4 border-green-400">
-            <h5 class="font-bold text-green-800">PhET - Fluid Pressure and Flow</h5>
-            <p class="text-sm text-gray-600 mt-1">ความดันและการไหลของของไหล</p>
-          </a>
-           <a href="https://www.vascak.cz/data/android/physicsatschool/template.php?s=mech_bernoulli&l=en" target="_blank" class="block bg-white rounded-lg shadow p-6 card-hover border-l-4 border-green-400">
-            <h5 class="font-bold text-green-800">Physics at School - Bernoulli</h5>
-            <p class="text-sm text-gray-600 mt-1">หลักการเบอร์นูลลี การไหลของอากาศ</p>
-          </a>
+            <hr class="my-12 border-t-2 border-gray-200">
+
+            <!-- Section 3: Bernoulli's Equation -->
+            <div>
+                <h2 class="text-3xl font-bold text-purple-700 mb-6">17.4.3 สมการของเบอร์นูลลี</h2>
+                <p class="mb-4 text-gray-700 leading-relaxed">
+                    สมการนี้เป็นหัวใจของพลศาสตร์ของของไหล ซึ่งอธิบายถึง <strong>การอนุรักษ์พลังงาน</strong> ของของไหลอุดมคติที่กำลังเคลื่อนที่ โดยกล่าวว่า "ผลรวมของความดัน พลังงานจลน์ต่อหนึ่งหน่วยปริมาตร และพลังงานศักย์โน้มถ่วงต่อหนึ่งหน่วยปริมาตร ณ ตำแหน่งใดๆ ในของไหล จะมีค่าคงที่"
+                </p>
+                <div class="equation-box my-4">
+                    $$ P + \frac{1}{2}\rho v^2 + \rho g h = \text{ค่าคงที่} $$
+                </div>
+                 <div class="variable-list">
+                    <p><span>$P$</span> = ความดันในของไหล (Pa)</p>
+                    <p><span>$\rho$</span> = ความหนาแน่นของของไหล (kg/m³)</p>
+                    <p><span>$v$</span> = อัตราเร็วของของไหล (m/s)</p>
+                    <p><span>$g$</span> = ความเร่งโน้มถ่วง (m/s²)</p>
+                    <p><span>$h$</span> = ความสูงจากระดับอ้างอิง (m)</p>
+                </div>
+                <p class="mt-8 text-gray-700 leading-relaxed">
+                    สมการนี้สามารถอธิบายปรากฏการณ์ต่างๆ ได้มากมาย เช่น การเกิดแรงยกของปีกเครื่องบิน หรือการทำงานของเครื่องพ่นสี
+                </p>
+
+                 <!-- Example Problem: Bernoulli -->
+                <div class="mt-8 p-6 bg-blue-50 border border-blue-200 rounded-lg">
+                    <h4 class="text-lg font-semibold text-blue-800 mb-4">💡 ตัวอย่างโจทย์</h4>
+                    <p class="font-medium">โจทย์:</p>
+                    <p class="mb-4">น้ำไหลอย่างสม่ำเสมอผ่านท่อในแนวระดับ ณ ตำแหน่งที่หนึ่งซึ่งมีความเร็ว 2.0 m/s มีความดัน $1.50 \times 10^5$ Pa เมื่อน้ำไหลไปยังตำแหน่งที่สองซึ่งมีความเร็ว 4.0 m/s จงหาความดันของน้ำ ณ ตำแหน่งที่สอง (กำหนดให้ $\rho_{น้ำ} = 1000$ kg/m³)</p>
+                    <p class="font-medium">วิธีทำ:</p>
+                    <div class="space-y-2 text-gray-700">
+                        <p>จากสมการของเบอร์นูลลีสำหรับท่อแนวระดับ ($h_1 = h_2$):</p>
+                        <div class="pl-4">$$ P_1 + \frac{1}{2}\rho v_1^2 = P_2 + \frac{1}{2}\rho v_2^2 $$</div>
+                        <p>จัดรูปสมการเพื่อหา $P_2$:</p>
+                        <div class="pl-4">$$ P_2 = P_1 + \frac{1}{2}\rho (v_1^2 - v_2^2) $$</div>
+                        <p>แทนค่า:</p>
+                        <div class="pl-4">$$ P_2 = (1.50 \times 10^5) + \frac{1}{2}(1000)(2.0^2 - 4.0^2) $$</div>
+                        <div class="pl-4">$$ P_2 = 1.50 \times 10^5 + 500(4 - 16) $$</div>
+                        <div class="pl-4">$$ P_2 = 1.50 \times 10^5 - 6000 = 1.44 \times 10^5 \text{ Pa} $$</div>
+                    </div>
+                    <p class="mt-4 font-bold text-blue-700">คำตอบ: ความดันของน้ำ ณ ตำแหน่งที่สองคือ 144 กิโลพาสคัล (kPa)</p>
+                </div>
+            </div>
+
+            <hr class="my-12 border-t-2 border-gray-200">
+            
+            <!-- Simulations -->
+            <div>
+                <h2 class="text-3xl font-bold text-purple-700 mb-6">🔗 การทดลองเสมือน (จากแหล่งอื่น)</h2>
+                <p class="mb-6 text-gray-700 leading-relaxed">
+                    เนื่องจากการจำลองพลศาสตร์ของไหลมีความซับซ้อนสูง สามารถศึกษาเพิ่มเติมได้จากการทดลองเสมือนจริงคุณภาพสูงจากแหล่งข้อมูลภายนอกดังนี้:
+                </p>
+                <div class="grid md:grid-cols-2 gap-6">
+                    <a href="https://phet.colorado.edu/sims/html/fluid-pressure-and-flow/latest/fluid-pressure-and-flow_th.html" target="_blank" rel="noopener noreferrer" class="block bg-white rounded-lg shadow-md p-6 card-hover border-l-4 border-blue-500">
+                        <h5 class="font-bold text-blue-800">PhET: ความดันและการไหลของของไหล</h5>
+                        <p class="text-sm text-gray-600 mt-1">สำรวจความดัน, การไหล, และแรงยกในแบบจำลองที่ปรับค่าได้หลากหลาย</p>
+                    </a>
+                    <a href="https://www.vascak.cz/data/android/physicsatschool/template.php?s=mech_bernoulli&l=en" target="_blank" rel="noopener noreferrer" class="block bg-white rounded-lg shadow-md p-6 card-hover border-l-4 border-green-500">
+                        <h5 class="font-bold text-green-800">Physics at School: Bernoulli's Principle</h5>
+                        <p class="text-sm text-gray-600 mt-1">แบบจำลองแสดงความสัมพันธ์ระหว่างอัตราเร็วและความดันอากาศตามหลักการของเบอร์นูลลี</p>
+                    </a>
+                </div>
+            </div>
         </div>
-      </div>
+    </main>
 
-    </div>
-  </main>
+    <!-- Footer -->
+    <footer class="gradient-bg text-white py-8 mt-16" role="contentinfo">
+        <div class="container mx-auto px-4 text-center">
+           <p class="text-sm text-blue-200">พัฒนาโดย: นายทรงเกียรติ สวนแก้ว โรงเรียนลองวิทยา อำเภอลอง จังหวัดแพร่</p>
+        </div>
+    </footer>
 
-  <!-- Footer -->
-  <footer class="gradient-bg text-white py-8 mt-16" role="contentinfo">
-    <div class="container mx-auto px-4 text-center">
-       <p class="text-sm text-blue-300">พัฒนาโดย: นายทรงเกียรติ สวนแก้ว โรงเรียนลองวิทยา อำเภอลอง จังหวัดแพร่</p>
-    </div>
-  </footer>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // --- Render Math Equations ---
+            if (typeof renderMathInElement === 'function') {
+                renderMathInElement(document.body, {
+                    delimiters: [
+                        {left: "$$", right: "$$", display: true},
+                        {left: "$", right: "$", display: false}
+                    ]
+                });
+            }
+        });
+    </script>
 </body>
 </html>
