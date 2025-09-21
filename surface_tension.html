@@ -1,179 +1,264 @@
 <!DOCTYPE html>
 <html lang="th">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>17.2 ความตึงผิวและความหนืด</title>
-  <meta name="description" content="เนื้อหาและการทดลองเสมือนจริงเรื่องความตึงผิวของของเหลว และความหนืดของของไหล" />
-  <meta name="theme-color" content="#5b6fe6" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-  <script src="https://cdn.tailwindcss.com"></script>
-  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-  <script>
-    tailwind.config = {
-      theme: {
-        extend: {
-          fontFamily: {
-            thai: ['Sarabun', 'sans-serif']
-          }
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>17.2 ความตึงผิวและความหนืด </title>
+    <meta name="description" content="เนื้อหาและการทดลองเสมือนจริงเรื่องความตึงผิวของของเหลว และความหนืดของของไหล" />
+    <meta name="theme-color" content="#5b6fe6" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <!-- KaTeX for beautiful math rendering -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css" xintegrity="sha384-n8MVd4RsNIU0KOVEMVIhbGKZC0sHCjodCIbAyOVK24jF2fYEVcfNE6oRdFToOTwV" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js" xintegrity="sha384-XjKyOOlVwcjNcsNQTeKa7fBI3DGhsczS0IOPRTmlAJ7QNusTdTsEBOPdQpEB8w3V" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js" xintegrity="sha384-+VBxd3r6XgURycqtZ117nYw44OOcIax56Z4dCRWbxyPt0Koah1uHoK0o4+/RRE05" crossorigin="anonymous"></script>
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        thai: ['Sarabun', 'sans-serif']
+                    },
+                    colors: {
+                        'brand-purple': '#5b6fe6',
+                        'brand-blue': '#667eea',
+                    }
+                }
+            }
         }
-      }
-    }
-  </script>
-  <style>
-    body { font-family: 'Sarabun', 'sans-serif'; }
-    .gradient-bg { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); }
-    input[type="range"] {
-        -webkit-appearance: none; appearance: none;
-        width: 100%; height: 8px;
-        background: #d1d5db; border-radius: 5px;
-        outline: none; opacity: 0.7;
-        transition: opacity .2s;
-    }
-    input[type="range"]:hover { opacity: 1; }
-    input[type="range"]::-webkit-slider-thumb {
-        -webkit-appearance: none; appearance: none;
-        width: 20px; height: 20px;
-        background: #10b981; cursor: pointer;
-        border-radius: 50%;
-    }
-    input[type="range"]::-moz-range-thumb {
-        width: 20px; height: 20px;
-        background: #10b981; cursor: pointer;
-        border-radius: 50%;
-    }
-    input[type=number]::-webkit-inner-spin-button, 
-    input[type=number]::-webkit-outer-spin-button { 
-      -webkit-appearance: none; 
-      margin: 0; 
-    }
-    input[type=number] {
-      -moz-appearance: textfield;
-    }
-    .control-btn {
-        transition: all 0.2s ease-in-out;
-    }
-    .control-btn-active {
-        transform: translateY(-2px);
-        box-shadow: 0 4px 6px rgba(16, 185, 129, 0.4);
-        background-color: #10b981;
-        color: white;
-        border-color: #059669;
-    }
-  </style>
+    </script>
+    <style>
+        body { font-family: 'Sarabun', 'sans-serif'; }
+        .gradient-bg { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); }
+        .equation-box {
+            background-color: #f3f4f6; padding: 1rem;
+            border-radius: 0.5rem;
+            text-align: center;
+            font-size: 1.25rem;
+        }
+        .variable-list {
+            background-color: #f9fafb;
+            border: 1px solid #e5e7eb;
+            border-radius: 0.5rem;
+            padding: 1.5rem;
+            margin-top: 1.5rem;
+        }
+        .variable-list p {
+            margin-bottom: 0.5rem;
+            font-size: 1.1rem;
+            display: flex;
+            align-items: flex-start;
+        }
+        .variable-list p > span:first-of-type {
+            display: inline-block;
+            min-width: 140px;
+            text-align: right;
+            margin-right: 10px;
+        }
+        input[type="range"] {
+            -webkit-appearance: none; appearance: none;
+            width: 100%; height: 8px;
+            background: #d1d5db; border-radius: 5px;
+            outline: none; opacity: 0.7;
+            transition: opacity .2s;
+        }
+        input[type="range"]:hover { opacity: 1; }
+        input[type="range"]::-webkit-slider-thumb {
+            -webkit-appearance: none; appearance: none;
+            width: 20px; height: 20px;
+            background: #10b981; cursor: pointer;
+            border-radius: 50%;
+        }
+        input[type="range"]::-moz-range-thumb {
+            width: 20px; height: 20px;
+            background: #10b981; cursor: pointer;
+            border-radius: 50%;
+        }
+        input[type=number]::-webkit-inner-spin-button, 
+        input[type=number]::-webkit-outer-spin-button { 
+            -webkit-appearance: none; 
+            margin: 0; 
+        }
+        input[type=number] { -moz-appearance: textfield; }
+        .control-btn {
+            transition: all 0.2s ease-in-out;
+        }
+        .control-btn-active {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 6px rgba(16, 185, 129, 0.4);
+            background-color: #10b981;
+            color: white;
+            border-color: #059669;
+        }
+    </style>
 </head>
-<body class="bg-gray-100 text-gray-900">
-  <!-- Navigation -->
-  <nav class="gradient-bg text-white shadow-lg sticky top-0 z-50" role="navigation" aria-label="หลัก">
-    <div class="container mx-auto px-4 py-4 flex items-center justify-between">
-      <div class="flex items-center gap-3">
-        <div class="w-10 h-10 bg-white rounded-full flex items-center justify-center" aria-hidden="true">
-          <span class="text-2xl">💧</span>
+<body class="bg-gray-100 text-gray-800">
+    <!-- Navigation -->
+    <nav class="gradient-bg text-white shadow-lg sticky top-0 z-50" role="navigation" aria-label="หลัก">
+        <div class="container mx-auto px-4 py-4 flex items-center justify-between">
+            <div class="flex items-center gap-3">
+                <div class="w-10 h-10 bg-white rounded-full flex items-center justify-center" aria-hidden="true">
+                    <span class="text-2xl">💧</span>
+                </div>
+                <h1 class="text-lg sm:text-xl font-bold">17.2 ความตึงผิวและความหนืด</h1>
+            </div>
+             <a href="index.html" class="flex items-center gap-2 px-3 py-2 text-sm font-medium rounded-md bg-white/20 hover:bg-white/30 transition-colors">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+                <span>กลับหน้าหลัก</span>
+            </a>
         </div>
-        <h1 class="text-lg sm:text-xl font-bold">17.2 ความตึงผิวและความหนืด</h1>
-      </div>
-      <a href="index.html" class="text-sm font-semibold hover:text-blue-200 transition-colors">กลับหน้าหลัก</a>
-    </div>
-  </nav>
+    </nav>
 
-  <main class="container mx-auto px-4 py-8 sm:py-12">
-    <div class="max-w-4xl mx-auto bg-white p-4 sm:p-8 rounded-lg shadow-lg space-y-12">
-      
-      <!-- Section 1 -->
-      <div>
-        <h2 class="text-3xl font-bold text-green-700 mb-6">17.2.1 ความตึงผิวของของเหลว</h2>
-        <p class="mb-4">
-          <strong>ความตึงผิว (Surface Tension, γ)</strong> เป็นสมบัติของผิวของเหลวที่พยายามจะยึดผิวหน้าไว้ให้มีพื้นที่น้อยที่สุด เกิดจากแรงยึดเหนี่ยวระหว่างโมเลกุลของของเหลว (Cohesive force) ที่ผิวหน้า ทำให้ผิวของเหลวมีลักษณะคล้ายแผ่นยางยืดบางๆ
-        </p>
-        <div class="mt-2 bg-gray-100 p-4 rounded-lg text-center font-mono text-lg">
-          γ = F / L
-        </div>
-      </div>
+    <main class="container mx-auto px-4 py-8 sm:py-12">
+        <div class="max-w-6xl mx-auto bg-white p-4 sm:p-8 rounded-2xl shadow-lg space-y-12">
+            
+            <!-- Section 1: Surface Tension -->
+            <div>
+                <h2 class="text-3xl font-bold text-purple-700 mb-6">17.2.1 ความตึงผิวของของเหลว</h2>
+                <p class="mb-4 text-gray-700 leading-relaxed">
+                    <strong>ความตึงผิว (Surface Tension, $\gamma$)</strong> เป็นสมบัติของผิวของเหลวที่พยายามจะยึดผิวหน้าไว้ให้มีพื้นที่น้อยที่สุด เกิดจากแรงยึดเหนี่ยวระหว่างโมเลกุลของของเหลว (Cohesive force) ที่ผิวหน้า ทำให้ผิวของเหลวมีลักษณะคล้ายแผ่นยางยืดบางๆ
+                </p>
+                <div class="equation-box my-4">
+                    $$ \gamma = \frac{F}{L} $$
+                </div>
+                <div class="variable-list">
+                    <p><span>$\gamma$ (gamma)</span> = ความตึงผิว (N/m)</p>
+                    <p><span>$F$</span> = แรงที่กระทำขนานกับผิวของเหลว (N)</p>
+                    <p><span>$L$</span> = ความยาวของขอบที่ของเหลวสัมผัส (m)</p>
+                </div>
+            </div>
 
-      <hr class="my-8">
+            <hr class="my-12 border-t-2 border-gray-200">
 
-      <!-- Section 2 -->
-      <div>
-        <h2 class="text-3xl font-bold text-green-700 mb-6">17.2.2 ความหนืดและกฎของสโตกส์</h2>
-        <p class="mb-4">
-          <strong>ความหนืด (Viscosity, η)</strong> คือสมบัติของของไหลที่ต้านทานการไหล เกิดจากแรงเสียดทานภายในระหว่างชั้นของของไหล เมื่อวัตถุทรงกลมรัศมี r เคลื่อนที่ในของไหล จะเกิดแรงต้านเนื่องจากความหนืด เรียกว่า **แรงหนืด (Fₛ)** ซึ่งหาได้จาก **กฎของสโตกส์ (Stoke's Law)**
-        </p>
-        <div class="mt-2 bg-gray-100 p-4 rounded-lg text-center font-mono text-lg">
-          Fₛ = 6πηrv
-        </div>
-      </div>
-
-      <!-- SIMULATION: Stokes' Law -->
-      <div class="mt-8 bg-white border border-gray-200 rounded-lg shadow-md p-4 sm:p-6">
-          <h4 class="text-xl font-semibold mb-6 text-green-600">🔬 การทดลอง: กฎของสโตกส์และอัตราเร็วปลาย</h4>
-          <div class="flex flex-col lg:flex-row lg:gap-6">
-              <!-- Controls -->
-              <div class="lg:w-1/3 lg:order-2 bg-white p-4 sm:p-6 rounded-xl shadow-inner mb-6 lg:mb-0">
-                  <div class="space-y-4">
-                      <div>
-                          <label class="font-medium text-sm mb-2 block">เลือกของไหล</label>
-                          <div id="fluidButtons" class="grid grid-cols-2 gap-2 text-center text-sm">
-                              <button data-viscosity="0.001" data-density="1000" class="control-btn p-2 rounded-lg bg-gray-200 control-btn-active border">น้ำ</button>
-                              <button data-viscosity="0.010" data-density="910" class="control-btn p-2 rounded-lg bg-gray-200 border">น้ำมันเครื่อง</button>
-                              <button data-viscosity="1.48" data-density="1260" class="control-btn p-2 rounded-lg bg-gray-200 border">กลีเซอรีน</button>
-                              <button data-viscosity="10.0" data-density="1420" class="control-btn p-2 rounded-lg bg-gray-200 border">น้ำผึ้ง</button>
+            <!-- Section 2: Viscosity & Stokes' Law -->
+            <div>
+                <h2 class="text-3xl font-bold text-purple-700 mb-6">17.2.2 ความหนืดและกฎของสโตกส์</h2>
+                <p class="mb-4 text-gray-700 leading-relaxed">
+                    <strong>ความหนืด (Viscosity, $\eta$)</strong> คือสมบัติของของไหลที่ต้านทานการไหล เกิดจากแรงเสียดทานภายในระหว่างชั้นของของไหล เมื่อวัตถุทรงกลมรัศมี $r$ เคลื่อนที่ในของไหล จะเกิดแรงต้านเนื่องจากความหนืด เรียกว่า <strong>แรงหนืด ($F_v$)</strong> ซึ่งหาได้จาก <strong>กฎของสโตกส์ (Stoke's Law)</strong>
+                </p>
+                <div class="equation-box my-4">
+                    $$ F_v = 6\pi\eta rv $$
+                </div>
+                 <div class="variable-list">
+                    <p><span>$F_v$</span> = แรงหนืด (N)</p>
+                    <p><span>$\eta$ (eta)</span> = สัมประสิทธิ์ความหนืด (Pa·s)</p>
+                    <p><span>$r$</span> = รัศมีของวัตถุทรงกลม (m)</p>
+                    <p><span>$v$</span> = อัตราเร็วของวัตถุเทียบกับของไหล (m/s)</p>
+                </div>
+                <p class="mt-8 mb-4 text-gray-700 leading-relaxed">
+                    เมื่อปล่อยวัตถุให้ตกในของไหล ในตอนแรกวัตถุจะเคลื่อนที่ด้วยความเร่ง แต่แรงหนืดจะเพิ่มขึ้นตามความเร็วจนกระทั่งแรงลัพธ์เป็นศูนย์ ($W = F_B + F_v$) หลังจากนั้นวัตถุจะเคลื่อนที่ด้วยความเร็วคงที่เรียกว่า <strong>อัตราเร็วปลาย (Terminal Velocity, $v_t$)</strong>
+                </p>
+                <div class="equation-box my-4">
+                    $$ v_t = \frac{2 r^2 g (\rho_{วัตถุ} - \rho_{ของไหล})}{9\eta} $$
+                </div>
+                 <div class="variable-list">
+                    <p><span>$v_t$</span> = อัตราเร็วปลาย (m/s)</p>
+                    <p><span>$\rho_{วัตถุ}$</span> = ความหนาแน่นของวัตถุ (kg/m³)</p>
+                    <p><span>$\rho_{ของไหล}$</span> = ความหนาแน่นของของไหล (kg/m³)</p>
+                </div>
+            </div>
+            
+            <!-- SIMULATION: Stokes' Law -->
+            <div class="mt-8 bg-white border border-gray-200 rounded-lg shadow-md p-4 sm:p-6">
+                  <h3 class="text-xl font-semibold mb-6 text-blue-600">🔬 การทดลอง: กฎของสโตกส์และอัตราเร็วปลาย</h3>
+                  <div class="flex flex-col lg:flex-row lg:gap-6">
+                      <!-- Controls -->
+                      <div class="lg:w-1/3 lg:order-2 bg-gray-50 p-4 sm:p-6 rounded-xl shadow-inner mb-6 lg:mb-0">
+                          <div class="space-y-4">
+                              <div>
+                                  <label class="font-medium text-sm mb-2 block text-gray-600">เลือกของไหล</label>
+                                  <div id="fluidButtons" class="grid grid-cols-2 gap-2 text-center text-sm">
+                                      <button data-viscosity="0.001" data-density="1000" class="control-btn p-2 rounded-lg bg-gray-200 control-btn-active border">น้ำ</button>
+                                      <button data-viscosity="0.010" data-density="910" class="control-btn p-2 rounded-lg bg-gray-200 border">น้ำมันเครื่อง</button>
+                                      <button data-viscosity="1.48" data-density="1260" class="control-btn p-2 rounded-lg bg-gray-200 border">กลีเซอรีน</button>
+                                      <button data-viscosity="10.0" data-density="1420" class="control-btn p-2 rounded-lg bg-gray-200 border">น้ำผึ้ง</button>
+                                  </div>
+                              </div>
+                               <div>
+                                  <label class="font-medium text-sm mb-2 block text-gray-600">เลือกวัตถุ</label>
+                                  <div id="objectButtons" class="grid grid-cols-2 gap-2 text-center text-sm">
+                                      <button data-density="2500" class="control-btn p-2 rounded-lg bg-gray-200 control-btn-active border">ลูกแก้ว</button>
+                                      <button data-density="7850" class="control-btn p-2 rounded-lg bg-gray-200 border">ลูกเหล็ก</button>
+                                  </div>
+                              </div>
+                              <div>
+                                  <label for="radiusSlider" class="font-medium text-sm mb-1 block text-gray-600">รัศมีวัตถุ (r)</label>
+                                  <div class="flex items-center gap-2">
+                                      <input type="range" id="radiusSlider" min="1" max="20" value="5" step="0.5" class="flex-grow">
+                                      <input type="number" id="radiusNumber" min="1" max="20" value="5" step="0.1" class="w-24 text-center border rounded-md p-1 bg-white">
+                                      <span class="text-xs text-gray-500">mm</span>
+                                  </div>
+                              </div>
+                          </div>
+                          <hr class="my-6">
+                          <div class="text-center p-3 bg-green-100 rounded-lg">
+                              <h4 class="font-bold text-green-800">ผลลัพธ์: อัตราเร็วปลาย (vₜ)</h4>
+                              <p id="terminalVelocityDisplay" class="font-semibold text-2xl mt-1">0.00 m/s</p>
+                              <p id="stokesForceDisplay" class="text-xs mt-1 text-green-700">แรงหนืด (Fᵥ): 0.00 N</p>
+                          </div>
+                          <div class="mt-6 space-y-2">
+                              <button id="calculateStokesBtn" class="w-full text-center py-3 bg-blue-500 hover:bg-blue-600 text-white font-bold rounded-lg transition text-base">คำนวณและบันทึกผล</button>
+                              <div class="flex gap-2">
+                                  <button id="clearStokesGraphBtn" class="w-1/2 text-center py-2 bg-yellow-400 hover:bg-yellow-500 text-yellow-900 font-bold rounded-lg transition text-sm">ล้างกราฟ</button>
+                                  <button id="exportStokesCsvBtn" class="w-1/2 text-center py-2 bg-green-500 hover:bg-green-600 text-white font-bold rounded-lg transition text-sm">ส่งออก CSV</button>
+                              </div>
                           </div>
                       </div>
-                       <div>
-                          <label class="font-medium text-sm mb-2 block">เลือกวัตถุ</label>
-                          <div id="objectButtons" class="grid grid-cols-2 gap-2 text-center text-sm">
-                              <button data-density="2500" class="control-btn p-2 rounded-lg bg-gray-200 control-btn-active border">ลูกแก้ว</button>
-                              <button data-density="7850" class="control-btn p-2 rounded-lg bg-gray-200 border">ลูกเหล็ก</button>
+                      <!-- Visuals -->
+                      <div class="lg:w-2/3 lg:order-1 space-y-4 lg:space-y-6">
+                          <div class="w-full flex items-center justify-center bg-gray-50 p-4 rounded-xl shadow-inner h-72 sm:h-80 lg:min-h-[350px]">
+                              <canvas id="viscosityCanvas"></canvas>
                           </div>
-                      </div>
-                      <div>
-                          <label for="radiusSlider" class="font-medium text-sm mb-1 block">รัศมีวัตถุ (r)</label>
-                          <div class="flex items-center gap-2">
-                              <input type="range" id="radiusSlider" min="1" max="20" value="5" step="0.5" class="flex-grow">
-                              <input type="number" id="radiusNumber" min="1" max="20" value="5" step="0.1" class="w-20 text-center border rounded-md p-1 bg-green-50">
-                              <span class="text-xs text-gray-500">mm</span>
+                          <div class="w-full bg-gray-50 p-2 sm:p-4 rounded-xl shadow-inner h-64 sm:h-72">
+                              <canvas id="viscosityChart"></canvas>
                           </div>
                       </div>
                   </div>
-                  <hr class="my-6">
-                  <div class="text-center p-3 bg-green-50 rounded-lg">
-                      <h4 class="font-bold text-green-700">ผลลัพธ์: อัตราเร็วปลาย (vₜ)</h4>
-                      <p id="terminalVelocityDisplay" class="font-semibold text-2xl mt-1">0.00 m/s</p>
-                      <p id="stokesForceDisplay" class="text-xs mt-1">แรงหนืด (Fₛ): 0.00 N</p>
-                  </div>
-                  <div class="mt-6 space-y-2">
-                      <button id="calculateStokesBtn" class="w-full text-center py-3 bg-green-500 hover:bg-green-600 text-white font-bold rounded-lg transition text-base">คำนวณและบันทึกผล</button>
-                      <div class="flex gap-2">
-                          <button id="clearStokesGraphBtn" class="w-1/2 text-center py-2 bg-yellow-400 hover:bg-yellow-500 text-yellow-800 font-bold rounded-lg transition text-sm">ล้างกราฟ</button>
-                          <button id="exportStokesCsvBtn" class="w-1/2 text-center py-2 bg-green-500 hover:bg-green-600 text-white font-bold rounded-lg transition text-sm">ส่งออก CSV</button>
-                      </div>
-                  </div>
-              </div>
-              <!-- Visuals -->
-              <div class="lg:w-2/3 lg:order-1 space-y-4 lg:space-y-6">
-                  <div class="w-full flex items-center justify-center bg-white p-4 rounded-xl shadow-inner h-72 sm:h-80 lg:min-h-[350px]">
-                      <canvas id="viscosityCanvas"></canvas>
-                  </div>
-                  <div class="w-full bg-white p-2 sm:p-4 rounded-xl shadow-inner h-64 sm:h-72">
-                      <canvas id="viscosityChart"></canvas>
-                  </div>
-              </div>
-          </div>
-      </div>
+            </div>
+            
+            <!-- Example Problem: Stokes -->
+            <div class="mt-8 p-6 bg-blue-50 border border-blue-200 rounded-lg">
+                <h4 class="text-lg font-semibold text-blue-800 mb-4">💡 ตัวอย่างโจทย์</h4>
+                <p class="font-medium">โจทย์:</p>
+                <p class="mb-4">จงหาอัตราเร็วปลายของลูกเหล็กทรงกลมรัศมี 2.0 mm ที่ตกลงในกลีเซอรีน กำหนดให้ $\rho_{เหล็ก} = 7850$ kg/m³, $\rho_{กลีเซอรีน} = 1260$ kg/m³, และ $\eta_{กลีเซอรีน} = 1.48$ Pa·s</p>
+                <p class="font-medium">วิธีทำ:</p>
+                <div class="space-y-2 text-gray-700">
+                    <p>1. แปลงหน่วยรัศมีเป็นเมตร: $r = 2.0 \text{ mm} = 2.0 \times 10^{-3} \text{ m}$</p>
+                    <p>2. ใช้สมการอัตราเร็วปลาย:</p>
+                    <div class="pl-4">$$ v_t = \frac{2 r^2 g (\rho_{วัตถุ} - \rho_{ของไหล})}{9\eta} $$</div>
+                    <p>3. แทนค่า:</p>
+                    <div class="pl-4">$$ v_t = \frac{2 (2.0 \times 10^{-3})^2 (9.81) (7850 - 1260)}{9(1.48)} $$</div>
+                    <div class="pl-4">$$ v_t = \frac{2 (4.0 \times 10^{-6}) (9.81) (6590)}{13.32} $$</div>
+                    <div class="pl-4">$$ v_t \approx \frac{0.517}{13.32} \approx 0.0388 \text{ m/s} $$</div>
+                </div>
+                <p class="mt-4 font-bold text-blue-700">คำตอบ: อัตราเร็วปลายของลูกเหล็กในกลีเซอรีนคือประมาณ 0.039 m/s</p>
+            </div>
 
-    </div>
-  </main>
+        </div>
+    </main>
 
-  <!-- Footer -->
-  <footer class="gradient-bg text-white py-8 mt-16" role="contentinfo">
-    <div class="container mx-auto px-4 text-center">
-       <p class="text-sm text-blue-300">พัฒนาโดย: นายทรงเกียรติ สวนแก้ว โรงเรียนลองวิทยา อำเภอลอง จังหวัดแพร่</p>
-    </div>
-  </footer>
+    <!-- Footer -->
+    <footer class="gradient-bg text-white py-8 mt-16" role="contentinfo">
+        <div class="container mx-auto px-4 text-center">
+           <p class="text-sm text-blue-200">พัฒนาโดย: นายทรงเกียรติ สวนแก้ว โรงเรียนลองวิทยา อำเภอลอง จังหวัดแพร่</p>
+        </div>
+    </footer>
 
-  <script>
+    <script>
     document.addEventListener('DOMContentLoaded', () => {
+        // --- Render Math Equations ---
+        if (typeof renderMathInElement === 'function') {
+            renderMathInElement(document.body, {
+                delimiters: [
+                    {left: "$$", right: "$$", display: true},
+                    {left: "$", right: "$", display: false}
+                ]
+            });
+        }
+
         const GRAVITY = 9.81;
         let stokesExperimentData = [];
         let stokesChart;
@@ -229,8 +314,13 @@
             const slider = document.getElementById(sliderId);
             const number = document.getElementById(numberId);
             if(!slider || !number) return;
-            slider.addEventListener('input', () => number.value = slider.value);
-            number.addEventListener('input', () => slider.value = number.value);
+            const update = (source) => {
+                if (source === 'slider') number.value = slider.value;
+                if (source === 'number') slider.value = number.value;
+                slider.dispatchEvent(new Event('input', {bubbles: true})); // trigger update
+            };
+            slider.addEventListener('input', () => update('slider'));
+            number.addEventListener('input', () => update('number'));
         }
 
         // --- Simulation Logic ---
@@ -279,13 +369,13 @@
             const ctx = stokesSim.canvas.getContext('2d');
             const W = stokesSim.canvas.width = stokesSim.canvas.parentElement.clientWidth;
             const H = stokesSim.canvas.height = stokesSim.canvas.parentElement.clientHeight;
-            const {eta, rho_f} = getFluidProperties();
+            const {eta} = getFluidProperties();
             const r = parseFloat(stokesSim.radiusSlider.value) / 1000;
             
             ctx.clearRect(0, 0, W, H);
 
             // Draw fluid container
-            const fluidColor = `rgba(107, 114, 128, ${0.1 + (eta / 12) * 0.4})`;
+            const fluidColor = `rgba(107, 114, 128, ${0.1 + Math.min(0.5, (eta / 10) * 0.4)})`;
             const containerWidth = W * 0.6;
             const containerX = (W - containerWidth) / 2;
             ctx.fillStyle = fluidColor;
@@ -295,7 +385,7 @@
             ctx.strokeRect(containerX, 0, containerWidth, H);
 
             // Draw sphere
-            const sphereRadiusPixels = 10 + (r * 1000 - 1) * 2;
+            const sphereRadiusPixels = 10 + (r * 1000 - 1) * 1.5;
             sphereState.startY = sphereRadiusPixels + 5;
             const sphereX = W / 2;
             
@@ -305,18 +395,19 @@
             ctx.fill();
 
             // Draw forces
+            const {rho_f} = getFluidProperties();
             const {rho_obj} = getObjectProperties();
             const volume = 4/3 * Math.PI * r**3;
             const Fg = rho_obj * volume * GRAVITY;
             const Fb = rho_f * volume * GRAVITY;
             const Fs = 6 * Math.PI * eta * r * sphereState.v;
 
-            const maxForce = Fg * 1.1;
+            const maxForce = Fg > 0 ? Fg * 1.1 : 1;
             const arrowScale = H / (maxForce * 4);
 
             drawArrow(ctx, sphereX, sphereState.y, Fg * arrowScale, Math.PI/2, '#16a34a', 'W');
             drawArrow(ctx, sphereX, sphereState.y, Fb * arrowScale, -Math.PI/2, '#3b82f6', 'Fʙ');
-            drawArrow(ctx, sphereX, sphereState.y, Fs * arrowScale, -Math.PI/2, '#d97706', 'Fₛ');
+            drawArrow(ctx, sphereX, sphereState.y, Fs * arrowScale, -Math.PI/2, '#d97706', 'Fᵥ');
         }
 
         function animateStokes(terminalVelocity, onFinish) {
@@ -366,18 +457,18 @@
             const {rho_obj} = getObjectProperties();
             const r = parseFloat(stokesSim.radiusSlider.value) / 1000;
 
-            const terminalVelocity = (2 * GRAVITY * r**2 * (rho_obj - rho_f)) / (9 * eta);
+            const terminalVelocity = Math.max(0, (2 * GRAVITY * r**2 * (rho_obj - rho_f)) / (9 * eta));
             const stokesForce = 6 * Math.PI * eta * r * terminalVelocity;
 
-            stokesSim.velocityDisplay.textContent = `${terminalVelocity > 0 ? terminalVelocity.toFixed(3) : '0.000'} m/s`;
-            stokesSim.forceDisplay.textContent = `แรงหนืด (Fₛ): ${stokesForce > 0 ? stokesForce.toExponential(2) : '0.00'} N`;
+            stokesSim.velocityDisplay.textContent = `${terminalVelocity.toFixed(3)} m/s`;
+            stokesSim.forceDisplay.textContent = `แรงหนืด (Fᵥ): ${stokesForce.toExponential(2)} N`;
             
             if (runAnimation) {
                 sphereState = { y: 25, v: 0, startY: 25 };
                 animateStokes(terminalVelocity);
             } else {
-                 sphereState = { y: 25, v: 0, startY: 25 };
-                 drawStokesSim();
+                sphereState = { y: 25, v: 0, startY: 25 };
+                drawStokesSim();
             }
         }
 
@@ -386,7 +477,7 @@
             const {name: objName, rho_obj} = getObjectProperties();
             const r_mm = parseFloat(stokesSim.radiusSlider.value);
             const r_m = r_mm / 1000;
-            const terminalVelocity = (2 * GRAVITY * r_m**2 * (rho_obj - rho_f)) / (9 * eta);
+            const terminalVelocity = Math.max(0, (2 * GRAVITY * r_m**2 * (rho_obj - rho_f)) / (9 * eta));
 
             if (terminalVelocity > 0) {
                  const dataPoint = {
@@ -394,7 +485,7 @@
                     radius_sq_mm: r_mm**2, terminalVelocity
                 };
                 stokesExperimentData.push(dataPoint);
-                stokesChart.data.datasets[0].data.push({ x: dataPoint.radius_sq_mm, y: dataPoint.terminalVelocity });
+                stokesChart.data.datasets[0].data.push({ x: dataPoint.radius_sq_mm.toFixed(2), y: dataPoint.terminalVelocity.toFixed(3) });
                 stokesChart.update();
             }
             updateStokesSim(true);
@@ -438,6 +529,6 @@
         
         initializeStokesSim();
     });
-  </script>
+    </script>
 </body>
 </html>
