@@ -87,12 +87,13 @@
             margin-bottom: 0.5rem;
             font-size: 1.1rem;
             display: flex;
-            align-items: center;
+            align-items: flex-start;
         }
-        .variable-list .katex {
-            min-width: 90px;
+        .variable-list p > span:first-of-type {
+            display: inline-block;
+            min-width: 140px;
             text-align: right;
-            margin-right: 15px;
+            margin-right: 10px;
         }
     </style>
 </head>
@@ -128,7 +129,7 @@
                     $$ P_{สัมบูรณ์} = P_{atm} + \rho g h $$
                 </div>
                 <div class="variable-list">
-                    <p>โดยที่ <span>$P_{เกจ}$</span> = ความดันเกจ (Pa)</p>
+                    <p><span>$P_{เกจ}$</span> = ความดันเกจ (Pa)</p>
                     <p><span>$P_{สัมบูรณ์}$</span> = ความดันสัมบูรณ์ (Pa)</p>
                     <p><span>$P_{atm}$</span> = ความดันบรรยากาศ (Pa, มีค่าประมาณ $1.01 \times 10^5$ Pa)</p>
                     <p><span>$\rho$</span> = ความหนาแน่นของของไหล (kg/m³)</p>
@@ -197,10 +198,10 @@
                         <p>แทนค่าตัวแปรที่ทราบ:</p>
                         <div class="pl-4">$$ P_{เกจ} = (1000 \text{ kg/m}^3)(9.81 \text{ m/s}^2)(20 \text{ m}) $$</div>
                         <div class="pl-4">$$ P_{เกจ} = 196,200 \text{ N/m}^2 \text{ หรือ } 196,200 \text{ Pa} $$</div>
-                        <p>แปลงหน่วยเป็นกิโลปาสคาล (kPa):</p>
+                        <p>แปลงหน่วยเป็นกิโลพาสคัล (kPa):</p>
                          <div class="pl-4">$$ P_{เกจ} = 196.2 \text{ kPa} $$</div>
                     </div>
-                    <p class="mt-4 font-bold text-blue-700">คำตอบ: ความดันเกจที่กระทำต่อนักประดาน้ำคือ 196.2 กิโลปาสคาล</p>
+                    <p class="mt-4 font-bold text-blue-700">คำตอบ: ความดันเกจที่กระทำต่อนักประดาน้ำคือ 196.2 กิโลพาสคัล</p>
                 </div>
             </div>
 
@@ -216,7 +217,7 @@
                     $$ \frac{F}{a} = \frac{W}{A} $$
                 </div>
                 <div class="variable-list">
-                    <p>โดยที่ <span>$F$</span> = แรงที่กระทำต่อลูกสูบเล็ก (N)</p>
+                    <p><span>$F$</span> = แรงที่กระทำต่อลูกสูบเล็ก (N)</p>
                     <p><span>$W$</span> = น้ำหนักที่ยกได้โดยลูกสูบใหญ่ (N)</p>
                     <p><span>$a$</span> = พื้นที่หน้าตัดของลูกสูบเล็ก (m²)</p>
                     <p><span>$A$</span> = พื้นที่หน้าตัดของลูกสูบใหญ่ (m²)</p>
@@ -234,8 +235,8 @@
                     $$ M.A. = \frac{W}{F} = \frac{A}{a} = \frac{R^2}{r^2} = \frac{D^2}{d^2} $$
                 </div>
                 <div class="variable-list">
-                    <p>โดยที่ <span>$r, d$</span> = รัศมี และ เส้นผ่านศูนย์กลางของลูกสูบเล็ก</p>
-                    <p><span>$R, D$</span> = รัศมี และ เส้นผ่านศูนย์กลางของลูกสูบใหญ่</p>
+                    <p><span>$r, d$</span> = รัศมี และ เส้นผ่านศูนย์กลางของลูกสูบเล็ก (m)</p>
+                    <p><span>$R, D$</span> = รัศมี และ เส้นผ่านศูนย์กลางของลูกสูบใหญ่ (m)</p>
                     <p><span>$M.A.$</span> = การได้เปรียบเชิงกล (ไม่มีหน่วย)</p>
                 </div>
 
@@ -358,7 +359,7 @@
                     $$ F_{B} = \rho_{ของไหล} V_{จม} g $$
                 </div>
                 <div class="variable-list">
-                    <p>โดยที่ <span>$F_B$</span> = แรงพยุง (N)</p>
+                    <p><span>$F_B$</span> = แรงพยุง (N)</p>
                     <p><span>$\rho_{ของไหล}$</span> = ความหนาแน่นของของไหล (kg/m³)</p>
                     <p><span>$V_{จม}$</span> = ปริมาตรของวัตถุส่วนที่จมในของไหล (m³)</p>
                     <p><span>$g$</span> = ความเร่งโน้มถ่วง (m/s²)</p>
