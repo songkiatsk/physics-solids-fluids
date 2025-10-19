@@ -229,9 +229,19 @@
                  <p class="mt-8 mb-4 text-gray-700 leading-relaxed">
                     ถ้าพื้นที่หน้าตัดของลูกสูบเป็นวงกลม เราสามารถแทนค่าพื้นที่ $a = \pi r^2$ และ $A = \pi R^2$ ซึ่งนำไปสู่ความสัมพันธ์ของรัศมี (r, R) และเส้นผ่านศูนย์กลาง (d, D) ได้ดังนี้:
                 </p>
-                 <div class="equation-box my-4 space-y-4">
-                    $$ \frac{F}{\pi r^2} = \frac{W}{\pi R^2} \quad \xrightarrow{\text{ตัด }\pi} \quad \frac{F}{r^2} = \frac{W}{R^2} $$
-                    $$ \frac{F}{\pi (\frac{d}{2})^2} = \frac{W}{\pi (\frac{D}{2})^2} \quad \xrightarrow{\text{จัดรูป}} \quad \frac{F}{d^2} = \frac{W}{D^2} $$
+                <!-- FIXED: Responsive equation block -->
+                <div class="equation-box my-4 p-2 sm:p-4">
+                    <div class="flex flex-wrap items-center justify-center gap-x-4 gap-y-2">
+                        <div>$$ \frac{F}{\pi r^2} = \frac{W}{\pi R^2} $$</div>
+                        <div class="text-xl text-gray-600">$$ \xrightarrow{\text{ตัด }\pi} $$</div>
+                        <div>$$ \frac{F}{r^2} = \frac{W}{R^2} $$</div>
+                    </div>
+                    <hr class="my-3 border-gray-300 max-w-xs mx-auto">
+                    <div class="flex flex-wrap items-center justify-center gap-x-4 gap-y-2">
+                        <div>$$ \frac{F}{\pi \left(\frac{d}{2}\right)^2} = \frac{W}{\pi \left(\frac{D}{2}\right)^2} $$</div>
+                        <div class="text-xl text-gray-600">$$ \xrightarrow{\text{จัดรูป}} $$</div>
+                        <div>$$ \frac{F}{d^2} = \frac{W}{D^2} $$</div>
+                    </div>
                 </div>
                  <p class="mt-4 mb-4 text-gray-700 leading-relaxed">
                     จากกฎของพาสคัล เราสามารถหา <strong>การได้เปรียบเชิงกล (Mechanical Advantage, M.A.)</strong> ซึ่งเป็นอัตราส่วนที่บอกว่าเครื่องกลนั้นช่วยผ่อนแรงได้กี่เท่า
@@ -977,4 +987,3 @@
     </script>
 </body>
 </html>
-
