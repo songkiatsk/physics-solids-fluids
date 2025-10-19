@@ -227,11 +227,12 @@
                     <p><span>$A$</span> = พื้นที่หน้าตัดของลูกสูบใหญ่ (m²)</p>
                 </div>
                  <p class="mt-8 mb-4 text-gray-700 leading-relaxed">
-                    ถ้าพื้นที่หน้าตัดของลูกสูบเป็นวงกลม จะได้ความสัมพันธ์เพิ่มเติมดังนี้
+                    ถ้าพื้นที่หน้าตัดของลูกสูบเป็นวงกลม เราสามารถแทนค่าพื้นที่ $a = \pi r^2$ และ $A = \pi R^2$ ซึ่งนำไปสู่ความสัมพันธ์ของรัศมี (r, R) และเส้นผ่านศูนย์กลาง (d, D) ได้ดังนี้:
                 </p>
-                 <div class="equation-box my-4">
-                      $$ \frac{F}{r^2} = \frac{W}{R^2} \quad \text{หรือ} \quad \frac{F}{d^2} = \frac{W}{D^2} $$
-                 </div>
+                 <div class="equation-box my-4 space-y-4">
+                    $$ \frac{F}{\pi r^2} = \frac{W}{\pi R^2} \quad \xrightarrow{\text{ตัด }\pi} \quad \frac{F}{r^2} = \frac{W}{R^2} $$
+                    $$ \frac{F}{\pi (\frac{d}{2})^2} = \frac{W}{\pi (\frac{D}{2})^2} \quad \xrightarrow{\text{จัดรูป}} \quad \frac{F}{d^2} = \frac{W}{D^2} $$
+                </div>
                  <p class="mt-4 mb-4 text-gray-700 leading-relaxed">
                     จากกฎของพาสคัล เราสามารถหา <strong>การได้เปรียบเชิงกล (Mechanical Advantage, M.A.)</strong> ซึ่งเป็นอัตราส่วนที่บอกว่าเครื่องกลนั้นช่วยผ่อนแรงได้กี่เท่า
                 </p>
@@ -273,16 +274,16 @@
                                 <div>
                                     <label for="d_small_slider" class="font-medium text-sm mb-1 block text-gray-600">เส้นผ่านศูนย์กลางเล็ก (d)</label>
                                     <div class="flex items-center gap-2">
-                                        <input type="range" id="d_small_slider" min="0.5" max="5" value="1.5" step="0.01" class="flex-grow">
-                                        <input type="number" id="d_small_number" min="0.5" max="5" value="1.5" step="0.01" class="w-24 text-center border rounded-md p-1 bg-white tabular-nums">
+                                        <input type="range" id="d_small_slider" min="0.5" max="5" value="2" step="0.01" class="flex-grow">
+                                        <input type="number" id="d_small_number" min="0.5" max="5" value="2" step="0.01" class="w-24 text-center border rounded-md p-1 bg-white tabular-nums">
                                         <span class="text-xs text-gray-500">cm</span>
                                     </div>
                                 </div>
                                 <div>
                                     <label for="D_large_slider" class="font-medium text-sm mb-1 block text-gray-600">เส้นผ่านศูนย์กลางใหญ่ (D)</label>
                                     <div class="flex items-center gap-2">
-                                        <input type="range" id="D_large_slider" min="1" max="25" value="3" step="0.01" class="flex-grow">
-                                        <input type="number" id="D_large_number" min="1" max="25" value="3" step="0.01" class="w-24 text-center border rounded-md p-1 bg-white tabular-nums">
+                                        <input type="range" id="D_large_slider" min="1" max="25" value="6" step="0.01" class="flex-grow">
+                                        <input type="number" id="D_large_number" min="1" max="25" value="6" step="0.01" class="w-24 text-center border rounded-md p-1 bg-white tabular-nums">
                                         <span class="text-xs text-gray-500">cm</span>
                                     </div>
                                 </div>
@@ -370,18 +371,18 @@
                 </div>
                  <p class="mt-8 mb-4 text-gray-700 leading-relaxed">
                     การลอยหรือจมของวัตถุขึ้นอยู่กับการเปรียบเทียบระหว่างน้ำหนักของวัตถุ ($W$) และแรงพยุง ($F_B$) หรือเปรียบเทียบความหนาแน่นของวัตถุ ($\rho_{วัตถุ}$) กับของไหล ($\rho_{ของไหล}$)
-                    <ul class="list-disc list-inside mt-2 space-y-2">
-                        <li><b>วัตถุจม:</b> เมื่อ $W > F_B$ (กรณีจมมิด) หรือ $\rho_{วัตถุ} > \rho_{ของไหล}$</li>
-                        <li><b>วัตถุลอย:</b> เมื่อ $W = F_B$ (กรณีลอยบางส่วน) หรือ $\rho_{วัตถุ} < \rho_{ของไหล}$</li>
-                        <li><b>วัตถุลอยปริ่ม:</b> เมื่อ $W = F_B$ (กรณีจมมิด) หรือ $\rho_{วัตถุ} = \rho_{ของไหล}$</li>
-                    </ul>
+                     <ul class="list-disc list-inside mt-2 space-y-2">
+                         <li><b>วัตถุจม:</b> เมื่อ $W > F_B$ (กรณีจมมิด) หรือ $\rho_{วัตถุ} > \rho_{ของไหล}$</li>
+                         <li><b>วัตถุลอย:</b> เมื่อ $W = F_B$ (กรณีลอยบางส่วน) หรือ $\rho_{วัตถุ} < \rho_{ของไหล}$</li>
+                         <li><b>วัตถุลอยปริ่ม:</b> เมื่อ $W = F_B$ (กรณีจมมิด) หรือ $\rho_{วัตถุ} = \rho_{ของไหล}$</li>
+                     </ul>
                 </p>
                 
                 <!-- SIMULATION: Buoyancy -->
                 <div class="mt-8 bg-white border border-gray-200 rounded-lg shadow-md p-4 sm:p-6">
                     <h3 class="text-xl font-semibold mb-6 text-green-600">🔬 การทดลอง: แรงลอยตัว</h3>
                     <div class="flex flex-col lg:flex-row lg:gap-6">
-                              <!-- Controls -->
+                             <!-- Controls -->
                         <div class="lg:w-1/3 lg:order-2 bg-gray-50 p-4 sm:p-6 rounded-xl shadow-inner mb-6 lg:mb-0">
                             <div>
                                 <label class="font-medium text-sm mb-2 block text-gray-600">เลือกวัสดุ</label>
@@ -889,7 +890,7 @@
             const actualBuoyantForce = Math.min(weight, maxBuoyantForce); // Corrected logic
             const status = buoyancySim.statusDisplay.textContent;
 
-            buoyancyExperimentData.push([materialName, rho_obj, V, weight.toFixed(2), actualBuoyancy.toFixed(2), status]); // Use actual force for CSV
+            buoyancyExperimentData.push([materialName, rho_obj, V, weight.toFixed(2), actualBuoyantForce.toFixed(2), status]); // Use actual force for CSV
             
             const label = `${materialName.substring(0,3)}. (${V.toFixed(3)} m³)`
             buoyancyChart.data.labels.push(label);
@@ -976,6 +977,4 @@
     </script>
 </body>
 </html>
-
-
 
